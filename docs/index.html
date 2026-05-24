@@ -32,11 +32,24 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .sidebar-logo{padding:1.5rem 1.25rem;display:flex;align-items:center;gap:.6rem;border-bottom:1px solid var(--border)}
 .sidebar-logo svg{width:28px;height:28px;color:var(--gold);flex-shrink:0}
 .sidebar-logo span{font-weight:800;font-size:1rem;color:var(--gold);letter-spacing:.02em}
-.sidebar-nav{flex:1;overflow-y:auto;padding:.75rem 0}
-.sidebar-nav a{display:flex;align-items:center;gap:.65rem;padding:.65rem 1.25rem;color:var(--text2);text-decoration:none;font-size:.8rem;font-weight:500;transition:var(--transition);border-left:3px solid transparent;cursor:pointer}
-.sidebar-nav a:hover{color:var(--text);background:rgba(255,255,255,.03)}
+.sidebar-nav{flex:1;overflow-y:auto;padding:.5rem 0}
+.nav-group{margin-bottom:.35rem}
+.nav-group-toggle{display:flex;align-items:center;gap:.6rem;padding:.6rem 1rem;margin:0 .6rem;color:var(--text3);font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:var(--transition);user-select:none;border-radius:8px}
+.nav-group-toggle:hover{color:var(--text2);background:rgba(255,255,255,.025)}
+.nav-group-toggle .g-icon{font-size:.85rem;width:22px;text-align:center}
+.nav-group-toggle .g-label{flex:1}
+.nav-group-toggle .chevron{font-size:.55rem;transition:transform .25s ease;transform:rotate(0deg);opacity:.5}
+.nav-group.open .nav-group-toggle{color:var(--gold);background:rgba(212,165,74,.06)}
+.nav-group.open .nav-group-toggle .chevron{transform:rotate(90deg);opacity:.8}
+.nav-group-links{max-height:0;overflow:hidden;transition:max-height .3s cubic-bezier(.4,0,.2,1)}
+.nav-group.open .nav-group-links{max-height:500px}
+.nav-group-links::before{content:'';display:block;height:4px}
+.nav-group-links::after{content:'';display:block;height:4px}
+.sidebar-nav a{display:flex;align-items:center;gap:.6rem;padding:.45rem 1rem .45rem 1.5rem;margin:1px .6rem 1px 1.2rem;color:var(--text2);text-decoration:none;font-size:.78rem;font-weight:500;transition:var(--transition);border-left:2px solid var(--border);border-radius:0 6px 6px 0;cursor:pointer}
+.sidebar-nav a:hover{color:var(--text);background:rgba(255,255,255,.03);border-left-color:var(--text3)}
 .sidebar-nav a.active{color:var(--gold);background:var(--gold-glow);border-left-color:var(--gold);font-weight:600}
-.sidebar-nav a .nav-icon{width:20px;text-align:center;font-size:.9rem;flex-shrink:0}
+.sidebar-nav a .nav-icon{width:18px;text-align:center;font-size:.82rem;flex-shrink:0}
+.nav-divider{height:1px;background:var(--border);margin:.25rem 1.2rem}
 .sidebar-footer{padding:1rem 1.25rem;border-top:1px solid var(--border);font-size:.65rem;color:var(--text3);text-align:center}
 
 /* Mobile hamburger */
@@ -312,22 +325,53 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     <span>BAYT CAFÉ</span>
   </div>
   <nav class="sidebar-nav">
-    <a data-page="dashboard" class="active"><span class="nav-icon">&#9673;</span>Dashboard</a>
-    <a data-page="savings"><span class="nav-icon">&#128176;</span>Savings</a>
-    <a data-page="startup"><span class="nav-icon">&#127959;</span>Startup Costs</a>
-    <a data-page="supplies"><span class="nav-icon">&#128230;</span>Supplies</a>
-    <a data-page="team"><span class="nav-icon">&#128101;</span>Team & Hiring</a>
-    <a data-page="menu"><span class="nav-icon">&#9749;</span>Menu & Pricing</a>
-    <a data-page="pnl"><span class="nav-icon">&#128200;</span>P&L Analysis</a>
-    <a data-page="location"><span class="nav-icon">&#128205;</span>Location</a>
-    <a data-page="competition"><span class="nav-icon">&#9876;</span>Competition</a>
-    <a data-page="milestones"><span class="nav-icon">&#127942;</span>Milestones</a>
-    <a data-page="standout"><span class="nav-icon">&#10024;</span>Stand Out</a>
-    <a data-page="checklist"><span class="nav-icon">&#9989;</span>Checklist</a>
-    <a data-page="partnership"><span class="nav-icon">&#129309;</span>Partnership</a>
-    <a data-page="suppliers"><span class="nav-icon">&#128203;</span>Suppliers</a>
-    <a data-page="ramadan"><span class="nav-icon">&#127769;</span>Ramadan</a>
-    <a data-page="zakat"><span class="nav-icon">&#128142;</span>Zakat</a>
+    <div class="nav-group open">
+      <div class="nav-group-toggle" onclick="this.parentElement.classList.toggle('open')">
+        <span class="g-icon">&#9881;</span><span class="g-label">Planning</span><span class="chevron">&#9654;</span>
+      </div>
+      <div class="nav-group-links">
+        <a data-page="dashboard" class="active"><span class="nav-icon">&#9673;</span>Dashboard</a>
+        <a data-page="savings"><span class="nav-icon">&#128176;</span>Savings</a>
+        <a data-page="checklist"><span class="nav-icon">&#9989;</span>Checklist</a>
+        <a data-page="partnership"><span class="nav-icon">&#129309;</span>Partnership</a>
+      </div>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-group">
+      <div class="nav-group-toggle" onclick="this.parentElement.classList.toggle('open')">
+        <span class="g-icon">&#128178;</span><span class="g-label">Financials</span><span class="chevron">&#9654;</span>
+      </div>
+      <div class="nav-group-links">
+        <a data-page="startup"><span class="nav-icon">&#127959;</span>Startup Costs</a>
+        <a data-page="supplies"><span class="nav-icon">&#128230;</span>Supplies</a>
+        <a data-page="team"><span class="nav-icon">&#128101;</span>Team & Hiring</a>
+        <a data-page="menu"><span class="nav-icon">&#9749;</span>Menu & Pricing</a>
+        <a data-page="pnl"><span class="nav-icon">&#128200;</span>P&L Analysis</a>
+      </div>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-group">
+      <div class="nav-group-toggle" onclick="this.parentElement.classList.toggle('open')">
+        <span class="g-icon">&#9813;</span><span class="g-label">Strategy</span><span class="chevron">&#9654;</span>
+      </div>
+      <div class="nav-group-links">
+        <a data-page="location"><span class="nav-icon">&#128205;</span>Location</a>
+        <a data-page="competition"><span class="nav-icon">&#9876;</span>Competition</a>
+        <a data-page="milestones"><span class="nav-icon">&#127942;</span>Milestones</a>
+        <a data-page="standout"><span class="nav-icon">&#10024;</span>Stand Out</a>
+        <a data-page="suppliers"><span class="nav-icon">&#128203;</span>Suppliers</a>
+      </div>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-group">
+      <div class="nav-group-toggle" onclick="this.parentElement.classList.toggle('open')">
+        <span class="g-icon">&#9770;</span><span class="g-label">Faith & Values</span><span class="chevron">&#9654;</span>
+      </div>
+      <div class="nav-group-links">
+        <a data-page="ramadan"><span class="nav-icon">&#127769;</span>Ramadan</a>
+        <a data-page="zakat"><span class="nav-icon">&#128142;</span>Zakat</a>
+      </div>
+    </div>
   </nav>
   <div class="sidebar-footer">All numbers in EGP<br>Rate: ~13.6 EGP = 1 AED</div>
 </aside>
@@ -2084,7 +2128,14 @@ function navigateTo(pageId) {
   const page = document.getElementById('page-' + pageId);
   if (page) page.classList.add('active');
   const link = document.querySelector('.sidebar-nav a[data-page="'+pageId+'"]');
-  if (link) link.classList.add('active');
+  if (link) {
+    link.classList.add('active');
+    const group = link.closest('.nav-group');
+    if (group && !group.classList.contains('open')) {
+      document.querySelectorAll('.nav-group').forEach(g => g.classList.remove('open'));
+      group.classList.add('open');
+    }
+  }
   // Close mobile sidebar
   document.querySelector('.sidebar').classList.remove('open');
   document.querySelector('.mobile-overlay').classList.remove('open');
