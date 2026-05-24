@@ -229,6 +229,74 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 /* Scroll reveal within pages */
 .reveal{opacity:0;transform:translateY(20px);transition:all .6s cubic-bezier(.4,0,.2,1)}
 .reveal.visible{opacity:1;transform:none}
+
+/* ===== CHECKLIST PAGE ===== */
+.cl-phase{margin-bottom:2rem}
+.cl-phase-header{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0;border-bottom:2px solid var(--border);margin-bottom:.75rem}
+.cl-phase-header h3{font-size:1rem;font-weight:700}
+.cl-phase-progress{font-size:.75rem;color:var(--text2)}
+.cl-phase-progress strong{color:var(--gold)}
+.cl-item{display:flex;align-items:flex-start;gap:.75rem;padding:.55rem 0;border-bottom:1px solid var(--border);transition:var(--transition)}
+.cl-item:last-child{border-bottom:none}
+.cl-item.checked .cl-title{text-decoration:line-through;color:var(--text3)}
+.cl-item.checked .cl-desc{color:var(--text3);opacity:.6}
+.cl-check{position:relative;width:22px;height:22px;flex-shrink:0;margin-top:1px}
+.cl-check input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;z-index:2;margin:0}
+.cl-check .cl-box{width:22px;height:22px;border:2px solid var(--border-light);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:.7rem;transition:all .25s ease;background:var(--bg)}
+.cl-check input:checked+.cl-box{background:var(--gold);border-color:var(--gold);color:var(--bg);box-shadow:0 0 12px var(--gold-glow)}
+.cl-check input:checked+.cl-box::after{content:'\2713';font-weight:800}
+.cl-title{font-size:.85rem;font-weight:600;line-height:1.4}
+.cl-desc{font-size:.72rem;color:var(--text2);margin-top:.15rem}
+.cl-overall{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;background:var(--gold-glow);border:1px solid rgba(212,165,74,.25);border-radius:var(--radius-sm);margin-bottom:1.5rem}
+.cl-overall .cl-ov-label{font-size:.85rem;font-weight:600}
+.cl-overall .cl-ov-val{font-size:1.3rem;font-weight:800;color:var(--gold)}
+.cl-bar{height:6px;background:var(--bg2);border-radius:3px;overflow:hidden;margin-top:.5rem}
+.cl-bar-fill{height:100%;background:var(--gold);border-radius:3px;transition:width .6s ease}
+.btn-reset{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.5rem 1.2rem;color:var(--red);font-size:.75rem;font-weight:600;cursor:pointer;transition:var(--transition);font-family:inherit}
+.btn-reset:hover{background:rgba(199,91,58,.1);border-color:var(--red)}
+
+/* ===== PARTNERSHIP PAGE ===== */
+.p-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.25rem;transition:var(--transition)}
+.p-card:hover{border-color:var(--border-light)}
+.p-card h3{font-size:1rem;font-weight:700;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.p-card h3 .p-num{width:28px;height:28px;border-radius:50%;background:var(--gold-glow);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0}
+.p-item{padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.82rem;color:var(--text2);line-height:1.6}
+.p-item:last-child{border-bottom:none}
+.p-item strong{color:var(--text)}
+.p-field{display:grid;grid-template-columns:1fr 120px;gap:.75rem;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.82rem}
+.p-field span{color:var(--text2)}
+
+/* ===== SUPPLIER PAGE ===== */
+.sup-section{margin-bottom:2rem}
+.sup-section h3{font-size:1rem;font-weight:700;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:.5rem}
+.sup-table{width:100%;border-collapse:collapse;font-size:.78rem}
+.sup-table th{text-align:left;font-size:.65rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;padding:.5rem .6rem;border-bottom:1px solid var(--border)}
+.sup-table td{padding:.55rem .6rem;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top}
+.sup-table tr:last-child td{border-bottom:none}
+.sup-table td:first-child{color:var(--text);font-weight:500}
+.sup-table .sup-price{color:var(--gold);font-weight:600;white-space:nowrap}
+
+/* ===== RAMADAN PAGE ===== */
+.ram-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.25rem}
+.ram-section h3{font-size:1rem;font-weight:700;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.ram-item{padding:.45rem 0;font-size:.82rem;color:var(--text2);line-height:1.6;display:flex;align-items:flex-start;gap:.5rem}
+.ram-item::before{content:'\25C6';color:var(--gold);flex-shrink:0;margin-top:2px;font-size:.6rem}
+.ram-accent{border-left:3px solid var(--gold);background:linear-gradient(135deg,var(--card) 0%,rgba(212,165,74,.04) 100%)}
+.ram-cl-item{display:flex;align-items:flex-start;gap:.75rem;padding:.5rem 0;border-bottom:1px solid var(--border)}
+.ram-cl-item:last-child{border-bottom:none}
+
+/* ===== ZAKAT PAGE ===== */
+.zk-calc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.zk-inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin-bottom:1.5rem}
+.zk-result{text-align:center;padding:2rem;background:var(--gold-glow);border:1px solid rgba(212,165,74,.25);border-radius:var(--radius-sm)}
+.zk-result .zk-amount{font-size:2.5rem;font-weight:900;color:var(--gold);letter-spacing:-.02em}
+.zk-result .zk-label{font-size:.75rem;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-top:.25rem}
+.zk-monthly{margin-top:1rem;padding:1rem;background:var(--bg2);border-radius:var(--radius-sm);text-align:center}
+.zk-monthly .zk-mo-val{font-size:1.4rem;font-weight:800;color:var(--green)}
+.zk-below{text-align:center;padding:1.5rem;border:1px dashed var(--border-light);border-radius:var(--radius-sm);margin-top:1rem}
+.zk-below p{font-size:.9rem;color:var(--text2)}
+.zk-notes{margin-top:1.5rem}
+.zk-notes li{font-size:.8rem;color:var(--text2);padding:.35rem 0;line-height:1.6}
 </style>
 </head>
 <body>
@@ -255,6 +323,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     <a data-page="competition"><span class="nav-icon">&#9876;</span>Competition</a>
     <a data-page="milestones"><span class="nav-icon">&#127942;</span>Milestones</a>
     <a data-page="standout"><span class="nav-icon">&#10024;</span>Stand Out</a>
+    <a data-page="checklist"><span class="nav-icon">&#9989;</span>Checklist</a>
+    <a data-page="partnership"><span class="nav-icon">&#129309;</span>Partnership</a>
+    <a data-page="suppliers"><span class="nav-icon">&#128203;</span>Suppliers</a>
+    <a data-page="ramadan"><span class="nav-icon">&#127769;</span>Ramadan</a>
+    <a data-page="zakat"><span class="nav-icon">&#128142;</span>Zakat</a>
   </nav>
   <div class="sidebar-footer">All numbers in EGP<br>Rate: ~13.6 EGP = 1 AED</div>
 </aside>
@@ -1052,6 +1125,473 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   </div>
 </div>
 
+<!-- ==================== PAGE: CHECKLIST ==================== -->
+<div class="page" id="page-checklist">
+  <div class="section-label">Pre-Launch</div>
+  <div class="section-title">Pre-Launch Checklist</div>
+  <div class="section-sub">Track every step from savings to opening day. Check items off as you go -- progress is saved automatically.</div>
+
+  <div class="cl-overall">
+    <div>
+      <div class="cl-ov-label">Overall Progress</div>
+      <div class="cl-bar" style="width:200px;margin-top:.35rem"><div class="cl-bar-fill" id="clOverallBar" style="width:0%"></div></div>
+    </div>
+    <div class="cl-ov-val" id="clOverallText">0 / 0</div>
+  </div>
+
+  <div style="text-align:right;margin-bottom:1.5rem">
+    <button class="btn-reset" onclick="resetChecklist()">Reset All</button>
+  </div>
+
+  <!-- Phase 1 -->
+  <div class="cl-phase" data-phase="1">
+    <div class="cl-phase-header">
+      <h3 style="color:var(--gold)">Phase 1: Foundation <span style="font-size:.75rem;font-weight:400;color:var(--text2)">(Months 1-3 of saving period)</span></h3>
+      <div class="cl-phase-progress" id="clPh1Progress">0 / 9</div>
+    </div>
+    <div class="cl-item" data-cl="p1_savings_account"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Open Mudarabah savings account</div><div class="cl-desc">Faisal Islamic Bank, ADIB, or Al Baraka</div></div></div>
+    <div class="cl-item" data-cl="p1_auto_transfer"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Set up automatic monthly transfer</div><div class="cl-desc">10K AED per month into Islamic savings</div></div></div>
+    <div class="cl-item" data-cl="p1_partnership"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Draft partnership agreement with sister</div><div class="cl-desc">See Partnership page for framework</div></div></div>
+    <div class="cl-item" data-cl="p1_cafe_visits"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Start visiting Cairo cafes</div><div class="cl-desc">Aim for 30+ visits, take notes on each</div></div></div>
+    <div class="cl-item" data-cl="p1_barista_course"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Take a barista course</div><div class="cl-desc">SCA Foundation at The Roastery, Cairo</div></div></div>
+    <div class="cl-item" data-cl="p1_social_follow"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Begin following Cairo coffee scene</div><div class="cl-desc">Instagram and TikTok -- study what works</div></div></div>
+    <div class="cl-item" data-cl="p1_locations"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Research and shortlist 3-5 potential locations</div><div class="cl-desc">Visit in person, check foot traffic at different times</div></div></div>
+    <div class="cl-item" data-cl="p1_gdrive"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Create shared Google Drive folder</div><div class="cl-desc">For all business documents, contracts, research</div></div></div>
+    <div class="cl-item" data-cl="p1_inspiration"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Start a cafe inspiration board</div><div class="cl-desc">Design, menu, branding ideas -- Pinterest, saved posts, photos</div></div></div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="cl-phase" data-phase="2">
+    <div class="cl-phase-header">
+      <h3 style="color:var(--green)">Phase 2: Planning <span style="font-size:.75rem;font-weight:400;color:var(--text2)">(Months 4-6)</span></h3>
+      <div class="cl-phase-progress" id="clPh2Progress">0 / 11</div>
+    </div>
+    <div class="cl-item" data-cl="p2_location_final"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Finalize location choice</div><div class="cl-desc">Maadi Degla recommended</div></div></div>
+    <div class="cl-item" data-cl="p2_lawyer"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Hire a lawyer for licensing process</div><div class="cl-desc">Essential for navigating Egyptian bureaucracy</div></div></div>
+    <div class="cl-item" data-cl="p2_commercial_reg"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Apply for Commercial Register</div><div class="cl-desc">&#1587;&#1580;&#1604; &#1578;&#1580;&#1575;&#1585;&#1610;</div></div></div>
+    <div class="cl-item" data-cl="p2_tax_card"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Apply for Tax Card</div><div class="cl-desc">&#1576;&#1591;&#1575;&#1602;&#1577; &#1590;&#1585;&#1610;&#1576;&#1610;&#1577;</div></div></div>
+    <div class="cl-item" data-cl="p2_brand_designer"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Begin brand identity work</div><div class="cl-desc">Hire freelance designer -- Behance, Mostaql</div></div></div>
+    <div class="cl-item" data-cl="p2_brand_finalize"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Finalize cafe name, logo, color palette, typography</div><div class="cl-desc">Lock in the brand before anything else is designed</div></div></div>
+    <div class="cl-item" data-cl="p2_menu_design"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Design menu layout and packaging</div><div class="cl-desc">Physical menu, takeaway cups, bags, stickers</div></div></div>
+    <div class="cl-item" data-cl="p2_roaster_samples"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Contact coffee roasters for samples and wholesale pricing</div><div class="cl-desc">The Roastery, Brown Nose, 30 North, Cairocoffee</div></div></div>
+    <div class="cl-item" data-cl="p2_bakery_partners"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Contact bakery partners for daily supply terms</div><div class="cl-desc">Negotiate pricing, delivery schedule, return policy</div></div></div>
+    <div class="cl-item" data-cl="p2_social_accounts"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Set up Instagram and TikTok accounts</div><div class="cl-desc">Start posting behind-the-scenes content</div></div></div>
+    <div class="cl-item" data-cl="p2_domain"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Register domain and create coming-soon page</div><div class="cl-desc">baytcafe.com -- simple, clean, with email signup</div></div></div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="cl-phase" data-phase="3">
+    <div class="cl-phase-header">
+      <h3 style="color:var(--blue)">Phase 3: Build-Out <span style="font-size:.75rem;font-weight:400;color:var(--text2)">(Months 7-9)</span></h3>
+      <div class="cl-phase-progress" id="clPh3Progress">0 / 20</div>
+    </div>
+    <div class="cl-item" data-cl="p3_lease"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Sign lease</div><div class="cl-desc">Push for 5-year term, 1-3 months rent-free fitout</div></div></div>
+    <div class="cl-item" data-cl="p3_architect"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Hire architect/contractor for renovation</div><div class="cl-desc">Get 3+ quotes, check past work, agree on timeline</div></div></div>
+    <div class="cl-item" data-cl="p3_health_permit"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Submit Health Permit application</div><div class="cl-desc">&#1578;&#1585;&#1582;&#1610;&#1589; &#1589;&#1581;&#1610;</div></div></div>
+    <div class="cl-item" data-cl="p3_operating_license"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Submit Operating License application</div><div class="cl-desc">&#1585;&#1582;&#1589;&#1577; &#1605;&#1586;&#1575;&#1608;&#1604;&#1577; &#1575;&#1604;&#1606;&#1588;&#1575;&#1591;</div></div></div>
+    <div class="cl-item" data-cl="p3_civil_defense"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Civil Defense inspection</div><div class="cl-desc">Fire safety compliance</div></div></div>
+    <div class="cl-item" data-cl="p3_nfsa"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">NFSA food safety compliance</div><div class="cl-desc">National Food Safety Authority requirements</div></div></div>
+    <div class="cl-item" data-cl="p3_espresso_machine"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Order espresso machine</div><div class="cl-desc">4-8 week lead time! Order early.</div></div></div>
+    <div class="cl-item" data-cl="p3_equipment"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Order grinders, refrigerators, ice machine, POS system</div><div class="cl-desc">All ancillary equipment</div></div></div>
+    <div class="cl-item" data-cl="p3_water"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Install water filtration system</div><div class="cl-desc">Non-negotiable in Cairo for espresso quality</div></div></div>
+    <div class="cl-item" data-cl="p3_ac"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Install AC system</div><div class="cl-desc">2-3 split units minimum for Egyptian summers</div></div></div>
+    <div class="cl-item" data-cl="p3_furniture"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Furniture and decor procurement</div><div class="cl-desc">Tables, chairs, bar stools, shelving, decor</div></div></div>
+    <div class="cl-item" data-cl="p3_signage"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Signage fabrication and permits</div><div class="cl-desc">Exterior sign, menu boards, window graphics</div></div></div>
+    <div class="cl-item" data-cl="p3_pos"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Set up POS system</div><div class="cl-desc">Foodics or POSRocket -- configure menu, test payments</div></div></div>
+    <div class="cl-item" data-cl="p3_social_insurance"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Register for social insurance for employees</div><div class="cl-desc">Legal requirement in Egypt</div></div></div>
+    <div class="cl-item" data-cl="p3_job_listings"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Post job listings for baristas</div><div class="cl-desc">Wuzzuf, Facebook groups, Instagram</div></div></div>
+    <div class="cl-item" data-cl="p3_hire"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Interview and hire 2 baristas + 1 cleaner</div><div class="cl-desc">Use the 3-stage evaluation from Team page</div></div></div>
+    <div class="cl-item" data-cl="p3_training"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Begin barista training</div><div class="cl-desc">2-3 weeks before opening -- every drink on the menu</div></div></div>
+    <div class="cl-item" data-cl="p3_inventory"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Order initial inventory</div><div class="cl-desc">Beans, milk, syrups, cups, disposables</div></div></div>
+    <div class="cl-item" data-cl="p3_suppliers"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Set up supplier delivery schedules</div><div class="cl-desc">Regular cadence for each supplier</div></div></div>
+    <div class="cl-item" data-cl="p3_music"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Music license</div><div class="cl-desc">Egyptian Society of Authors, Composers, Publishers</div></div></div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="cl-phase" data-phase="4">
+    <div class="cl-phase-header">
+      <h3 style="color:var(--copper)">Phase 4: Launch <span style="font-size:.75rem;font-weight:400;color:var(--text2)">(Month 10)</span></h3>
+      <div class="cl-phase-progress" id="clPh4Progress">0 / 10</div>
+    </div>
+    <div class="cl-item" data-cl="p4_equipment_test"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Equipment installed, tested, and dialed in</div><div class="cl-desc">Every machine calibrated and running smoothly</div></div></div>
+    <div class="cl-item" data-cl="p4_menu_test"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Full menu test run</div><div class="cl-desc">Make every item, taste, adjust recipes</div></div></div>
+    <div class="cl-item" data-cl="p4_staff_ready"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Staff can execute entire menu independently</div><div class="cl-desc">Every barista can make every drink without help</div></div></div>
+    <div class="cl-item" data-cl="p4_soft_open"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Soft opening -- friends and family</div><div class="cl-desc">2-3 days, invite-only, practice real service</div></div></div>
+    <div class="cl-item" data-cl="p4_feedback"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Collect and address soft opening feedback</div><div class="cl-desc">Fix every issue before the real opening</div></div></div>
+    <div class="cl-item" data-cl="p4_google_maps"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Google Maps listing live with photos</div><div class="cl-desc">Essential for discoverability</div></div></div>
+    <div class="cl-item" data-cl="p4_photo_session"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Professional photography session</div><div class="cl-desc">Space + drinks -- for social media, Google, menu</div></div></div>
+    <div class="cl-item" data-cl="p4_grand_plan"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Grand opening event planned and promoted</div><div class="cl-desc">Social media, invites, special offers</div></div></div>
+    <div class="cl-item" data-cl="p4_grand_opening"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title" style="color:var(--gold);font-size:.95rem">GRAND OPENING -- Bismillah!</div><div class="cl-desc">The day everything begins, insha'Allah</div></div></div>
+    <div class="cl-item" data-cl="p4_reviews"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Encourage first customers to leave Google reviews</div><div class="cl-desc">Early reviews build trust and visibility</div></div></div>
+  </div>
+</div>
+
+<!-- ==================== PAGE: PARTNERSHIP ==================== -->
+<div class="page" id="page-partnership">
+  <div class="section-label">Legal Framework</div>
+  <div class="section-title">Partnership Framework</div>
+  <div class="section-sub">You and your sister -- agree on these before spending a single pound. Review with a lawyer to make it official.</div>
+
+  <div class="info-box info-red" style="margin-bottom:1.5rem">
+    <strong>Disclaimer:</strong> This is NOT legal advice. It is a framework to guide your discussions. Hire a lawyer to formalize everything into a proper Musharakah partnership agreement under Egyptian commercial law.
+  </div>
+
+  <!-- Section 1: Ownership -->
+  <div class="p-card">
+    <h3><span class="p-num">1</span> Ownership & Capital</h3>
+    <div class="p-field"><span>Ownership Split</span><span style="color:var(--gold);font-weight:700">50 / 50</span></div>
+    <div class="p-field"><span>Your Capital Contribution (%)</span><input class="fi fi-sm" type="number" data-key="partnerYourCapital" min="0" max="100" step="5" style="width:100px;text-align:right"></div>
+    <div class="p-field"><span>Sister's Capital Contribution (%)</span><span style="color:var(--gold);font-weight:600" data-calc="partnerSisterCapital">50%</span></div>
+    <div class="p-item"><strong>What counts as capital:</strong> Cash contributed, equipment purchased, deposits paid. Time invested is separate from capital -- it is compensated through profit share and/or management salary.</div>
+    <div class="p-item"><strong>Additional capital later:</strong> If one partner contributes more capital after launch, document it. Options: (a) treat as a profit-sharing loan, (b) adjust ownership proportionally, or (c) treat as a loan with no riba -- repaid from profits before distribution. Agree on which approach upfront.</div>
+  </div>
+
+  <!-- Section 2: Roles -->
+  <div class="p-card">
+    <h3><span class="p-num">2</span> Roles & Responsibilities</h3>
+    <div class="p-item"><strong>You (Remote Partner):</strong> Financial planning, budgets, and forecasting. Systems and tech (POS setup, automation, analytics). Strategic decisions and business development. Bookkeeping oversight and P&L review.</div>
+    <div class="p-item"><strong>Sister (On-Ground Partner):</strong> Daily operations and cafe management. Supplier relationships and procurement. Staff management, scheduling, and training. On-ground logistics in Cairo -- permits, maintenance, emergencies.</div>
+    <div class="p-item" style="border-left:3px solid var(--gold);padding-left:1rem;margin-top:.5rem">
+      <strong>Decision Framework:</strong><br>
+      Day-to-day decisions under <input class="fi fi-sm" type="number" data-key="partnerDayThreshold" step="1000" style="width:90px;text-align:right;display:inline-block"> EGP -- whoever is on-ground decides.<br>
+      Decisions over that amount -- both partners must agree.<br>
+      Strategic decisions (new location, major hires, menu overhaul) -- both must agree, no exceptions.
+    </div>
+  </div>
+
+  <!-- Section 3: Profit -->
+  <div class="p-card">
+    <h3><span class="p-num">3</span> Profit Distribution</h3>
+    <div class="p-field"><span>Distribution Frequency</span><span style="color:var(--text);font-weight:500">Monthly recommended (review quarterly)</span></div>
+    <div class="p-field"><span>Reinvest % (first 2 years)</span><input class="fi fi-sm" type="number" data-key="partnerReinvest" min="0" max="100" step="5" style="width:100px;text-align:right"></div>
+    <div class="p-field"><span>Distribute %</span><span style="color:var(--green);font-weight:600" data-calc="partnerDistribute">50%</span></div>
+    <div class="p-item"><strong>Zakat:</strong> Set aside 2.5% of qualifying wealth annually. See the <a href="#" onclick="navigateTo('zakat');return false;" style="color:var(--gold);text-decoration:underline">Zakat Calculator</a> page for details.</div>
+    <div class="p-item"><strong>After year 2:</strong> Revisit the reinvestment ratio. As the business stabilizes, you can shift to distributing more (e.g. 30% reinvest / 70% distribute).</div>
+  </div>
+
+  <!-- Section 4: Problems -->
+  <div class="p-card">
+    <h3><span class="p-num">4</span> What If Things Go Wrong</h3>
+    <div class="p-item"><strong>Disagreements:</strong> Agree on a third-party mediator before you need one. Options: trusted family member, business mentor, or Islamic arbitration (tahkeem). The mediator's decision is binding for the specific dispute.</div>
+    <div class="p-item"><strong>If one partner wants out:</strong> Remaining partner gets first right to buy the departing partner's share at fair market value (assessed by an independent accountant). Minimum 6-month notice period so the business can adjust.</div>
+    <div class="p-item"><strong>If the business fails:</strong> Losses are split 50/50, matching ownership. All debts are settled first. Remaining assets are divided equally. No blame, no resentment -- this is business, and you both took the risk.</div>
+    <div class="p-item"><strong>If one partner cannot contribute time:</strong> Discuss openly. Options: (a) adjust profit share temporarily to reflect actual contribution, (b) hire a replacement for their role and deduct the salary from their share, or (c) keep 50/50 if both agree. Whatever you decide, document it.</div>
+  </div>
+
+  <!-- Section 5: Exit -->
+  <div class="p-card">
+    <h3><span class="p-num">5</span> Exit & Succession</h3>
+    <div class="p-item"><strong>If one partner passes away:</strong> Their share passes to heirs per Islamic inheritance law (fara'id). The surviving partner has first right of refusal to purchase the inherited share at fair market value. Important: address this in writing.</div>
+    <div class="p-item"><strong>Can either partner sell to an outsider?</strong> Recommended: No. The other partner always gets first right of refusal. This is a family business -- keep it that way.</div>
+    <div class="p-item"><strong>If both want to sell:</strong> Both partners must agree on the sale price. Engage an independent business valuator. Split proceeds 50/50 after settling all debts and obligations.</div>
+  </div>
+
+  <!-- Section 6: Documentation -->
+  <div class="p-card" style="border-color:rgba(212,165,74,.2);background:linear-gradient(135deg,var(--card) 0%,rgba(212,165,74,.04) 100%)">
+    <h3><span class="p-num">6</span> Documenting It</h3>
+    <div class="p-item"><strong>Formalize as a Musharakah partnership agreement</strong> -- hire a lawyer experienced in Islamic commercial law in Egypt.</div>
+    <div class="p-item"><strong>Register properly</strong> with Egyptian commercial registration authority.</div>
+    <div class="p-item"><strong>Keep copies</strong> in the shared Google Drive and each partner holds a physical signed copy.</div>
+    <div class="p-field"><span>Estimated Legal Cost</span><span style="color:var(--gold);font-weight:600">15,000 - 30,000 EGP</span></div>
+  </div>
+</div>
+
+<!-- ==================== PAGE: SUPPLIERS ==================== -->
+<div class="page" id="page-suppliers">
+  <div class="section-label">Directory</div>
+  <div class="section-title">Supplier Directory</div>
+  <div class="section-sub">Actual suppliers in Cairo, organized by category. Prices are estimates from 2025-2026 -- always get fresh quotes. Prices in Egypt change frequently due to inflation.</div>
+
+  <!-- Coffee Roasters -->
+  <div class="sup-section">
+    <div class="card">
+      <h3 style="color:var(--gold)">&#9749; Coffee Roasters</h3>
+      <table class="sup-table">
+        <thead><tr><th>Supplier</th><th>What</th><th>Est. Price</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>The Roastery</td><td>Specialty beans, SCA training</td><td class="sup-price">800-1,500 EGP/kg</td><td>SCA-accredited, well-established. Also offers barista training.</td></tr>
+          <tr><td>Brown Nose Coffee</td><td>Specialty roasted beans</td><td class="sup-price">900-1,600 EGP/kg</td><td>Featured in international press. Strong sourcing story.</td></tr>
+          <tr><td>30 North Coffee</td><td>Specialty beans</td><td class="sup-price">850-1,400 EGP/kg</td><td>Roast for the Grand Egyptian Museum cafe.</td></tr>
+          <tr><td>Cairocoffee</td><td>Local specialty roaster</td><td class="sup-price">700-1,200 EGP/kg</td><td>Good mid-range option.</td></tr>
+          <tr><td>Direct import (Ethiopia/Kenya)</td><td>Green beans for roasting</td><td class="sup-price">400-800 EGP/kg</td><td>Egypt's proximity to origins is an advantage. Need a roasting partner or own roaster.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Equipment -->
+  <div class="sup-section">
+    <div class="card">
+      <h3 style="color:var(--copper)">&#9881; Equipment Dealers</h3>
+      <table class="sup-table">
+        <thead><tr><th>Supplier</th><th>What</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>La Marzocco distributor (Egypt)</td><td>Premium espresso machines</td><td>350K-500K EGP. Gold standard.</td></tr>
+          <tr><td>Victoria Arduino distributor</td><td>Premium machines</td><td>Similar range to La Marzocco.</td></tr>
+          <tr><td>Astoria / Expobar</td><td>Mid-range machines</td><td>150K-250K EGP. Good starter option.</td></tr>
+          <tr><td>Mahlkonig / Ceado / Eureka</td><td>Grinders</td><td>25K-100K EGP per grinder.</td></tr>
+          <tr><td>BWT / Brita</td><td>Water filtration</td><td>5K-15K EGP. Non-negotiable in Cairo.</td></tr>
+          <tr><td>Beverage Experts Egypt</td><td>Equipment consulting + supply</td><td>bevexperts.com -- full-service equipment sourcing.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Milk -->
+  <div class="sup-section">
+    <div class="card">
+      <h3 style="color:var(--blue)">&#129371; Milk & Dairy</h3>
+      <table class="sup-table">
+        <thead><tr><th>Supplier</th><th>What</th><th>Est. Price</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Juhayna</td><td>Full-fat milk</td><td class="sup-price">~20-25 EGP/L</td><td>Most popular in Egyptian cafes. Daily delivery available.</td></tr>
+          <tr><td>Beyti</td><td>Full-fat milk</td><td class="sup-price">~20-25 EGP/L</td><td>Alternative to Juhayna.</td></tr>
+          <tr><td>Oatly</td><td>Oat milk</td><td class="sup-price">~70-90 EGP/L</td><td>Premium, imported. Check availability.</td></tr>
+          <tr><td>Local oat milk brands</td><td>Oat milk</td><td class="sup-price">~50-70 EGP/L</td><td>Growing market, check quality for steaming.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Syrups -->
+  <div class="sup-section">
+    <div class="card">
+      <h3 style="color:var(--purple)">&#127862; Syrups & Flavors</h3>
+      <table class="sup-table">
+        <thead><tr><th>Supplier</th><th>What</th><th>Est. Price</th></tr></thead>
+        <tbody>
+          <tr><td>Monin</td><td>Full syrup range</td><td class="sup-price">~250-400 EGP/bottle (700ml)</td></tr>
+          <tr><td>1883 Maison Routin</td><td>Premium syrups</td><td class="sup-price">~300-450 EGP/bottle</td></tr>
+          <tr><td>DaVinci</td><td>Budget-friendly syrups</td><td class="sup-price">~200-350 EGP/bottle</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card-grid cols-2" style="margin-bottom:1.25rem">
+    <!-- Disposables -->
+    <div class="card">
+      <h3 style="color:var(--green);font-size:1rem;font-weight:700;margin-bottom:.75rem">&#128230; Disposables & Packaging</h3>
+      <table class="sup-table">
+        <thead><tr><th>Supplier</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Local packaging suppliers</td><td>Custom branding available. MOQ usually 5,000-10,000 units. Ask other cafe owners for referrals.</td></tr>
+          <tr><td>Alibaba / Made-in-China</td><td>Cheaper per unit but high MOQ and 4-8 week shipping.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- POS -->
+    <div class="card">
+      <h3 style="color:var(--blue);font-size:1rem;font-weight:700;margin-bottom:.75rem">&#128187; POS Systems</h3>
+      <table class="sup-table">
+        <thead><tr><th>System</th><th>Monthly Cost</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Foodics</td><td class="sup-price">~1,000-2,000 EGP/mo</td><td>Most popular in Egypt F&B. Arabic support.</td></tr>
+          <tr><td>POSRocket</td><td class="sup-price">~800-1,500 EGP/mo</td><td>Growing competitor.</td></tr>
+          <tr><td>iCount</td><td class="sup-price">~600-1,200 EGP/mo</td><td>Budget option.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Bakery -->
+  <div class="sup-section">
+    <div class="card">
+      <h3 style="color:var(--copper)">&#127856; Bakery Partners</h3>
+      <div class="p-item"><strong>Local artisan bakeries:</strong> Approach bakeries in your neighborhood for daily wholesale supply. Best quality and freshest product.</div>
+      <div class="p-item"><strong>Breadfast:</strong> Delivery platform that also does wholesale. Convenient but less control over selection.</div>
+      <div class="p-item"><strong>Home bakers on Instagram:</strong> Growing trend in Cairo. Good quality, flexible quantities, unique items. Great for specialty pastries.</div>
+      <div class="p-item"><strong>Negotiate terms:</strong> Daily delivery of 20-30 pieces, return policy for unsold items, consistent quality standards, and payment terms (weekly or bi-weekly).</div>
+    </div>
+  </div>
+
+  <!-- Design -->
+  <div class="sup-section">
+    <div class="card">
+      <h3 style="color:var(--gold)">&#127912; Design & Branding</h3>
+      <table class="sup-table">
+        <thead><tr><th>Platform</th><th>What</th><th>Est. Cost</th></tr></thead>
+        <tbody>
+          <tr><td>Behance</td><td>Find Egyptian designers</td><td>Browse portfolios, contact directly</td></tr>
+          <tr><td>Mostaql</td><td>Arabic freelancing platform</td><td class="sup-price">15K-50K EGP for full brand identity</td></tr>
+          <tr><td>99designs</td><td>Logo + brand identity</td><td class="sup-price">$300-1,000 (international competition)</td></tr>
+          <tr><td>Local Cairo agencies</td><td>Full branding package</td><td class="sup-price">30K-80K EGP</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE: RAMADAN ==================== -->
+<div class="page" id="page-ramadan">
+  <div class="section-label">Seasonal Operations</div>
+  <div class="section-title" style="display:flex;align-items:center;gap:.75rem">Ramadan Operations Guide <span style="font-size:1.2rem">&#127769;</span></div>
+  <div class="section-sub">One month that can define your quarter. Plan it like a separate business.</div>
+
+  <!-- Hours -->
+  <div class="ram-section ram-accent">
+    <h3><span style="color:var(--gold)">&#9201;</span> Hours & Schedule</h3>
+    <div class="ram-item"><strong>Before Iftar:</strong> Most specialty cafes close or run limited hours during fasting (sunrise to sunset). Some open for takeaway only for non-fasting customers.</div>
+    <div class="ram-item"><strong>After Iftar (sunset to 2-3 AM):</strong> PEAK hours. This is when Egypt comes alive. Extended evening hours are essential.</div>
+    <div class="ram-item"><strong>Suhoor (3-4 AM):</strong> Some cafes stay open for suhoor. Evaluate if your location has demand.</div>
+    <div class="ram-item"><strong>Recommended schedule:</strong> Close 2PM-6PM (dead hours during fasting), open 6PM-2AM (prime time).</div>
+    <div class="ram-item"><strong>Staff shifts</strong> need complete restructuring for this month.</div>
+  </div>
+
+  <!-- Menu -->
+  <div class="ram-section">
+    <h3><span style="color:var(--gold)">&#127869;</span> Special Ramadan Menu</h3>
+    <div class="ram-item"><strong>Dates + Arabic coffee</strong> -- traditional iftar starter. Must have.</div>
+    <div class="ram-item"><strong>Sahlab</strong> -- warm, creamy, perfect post-iftar. Your signature Sahlab Latte would shine here.</div>
+    <div class="ram-item"><strong>Qamar el-Din</strong> (apricot drink) -- classic Ramadan beverage.</div>
+    <div class="ram-item"><strong>Heavier pastries:</strong> Kunafa, Qatayef, Basbousa -- partner with a bakery or make simple versions.</div>
+    <div class="ram-item"><strong>Ramadan combo:</strong> Dates + Arabic coffee + mini kunafa -- special pricing.</div>
+    <div class="ram-item">Reduce cold drinks (less demand during cooler evening hours).</div>
+    <div class="ram-item"><strong>Traditional drinks:</strong> Add Tamr Hindi (tamarind) and Karkade (hibiscus) -- classic Ramadan favorites.</div>
+  </div>
+
+  <!-- Staffing -->
+  <div class="ram-section">
+    <h3><span style="color:var(--green)">&#128101;</span> Staffing Adjustments</h3>
+    <div class="ram-item">Staff are fasting -- shorter active shifts, avoid heavy labor during fasting hours.</div>
+    <div class="ram-item"><strong>Shift structure:</strong> Split shifts or evening-only during Ramadan.</div>
+    <div class="ram-item"><strong>Provide iftar meal</strong> for staff working the evening shift (mandatory culturally).</div>
+    <div class="ram-item">Consider hiring 1 temporary part-time worker for the Ramadan rush.</div>
+    <div class="ram-item">Be flexible and compassionate -- fasting while working is hard.</div>
+  </div>
+
+  <!-- Marketing -->
+  <div class="ram-section">
+    <h3><span style="color:var(--blue)">&#128227;</span> Marketing Opportunities</h3>
+    <div class="ram-item"><strong>Ramadan decorations</strong> -- lanterns (fanous), crescent, warm lighting. Transform the space.</div>
+    <div class="ram-item"><strong>"Iftar at Bayt"</strong> -- position the cafe as a gathering spot for friends post-iftar.</div>
+    <div class="ram-item"><strong>Loyalty special:</strong> Double stamps on the loyalty card during Ramadan.</div>
+    <div class="ram-item"><strong>Social media:</strong> Ramadan content calendar, daily greetings, special menu highlights.</div>
+    <div class="ram-item"><strong>Charity collaboration:</strong> Partner with a charity for "suspended coffee" (pay-it-forward) during Ramadan. Great for brand and sawab.</div>
+  </div>
+
+  <!-- Financial -->
+  <div class="ram-section">
+    <h3><span style="color:var(--copper)">&#128176;</span> Financial Impact</h3>
+    <div class="ram-item"><strong>Expect:</strong> Lower daytime revenue, significantly higher evening revenue.</div>
+    <div class="ram-item"><strong>Net effect:</strong> Usually neutral to slightly positive if you plan well.</div>
+    <div class="ram-item"><strong>Extra costs:</strong> Special menu items (dates, kunafa), decorations, temporary staff.</div>
+    <div class="ram-item"><strong>Revenue boost:</strong> Extended hours, higher evening traffic, group gatherings, Ramadan specials.</div>
+    <div class="ram-item" style="color:var(--gold)"><strong>Eid al-Fitr (end of Ramadan):</strong> MASSIVE day. Plan a special Eid event and menu. Stock up well in advance.</div>
+  </div>
+
+  <!-- Ramadan Checklist -->
+  <div class="ram-section" style="border-color:rgba(212,165,74,.2);background:linear-gradient(135deg,var(--card) 0%,rgba(212,165,74,.04) 100%)">
+    <h3><span style="color:var(--gold)">&#9989;</span> Ramadan Checklist <span style="font-size:.75rem;font-weight:400;color:var(--text2);margin-left:.5rem" id="ramClProgress">0 / 8</span></h3>
+    <div class="ram-cl-item" data-cl="ram_menu"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Plan Ramadan menu 6 weeks before</div></div></div>
+    <div class="ram-cl-item" data-cl="ram_source"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Source dates, Qamar el-Din, kunafa ingredients</div></div></div>
+    <div class="ram-cl-item" data-cl="ram_decor"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Order Ramadan decorations (fanous, lanterns, crescents)</div></div></div>
+    <div class="ram-cl-item" data-cl="ram_schedule"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Adjust staff schedule for evening shifts</div></div></div>
+    <div class="ram-cl-item" data-cl="ram_social"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Plan social media Ramadan content calendar</div></div></div>
+    <div class="ram-cl-item" data-cl="ram_combo"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Set up iftar combo pricing</div></div></div>
+    <div class="ram-cl-item" data-cl="ram_brief"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Brief staff on Ramadan operations</div></div></div>
+    <div class="ram-cl-item" data-cl="ram_eid"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Plan Eid al-Fitr special event</div></div></div>
+  </div>
+</div>
+
+<!-- ==================== PAGE: ZAKAT ==================== -->
+<div class="page" id="page-zakat">
+  <div class="section-label">Religious Obligation</div>
+  <div class="section-title">Zakat Calculator</div>
+  <div class="section-sub">2.5% of qualifying wealth after one lunar year (hawl). Consult a scholar for your specific situation.</div>
+
+  <!-- How Zakat Works -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <h3 style="margin-bottom:.75rem">How Zakat Works on Business</h3>
+    <div class="p-item"><strong>Rate:</strong> 2.5% of net qualifying assets after one lunar year.</div>
+    <div class="p-item"><strong>Zakat IS due on:</strong> Cash in bank, inventory (beans, cups, etc. at cost value), money owed to you by customers (receivables).</div>
+    <div class="p-item"><strong>Zakat is NOT due on:</strong> Equipment, furniture, fixtures -- assets used in business, not intended for trade.</div>
+  </div>
+
+  <!-- Calculator -->
+  <div class="zk-calc">
+    <h3 style="margin-bottom:1rem">Calculate Your Zakat</h3>
+
+    <div style="font-size:.72rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem">Assets (add together)</div>
+    <div class="zk-inputs">
+      <div>
+        <label class="fi-label">Cash in Bank / Savings (EGP)</label>
+        <input class="fi" type="number" data-key="zkCash" min="0" step="10000">
+      </div>
+      <div>
+        <label class="fi-label">Value of Inventory at Cost (EGP)</label>
+        <input class="fi" type="number" data-key="zkInventory" min="0" step="5000">
+      </div>
+      <div>
+        <label class="fi-label">Receivables / Money Owed to You (EGP)</label>
+        <input class="fi" type="number" data-key="zkReceivables" min="0" step="1000">
+      </div>
+    </div>
+
+    <div style="font-size:.72rem;color:var(--red);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem">Deductions (subtract)</div>
+    <div class="zk-inputs">
+      <div>
+        <label class="fi-label">Outstanding Debts You Owe (EGP)</label>
+        <input class="fi" type="number" data-key="zkDebts" min="0" step="5000">
+      </div>
+      <div>
+        <label class="fi-label">Immediate Business Expenses Due (EGP)</label>
+        <input class="fi" type="number" data-key="zkExpenses" min="0" step="5000">
+      </div>
+    </div>
+
+    <div style="font-size:.72rem;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem">Nisab Threshold</div>
+    <div class="zk-inputs" style="margin-bottom:1.5rem">
+      <div>
+        <label class="fi-label">Nisab in EGP (~85g gold x current gold price)</label>
+        <input class="fi" type="number" data-key="zkNisab" min="0" step="10000">
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:1.5rem">
+      <div style="background:var(--bg2);padding:1rem;text-align:center">
+        <div style="font-size:1.2rem;font-weight:800;color:var(--text)" data-calc="zkNetAssets">--</div>
+        <div style="font-size:.65rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Net Zakatable Assets</div>
+      </div>
+      <div style="background:var(--bg2);padding:1rem;text-align:center">
+        <div style="font-size:1.2rem;font-weight:800;color:var(--blue)" data-calc="zkNisabDisplay">--</div>
+        <div style="font-size:.65rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Nisab Threshold</div>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div id="zkResultArea">
+      <div class="zk-result" id="zkDueBox">
+        <div style="font-size:.7rem;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem">Zakat Due (2.5%)</div>
+        <div class="zk-amount" data-calc="zkAmount">--</div>
+        <div class="zk-label">EGP</div>
+      </div>
+      <div class="zk-monthly" id="zkMonthlyBox">
+        <div style="font-size:.7rem;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.25rem">Suggested Monthly Set-Aside</div>
+        <div class="zk-mo-val" data-calc="zkMonthly">--</div>
+        <div style="font-size:.72rem;color:var(--text3);margin-top:.3rem">Set aside this amount monthly so Zakat does not come as a big hit</div>
+      </div>
+      <div class="zk-below" id="zkBelowBox" style="display:none">
+        <p><strong style="color:var(--text)">No Zakat due this year.</strong></p>
+        <p style="font-size:.8rem;margin-top:.25rem">Net assets are below the nisab threshold.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Important Notes -->
+  <div class="card">
+    <h3 style="margin-bottom:.75rem">Important Notes</h3>
+    <ul class="zk-notes" style="list-style:none;padding:0">
+      <li style="display:flex;align-items:flex-start;gap:.5rem"><span style="color:var(--gold);flex-shrink:0">&#9670;</span> This is a simplified calculator. Consult an Islamic scholar or your Islamic bank for a precise ruling on your situation.</li>
+      <li style="display:flex;align-items:flex-start;gap:.5rem"><span style="color:var(--gold);flex-shrink:0">&#9670;</span> Zakat on business assets is calculated differently than personal wealth zakat.</li>
+      <li style="display:flex;align-items:flex-start;gap:.5rem"><span style="color:var(--gold);flex-shrink:0">&#9670;</span> Some scholars say zakat is on net profit only, others on total qualifying assets. Follow your madhab or ask a trusted scholar.</li>
+      <li style="display:flex;align-items:flex-start;gap:.5rem"><span style="color:var(--gold);flex-shrink:0">&#9670;</span> Pay zakat in the lunar month it becomes due. Many pay in Ramadan for extra reward.</li>
+      <li style="display:flex;align-items:flex-start;gap:.5rem"><span style="color:var(--gold);flex-shrink:0">&#9670;</span> Zakat can be given to local Egyptian charities, orphanages, or directly to those in need.</li>
+    </ul>
+  </div>
+</div>
+
 </main>
 
 <script>
@@ -1170,7 +1710,20 @@ const DEFAULTS = {
   opAccounting: 3000,
   opInsurance: 3000,
   opPOS: 1500,
-  opMisc: 5000
+  opMisc: 5000,
+
+  // Partnership
+  partnerYourCapital: 50,
+  partnerDayThreshold: 5000,
+  partnerReinvest: 50,
+
+  // Zakat
+  zkCash: 0,
+  zkInventory: 0,
+  zkReceivables: 0,
+  zkDebts: 0,
+  zkExpenses: 0,
+  zkNisab: 350000
 };
 
 // Load from localStorage or use defaults
@@ -1421,6 +1974,30 @@ function calc() {
   C.savDate = openDate.toLocaleDateString('en-US', {month:'short', year:'numeric'});
   C.sisterLabel = S.sisterMatch ? 'Enabled (50/50)' : 'Disabled (solo)';
 
+  // ---- PARTNERSHIP ----
+  C.partnerSisterCapital = (100 - (S.partnerYourCapital || 50)) + '%';
+  C.partnerDistribute = (100 - (S.partnerReinvest || 50)) + '%';
+
+  // ---- ZAKAT ----
+  const zkAssets = (S.zkCash||0) + (S.zkInventory||0) + (S.zkReceivables||0);
+  const zkDeductions = (S.zkDebts||0) + (S.zkExpenses||0);
+  C.zkNetAssetsN = zkAssets - zkDeductions;
+  C.zkNetAssets = fmt(Math.max(0, C.zkNetAssetsN)) + ' EGP';
+  C.zkNisabDisplay = fmt(S.zkNisab||350000) + ' EGP';
+  const zkAboveNisab = C.zkNetAssetsN >= (S.zkNisab||350000);
+  C.zkAmountN = zkAboveNisab ? C.zkNetAssetsN * 0.025 : 0;
+  C.zkAmount = fmt(Math.round(C.zkAmountN));
+  C.zkMonthlyN = C.zkAmountN / 12;
+  C.zkMonthly = fmt(Math.round(C.zkMonthlyN)) + ' EGP/mo';
+
+  // Show/hide zakat result areas
+  const zkDueBox = document.getElementById('zkDueBox');
+  const zkMonthlyBox = document.getElementById('zkMonthlyBox');
+  const zkBelowBox = document.getElementById('zkBelowBox');
+  if (zkDueBox) zkDueBox.style.display = zkAboveNisab ? '' : 'none';
+  if (zkMonthlyBox) zkMonthlyBox.style.display = zkAboveNisab ? '' : 'none';
+  if (zkBelowBox) zkBelowBox.style.display = zkAboveNisab ? 'none' : '';
+
   // ---- UPDATE DOM ----
   document.querySelectorAll('[data-calc]').forEach(el => {
     const key = el.dataset.calc;
@@ -1550,6 +2127,78 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 bindInputs();
 setupDuplicateSync();
 calc();
+
+// ===========================
+// CHECKLIST SYSTEM
+// ===========================
+function initChecklists() {
+  const allItems = document.querySelectorAll('[data-cl]');
+  allItems.forEach(item => {
+    const id = item.dataset.cl;
+    const cb = item.querySelector('input[type="checkbox"]');
+    if (!cb) return;
+    // Load state
+    const saved = localStorage.getItem('bayt_cl_' + id);
+    if (saved === '1') {
+      cb.checked = true;
+      item.classList.add('checked');
+    }
+    // Listen
+    cb.addEventListener('change', () => {
+      if (cb.checked) {
+        localStorage.setItem('bayt_cl_' + id, '1');
+        item.classList.add('checked');
+      } else {
+        localStorage.removeItem('bayt_cl_' + id);
+        item.classList.remove('checked');
+      }
+      updateChecklistProgress();
+    });
+  });
+  updateChecklistProgress();
+}
+
+function updateChecklistProgress() {
+  // Phase progress (main checklist)
+  const phases = {'1':'clPh1Progress','2':'clPh2Progress','3':'clPh3Progress','4':'clPh4Progress'};
+  let totalAll = 0, checkedAll = 0;
+  Object.entries(phases).forEach(([phase, elId]) => {
+    const phaseEl = document.querySelector('.cl-phase[data-phase="'+phase+'"]');
+    if (!phaseEl) return;
+    const items = phaseEl.querySelectorAll('[data-cl]');
+    const checked = phaseEl.querySelectorAll('[data-cl] input:checked');
+    const el = document.getElementById(elId);
+    if (el) el.innerHTML = '<strong>' + checked.length + '</strong> / ' + items.length;
+    totalAll += items.length;
+    checkedAll += checked.length;
+  });
+  // Overall
+  const ovText = document.getElementById('clOverallText');
+  const ovBar = document.getElementById('clOverallBar');
+  if (ovText) ovText.textContent = checkedAll + ' / ' + totalAll;
+  if (ovBar) ovBar.style.width = (totalAll > 0 ? (checkedAll / totalAll * 100) : 0) + '%';
+
+  // Ramadan checklist progress
+  const ramItems = document.querySelectorAll('.ram-cl-item[data-cl]');
+  const ramChecked = document.querySelectorAll('.ram-cl-item[data-cl] input:checked');
+  const ramProg = document.getElementById('ramClProgress');
+  if (ramProg) ramProg.textContent = ramChecked.length + ' / ' + ramItems.length;
+}
+
+function resetChecklist() {
+  if (!confirm('Reset ALL checklist items? This cannot be undone.')) return;
+  const allItems = document.querySelectorAll('[data-cl]');
+  allItems.forEach(item => {
+    const id = item.dataset.cl;
+    localStorage.removeItem('bayt_cl_' + id);
+    const cb = item.querySelector('input[type="checkbox"]');
+    if (cb) cb.checked = false;
+    item.classList.remove('checked');
+  });
+  updateChecklistProgress();
+}
+
+initChecklists();
 </script>
 </body>
 </html>
