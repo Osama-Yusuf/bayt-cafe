@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bayt Café — بيت كافيه</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b0b0b;--bg2:#131313;--card:#181818;--card-hover:#1e1e1e;
+  --border:#252525;--border-light:#333;
+  --text:#ece5db;--text2:#a09889;--text3:#6b6158;
+  --gold:#d4a54a;--copper:#c08b5c;--green:#5ba872;--red:#c75b3a;
+  --blue:#5b8fc7;--purple:#9b7dd4;
+  --gold-glow:rgba(212,165,74,.15);--green-glow:rgba(91,168,114,.12);
+  --radius:12px;--radius-sm:8px;
+  --shadow:0 4px 24px rgba(0,0,0,.4);
+  --transition:all .3s cubic-bezier(.4,0,.2,1);
+  --sidebar-w:240px;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;display:flex;min-height:100vh}
+.serif{font-family:'Playfair Display',Georgia,serif}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:3px}
+
+/* ===== SIDEBAR ===== */
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:#101010;border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:200;transition:transform .3s ease}
+.sidebar-logo{padding:1.5rem 1.25rem;display:flex;align-items:center;gap:.6rem;border-bottom:1px solid var(--border)}
+.sidebar-logo svg{width:28px;height:28px;color:var(--gold);flex-shrink:0}
+.sidebar-logo span{font-weight:800;font-size:1rem;color:var(--gold);letter-spacing:.02em}
+.sidebar-nav{flex:1;overflow-y:auto;padding:.75rem 0}
+.sidebar-nav a{display:flex;align-items:center;gap:.65rem;padding:.65rem 1.25rem;color:var(--text2);text-decoration:none;font-size:.8rem;font-weight:500;transition:var(--transition);border-left:3px solid transparent;cursor:pointer}
+.sidebar-nav a:hover{color:var(--text);background:rgba(255,255,255,.03)}
+.sidebar-nav a.active{color:var(--gold);background:var(--gold-glow);border-left-color:var(--gold);font-weight:600}
+.sidebar-nav a .nav-icon{width:20px;text-align:center;font-size:.9rem;flex-shrink:0}
+.sidebar-footer{padding:1rem 1.25rem;border-top:1px solid var(--border);font-size:.65rem;color:var(--text3);text-align:center}
+
+/* Mobile hamburger */
+.hamburger{display:none;position:fixed;top:1rem;left:1rem;z-index:300;width:40px;height:40px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;align-items:center;justify-content:center;color:var(--gold);font-size:1.2rem}
+.mobile-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:190}
+
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .hamburger{display:flex}
+  .mobile-overlay.open{display:block}
+  .main-content{margin-left:0!important;padding:1rem!important;padding-top:4rem!important}
+}
+
+/* ===== MAIN CONTENT ===== */
+.main-content{margin-left:var(--sidebar-w);flex:1;padding:2rem 2.5rem;min-height:100vh}
+.page{display:none;animation:fadeIn .35s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* ===== COMMON ===== */
+.section-label{font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+.section-label::before{content:'';width:24px;height:1px;background:var(--gold)}
+.section-title{font-size:2.2rem;font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:.75rem}
+.section-sub{color:var(--text2);font-size:1rem;max-width:650px;margin-bottom:2.5rem;line-height:1.7}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;transition:var(--transition);position:relative;overflow:hidden}
+.card:hover{border-color:var(--border-light);transform:translateY(-2px);box-shadow:var(--shadow)}
+.card-grid{display:grid;gap:1rem}
+.card-grid.cols-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card-grid.cols-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card-grid.cols-4{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.card-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:.75rem}
+.card h3{font-size:1rem;font-weight:700;margin-bottom:.4rem;letter-spacing:-.01em}
+.card p,.card-body{font-size:.82rem;color:var(--text2);line-height:1.65}
+
+/* Tags */
+.tag{display:inline-flex;align-items:center;font-size:.63rem;font-weight:600;letter-spacing:.05em;padding:.2rem .55rem;border-radius:100px;text-transform:uppercase}
+.tag-gold{background:var(--gold-glow);color:var(--gold);border:1px solid rgba(212,165,74,.2)}
+.tag-green{background:var(--green-glow);color:var(--green);border:1px solid rgba(91,168,114,.2)}
+.tag-red{background:rgba(199,91,58,.12);color:var(--red);border:1px solid rgba(199,91,58,.2)}
+.tag-blue{background:rgba(91,143,199,.12);color:var(--blue);border:1px solid rgba(91,143,199,.2)}
+.tag-purple{background:rgba(155,125,212,.1);color:var(--purple);border:1px solid rgba(155,125,212,.2)}
+
+/* Tooltip */
+[data-tip]{position:relative;cursor:help;border-bottom:1px dashed var(--text3)}
+[data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#222;color:var(--text);font-size:.72rem;padding:.5rem .75rem;border-radius:var(--radius-sm);z-index:50;box-shadow:var(--shadow);pointer-events:none;font-weight:400;line-height:1.5;max-width:300px;white-space:normal;text-align:center}
+
+/* Inputs */
+.fi{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.55rem .75rem;color:var(--text);font-size:.9rem;font-weight:600;font-family:inherit;transition:var(--transition)}
+.fi:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
+.fi-sm{padding:.4rem .6rem;font-size:.82rem}
+.fi-label{display:block;font-size:.68rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem}
+
+/* Cost table rows */
+.cost-row{display:grid;grid-template-columns:1fr 120px 100px;gap:.75rem;align-items:center;padding:.55rem 0;border-bottom:1px solid var(--border);font-size:.82rem}
+.cost-row:last-child{border-bottom:none}
+.cost-row .cr-name{color:var(--text2)}
+.cost-row .cr-input{text-align:right}
+.cost-row .cr-sub{text-align:right;color:var(--gold);font-weight:600;font-size:.8rem}
+.cost-cat-header{font-size:.9rem;font-weight:700;color:var(--text);padding:.75rem 0 .25rem;border-bottom:2px solid var(--border);margin-top:1.25rem;display:flex;justify-content:space-between;align-items:center}
+.cost-cat-header:first-child{margin-top:0}
+.cost-cat-total{font-size:.85rem;color:var(--gold);font-weight:700}
+.grand-total-bar{display:flex;justify-content:space-between;align-items:center;padding:1rem;margin-top:1rem;background:var(--gold-glow);border:1px solid rgba(212,165,74,.25);border-radius:var(--radius-sm);font-weight:800}
+.grand-total-bar .gt-val{font-size:1.3rem;color:var(--gold)}
+
+/* Metric card */
+.metric{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;text-align:center;transition:var(--transition)}
+.metric:hover{border-color:var(--border-light);box-shadow:var(--shadow)}
+.metric .m-val{font-size:1.6rem;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.metric .m-label{font-size:.65rem;color:var(--text2);margin-top:.25rem;text-transform:uppercase;letter-spacing:.08em}
+
+/* Toggle switch */
+.toggle-wrap{display:flex;align-items:center;gap:.6rem}
+.toggle{position:relative;width:42px;height:24px;cursor:pointer}
+.toggle input{opacity:0;width:0;height:0}
+.toggle .slider{position:absolute;inset:0;background:var(--border-light);border-radius:12px;transition:.3s}
+.toggle .slider::before{content:'';position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:var(--text3);border-radius:50%;transition:.3s}
+.toggle input:checked+.slider{background:var(--gold)}
+.toggle input:checked+.slider::before{transform:translateX(18px);background:var(--bg)}
+
+/* Team role row */
+.team-row{display:grid;grid-template-columns:auto 1fr 120px 50px;gap:.75rem;align-items:center;padding:.75rem 0;border-bottom:1px solid var(--border);font-size:.82rem}
+.team-row.disabled-role{opacity:.45}
+.team-row .tr-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.team-row .tr-info h4{font-size:.85rem;font-weight:600;margin-bottom:.1rem}
+.team-row .tr-info p{font-size:.72rem;color:var(--text3)}
+
+/* Menu item row */
+.menu-row{display:grid;grid-template-columns:1fr 90px 90px 80px;gap:.5rem;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.82rem}
+.menu-row .mr-margin{font-weight:600;text-align:right}
+
+/* PL rows */
+.pl-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.85rem}
+.pl-row .pl-val{font-weight:600;font-variant-numeric:tabular-nums}
+.pl-section{font-size:.72rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;padding:.85rem 0 .3rem;margin-top:.5rem}
+
+/* Bar chart */
+.bar-chart{display:flex;align-items:flex-end;gap:2rem;justify-content:center;padding:2rem 0}
+.bar-col{display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.bar-fill{width:80px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;transition:height .8s cubic-bezier(.4,0,.2,1);min-height:4px}
+.bar-label{font-size:.7rem;color:var(--text2);text-align:center}
+.bar-val{font-size:.85rem;font-weight:700}
+
+/* Compare bar */
+.compare-bar{margin:.6rem 0}
+.compare-bar-label{display:flex;justify-content:space-between;font-size:.72rem;margin-bottom:.25rem}
+.compare-bar-label span:first-child{color:var(--text2)}
+.compare-bar-label span:last-child{font-weight:700}
+.compare-bar-track{height:8px;background:var(--bg2);border-radius:4px;overflow:hidden}
+.compare-bar-fill{height:100%;border-radius:4px;transition:width 1s ease;width:0}
+
+/* Timeline / Phases */
+.timeline{position:relative;padding-left:3rem}
+.timeline::before{content:'';position:absolute;left:14px;top:0;bottom:0;width:2px;background:var(--border)}
+.phase{position:relative;margin-bottom:2.5rem}
+.phase-dot{position:absolute;left:-3rem;top:.25rem;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;z-index:2;border:2px solid}
+.phase-dot.active{background:var(--gold);border-color:var(--gold);color:var(--bg);box-shadow:0 0 20px var(--gold-glow)}
+.phase-dot.future{background:var(--bg);border-color:var(--border-light);color:var(--text3)}
+.phase h3{font-size:1.05rem;font-weight:700;margin-bottom:.2rem}
+.phase .phase-sub{font-size:.78rem;color:var(--text2);margin-bottom:.75rem}
+.triggers{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.75rem}
+.trigger{display:flex;align-items:center;gap:.3rem;font-size:.7rem;padding:.25rem .5rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text2)}
+
+/* VS grid */
+.vs-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:1.5rem;align-items:start}
+@media(max-width:700px){.vs-grid{grid-template-columns:1fr;text-align:center}}
+.vs-divider{display:flex;align-items:center;justify-content:center;color:var(--text3);font-weight:800;font-size:1.2rem;padding-top:4rem}
+
+/* Location cards */
+.location-card .badge{position:absolute;top:-8px;right:1rem;padding:.3rem .8rem;border-radius:100px;font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.location-card .price{font-size:1.4rem;font-weight:800;color:var(--gold);margin:.5rem 0}
+.location-card .price span{font-size:.8rem;color:var(--text2);font-weight:400}
+.location-card ul{list-style:none;margin-top:.75rem}
+.location-card li{font-size:.78rem;color:var(--text2);padding:.3rem 0;display:flex;align-items:center;gap:.5rem}
+
+/* Signature drink */
+.sig-drink{background:linear-gradient(135deg,var(--card) 0%,rgba(212,165,74,.05) 100%);border:1px solid rgba(212,165,74,.15);border-radius:var(--radius);padding:1.15rem;transition:var(--transition)}
+.sig-drink:hover{border-color:var(--gold);box-shadow:0 0 30px var(--gold-glow)}
+.sig-drink h4{font-size:.88rem;font-weight:700;margin-bottom:.25rem;color:var(--gold)}
+.sig-drink p{font-size:.76rem;color:var(--text2)}
+
+/* Quick wins */
+.qw{display:flex;gap:.6rem;padding:.7rem 0;border-bottom:1px solid var(--border)}
+.qw:last-child{border-bottom:none}
+.qw-num{width:26px;height:26px;border-radius:50%;background:var(--gold-glow);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;flex-shrink:0}
+.qw p{font-size:.8rem;color:var(--text2);line-height:1.5}
+
+/* Checklist */
+.checklist{list-style:none}
+.checklist li{display:flex;align-items:flex-start;gap:.5rem;padding:.35rem 0;font-size:.8rem;color:var(--text2)}
+.checklist li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:7px}
+
+/* Info box */
+.info-box{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:var(--radius-sm);padding:.85rem 1rem;margin:.75rem 0;font-size:.78rem;color:var(--text2);line-height:1.6}
+.info-box strong{color:var(--text)}
+.info-box.info-green{border-left-color:var(--green)}
+.info-box.info-blue{border-left-color:var(--blue)}
+.info-box.info-red{border-left-color:var(--red)}
+
+/* Supplies section grid */
+.supply-row{display:grid;grid-template-columns:1fr 90px 100px 100px;gap:.5rem;align-items:center;padding:.45rem 0;border-bottom:1px solid var(--border);font-size:.82rem}
+.supply-row .sr-name{color:var(--text2)}
+.supply-row .sr-sub{text-align:right;color:var(--gold);font-weight:600}
+
+/* Hiring stages */
+.hire-stage{background:var(--bg2);padding:1.1rem;border-radius:var(--radius-sm);border-left:3px solid var(--gold)}
+.hire-stage h4{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
+.hire-stage.stg-green{border-left-color:var(--green)}
+.hire-stage.stg-blue{border-left-color:var(--blue)}
+.hire-stage h4.stg-green-text{color:var(--green)}
+.hire-stage h4.stg-blue-text{color:var(--blue)}
+
+/* Responsive */
+@media(max-width:600px){
+  .section-title{font-size:1.6rem}
+  .cost-row{grid-template-columns:1fr 90px 80px;font-size:.75rem}
+  .menu-row{grid-template-columns:1fr 70px 70px 60px;font-size:.75rem}
+  .supply-row{grid-template-columns:1fr 70px 80px 80px;font-size:.75rem}
+  .team-row{grid-template-columns:auto 1fr 90px 40px;font-size:.75rem}
+  .bar-chart{gap:1rem}
+  .bar-fill{width:50px}
+}
+
+/* Pulse animation for the dashboard */
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;display:inline-block}
+
+/* Scroll reveal within pages */
+.reveal{opacity:0;transform:translateY(20px);transition:all .6s cubic-bezier(.4,0,.2,1)}
+.reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- MOBILE HAMBURGER -->
+<button class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.mobile-overlay').classList.toggle('open')">&#9776;</button>
+<div class="mobile-overlay" onclick="document.querySelector('.sidebar').classList.remove('open');this.classList.remove('open')"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 110 8h-1M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
+    <span>BAYT CAFÉ</span>
+  </div>
+  <nav class="sidebar-nav">
+    <a data-page="dashboard" class="active"><span class="nav-icon">&#9673;</span>Dashboard</a>
+    <a data-page="savings"><span class="nav-icon">&#128176;</span>Savings</a>
+    <a data-page="startup"><span class="nav-icon">&#127959;</span>Startup Costs</a>
+    <a data-page="supplies"><span class="nav-icon">&#128230;</span>Supplies</a>
+    <a data-page="team"><span class="nav-icon">&#128101;</span>Team & Hiring</a>
+    <a data-page="menu"><span class="nav-icon">&#9749;</span>Menu & Pricing</a>
+    <a data-page="pnl"><span class="nav-icon">&#128200;</span>P&L Analysis</a>
+    <a data-page="location"><span class="nav-icon">&#128205;</span>Location</a>
+    <a data-page="competition"><span class="nav-icon">&#9876;</span>Competition</a>
+    <a data-page="milestones"><span class="nav-icon">&#127942;</span>Milestones</a>
+    <a data-page="standout"><span class="nav-icon">&#10024;</span>Stand Out</a>
+  </nav>
+  <div class="sidebar-footer">All numbers in EGP<br>Rate: ~13.6 EGP = 1 AED</div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main-content">
+
+<!-- ==================== PAGE: DASHBOARD ==================== -->
+<div class="page active" id="page-dashboard">
+  <div class="section-label"><span class="pulse-dot"></span> Bayt Café — Business Plan 2026</div>
+  <h1 class="section-title" style="font-size:clamp(2rem,5vw,3.2rem)">Bayt <span class="serif" style="color:var(--gold)">Café</span> <span style="font-size:.5em;color:var(--text2);font-weight:400">بيت كافيه</span></h1>
+  <p class="section-sub">A sibling partnership building Cairo's next great specialty café. Where coffee feels like home. Every number is editable. Every calculation updates live.</p>
+
+  <div class="card-grid cols-3" style="margin-bottom:2rem">
+    <div class="metric"><div class="m-val" style="color:var(--gold)" data-calc="totalStartup">--</div><div class="m-label">Total Startup Cost</div></div>
+    <div class="metric"><div class="m-val" style="color:var(--copper)" data-calc="totalMonthlyOp">--</div><div class="m-label">Monthly Operating Cost</div></div>
+    <div class="metric"><div class="m-val" style="color:var(--green)" data-calc="monthlyRevenue">--</div><div class="m-label">Monthly Revenue Est.</div></div>
+    <div class="metric"><div class="m-val" data-calc="monthlyPL">--</div><div class="m-label">Monthly Profit/Loss</div></div>
+    <div class="metric"><div class="m-val" style="color:var(--blue)" data-calc="breakEvenCustomers">--</div><div class="m-label">Break-even Customers/Day</div></div>
+    <div class="metric"><div class="m-val" style="color:var(--purple)" data-calc="monthsToSave">--</div><div class="m-label">Months to Save Target</div></div>
+  </div>
+
+  <h3 style="font-size:.95rem;font-weight:700;margin-bottom:1rem;color:var(--text2)">Market Snapshot</h3>
+  <div class="card-grid cols-4">
+    <div class="card" style="text-align:center">
+      <div style="font-size:2rem;font-weight:800;color:var(--gold)">2x</div>
+      <p>Egypt coffee consumption doubled in 5 years</p>
+    </div>
+    <div class="card" style="text-align:center">
+      <div style="font-size:2rem;font-weight:800;color:var(--green)">Top 3</div>
+      <p>Fastest-growing coffee market in MENA</p>
+    </div>
+    <div class="card" style="text-align:center">
+      <div style="font-size:2rem;font-weight:800;color:var(--blue)">110M</div>
+      <p>Population, 60% reaching middle-class</p>
+    </div>
+    <div class="card" style="text-align:center">
+      <div style="font-size:2rem;font-weight:800;color:var(--copper)">Under 35</div>
+      <p>Young Egyptians see coffee as lifestyle</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE: SAVINGS ==================== -->
+<div class="page" id="page-savings">
+  <div class="section-label">Financial Planning</div>
+  <div class="section-title">Savings & Timeline</div>
+  <div class="section-sub">With halal Mudarabah profit-sharing and your sister matching 50/50 -- here is exactly when you can open.</div>
+
+  <!-- Calculator -->
+  <div class="card" style="margin-bottom:2rem">
+    <h3 style="margin-bottom:.3rem">Savings Calculator</h3>
+    <p style="font-size:.78rem;color:var(--text2);margin-bottom:1.25rem">Adjust your numbers to see when you can launch.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:1rem">
+      <div>
+        <label class="fi-label">Monthly Savings (AED)</label>
+        <input class="fi" type="number" data-key="monthlySavingsAED" min="0" step="500">
+      </div>
+      <div>
+        <label class="fi-label">Current Savings (EGP)</label>
+        <input class="fi" type="number" data-key="currentSavingsEGP" min="0" step="10000">
+      </div>
+      <div>
+        <label class="fi-label">Expected Profit Rate - Mudarabah (%)</label>
+        <input class="fi" type="number" data-key="mudarabahRate" min="0" max="30" step="1">
+      </div>
+      <div>
+        <label class="fi-label">Target Amount (EGP, both partners)</label>
+        <input class="fi" type="number" data-key="savingsTarget" min="500000" step="100000">
+      </div>
+      <div>
+        <label class="fi-label" style="margin-bottom:.5rem">Sister Matches 50/50</label>
+        <div class="toggle-wrap">
+          <label class="toggle"><input type="checkbox" data-key="sisterMatch" checked><span class="slider"></span></label>
+          <span style="font-size:.8rem;color:var(--text2)" data-calc="sisterLabel">Enabled</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-top:1rem">
+      <div style="background:var(--bg2);padding:1rem;text-align:center"><div style="font-size:1.3rem;font-weight:800;color:var(--gold)" data-calc="savMonths">--</div><div style="font-size:.65rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Months to Target</div></div>
+      <div style="background:var(--bg2);padding:1rem;text-align:center"><div style="font-size:1.3rem;font-weight:800;color:var(--gold)" data-calc="savYourTotal">--</div><div style="font-size:.65rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Your 50% Total</div></div>
+      <div style="background:var(--bg2);padding:1rem;text-align:center"><div style="font-size:1.3rem;font-weight:800;color:var(--green)" data-calc="savProfit">--</div><div style="font-size:.65rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Profit Share Earned</div></div>
+      <div style="background:var(--bg2);padding:1rem;text-align:center"><div style="font-size:1.3rem;font-weight:800;color:var(--copper)" data-calc="savDate">--</div><div style="font-size:.65rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Estimated Open Date</div></div>
+    </div>
+  </div>
+
+  <!-- Islamic Savings Comparison -->
+  <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem">Islamic Savings Comparison</h3>
+  <div class="card-grid cols-3" style="margin-bottom:2rem">
+    <div class="card" style="border-color:rgba(212,165,74,.25)">
+      <div class="card-icon" style="background:var(--gold-glow);color:var(--gold)">&#127764;</div>
+      <h3>Mudarabah (Profit-Sharing)</h3>
+      <div style="font-size:2rem;font-weight:800;color:var(--gold);margin:.4rem 0">12-18%</div>
+      <p>Halal profit-sharing through Islamic banks. Your money is invested in Sharia-compliant ventures -- you share the profits. Zero hassle.</p>
+      <span class="tag tag-gold" style="position:absolute;top:.75rem;right:.75rem">Halal & Recommended</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(91,143,199,.12);color:var(--blue)">&#127974;</div>
+      <h3>Commercial Property</h3>
+      <div style="font-size:2rem;font-weight:800;color:var(--blue);margin:.4rem 0">5-7%</div>
+      <p>Halal (real asset), but lower returns. Tenant management, maintenance, months to sell if you need cash.</p>
+      <span class="tag tag-blue" style="position:absolute;top:.75rem;right:.75rem">Halal but Detour</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:var(--green-glow);color:var(--green)">&#128200;</div>
+      <h3>The Verdict</h3>
+      <div style="font-size:2rem;font-weight:800;color:var(--green);margin:.4rem 0">2-3x</div>
+      <p>Mudarabah earns 2-3x more than property rent. Buy property <em>after</em> the cafe is profitable, insha'Allah.</p>
+      <span class="tag tag-green" style="position:absolute;top:.75rem;right:.75rem">Winner</span>
+    </div>
+  </div>
+
+  <!-- Recommended Timeline -->
+  <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem">Recommended Timeline</h3>
+  <div class="card-grid cols-4" style="margin-bottom:2rem">
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <div style="font-size:.65rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.1em">Month 1-3</div>
+      <h3 style="margin-top:.4rem">Save</h3>
+      <p>Build savings through Mudarabah. Set up accounts at Faisal Islamic Bank or ADIB Egypt. Automate monthly transfers.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--green)">
+      <div style="font-size:.65rem;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:.1em">Month 4-6</div>
+      <h3 style="margin-top:.4rem">Plan</h3>
+      <p>Finalize business plan. Scout locations. Research suppliers. Start branding. Get legal advice on licensing.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--blue)">
+      <div style="font-size:.65rem;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:.1em">Month 7-9</div>
+      <h3 style="margin-top:.4rem">Build</h3>
+      <p>Sign lease. Begin renovation. Order equipment. Hire & train baristas. Get all permits and licenses.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--copper)">
+      <div style="font-size:.65rem;color:var(--copper);font-weight:700;text-transform:uppercase;letter-spacing:.1em">Month 10</div>
+      <h3 style="margin-top:.4rem">Open</h3>
+      <p>Soft opening for 1-2 weeks. Fix issues. Grand opening. Focus on getting the coffee right, nothing else.</p>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>Halal Alternatives for Savings:</strong> Mudarabah (profit-sharing), Wakala (agency investment), Gold, Musharakah (partnership investment). Available through Faisal Islamic Bank, ADIB Egypt, and Al Baraka Bank.
+  </div>
+</div>
+
+<!-- ==================== PAGE: STARTUP COSTS ==================== -->
+<div class="page" id="page-startup">
+  <div class="section-label">Investment</div>
+  <div class="section-title">Startup Costs</div>
+  <div class="section-sub">Every line item is editable. Totals update instantly. Hover items for pricing context.</div>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <!-- Equipment -->
+    <div class="cost-cat-header">Equipment <span class="cost-cat-total" data-calc="catEquipment">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="La Marzocca ~400K, Expobar ~150K, Nuova Simonelli ~250K">Espresso Machine</span><input class="fi fi-sm cr-input" type="number" data-key="eqEspresso" step="5000"><span class="cr-sub" data-calc="eqEspressoV">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="Eureka ~25K, Mahlkonig EK43 ~80K. Get 2: espresso + filter">Grinders (x2)</span><input class="fi fi-sm cr-input" type="number" data-key="eqGrinders" step="5000"><span class="cr-sub" data-calc="eqGrindersV">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="3-stage or RO system. Critical for espresso quality">Water Filtration</span><input class="fi fi-sm cr-input" type="number" data-key="eqWater" step="1000"><span class="cr-sub" data-calc="eqWaterV">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="Under-counter + display fridge for pastries">Refrigerators</span><input class="fi fi-sm cr-input" type="number" data-key="eqFridge" step="5000"><span class="cr-sub" data-calc="eqFridgeV">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="Essential for iced drinks in Egyptian summer">Ice Machine</span><input class="fi fi-sm cr-input" type="number" data-key="eqIce" step="1000"><span class="cr-sub" data-calc="eqIceV">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="Commercial blender for frappes, smoothies">Blenders</span><input class="fi fi-sm cr-input" type="number" data-key="eqBlenders" step="1000"><span class="cr-sub" data-calc="eqBlendersV">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="V60, Chemex, Kalita Wave, kettles, scales">Pour-over Setup</span><input class="fi fi-sm cr-input" type="number" data-key="eqPourover" step="1000"><span class="cr-sub" data-calc="eqPouroverV">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="Toddy or Bruer system. Batch cold brew is high margin">Cold Brew System</span><input class="fi fi-sm cr-input" type="number" data-key="eqColdbrew" step="1000"><span class="cr-sub" data-calc="eqColdbrewV">--</span></div>
+
+    <!-- Space -->
+    <div class="cost-cat-header">Space & Fitout <span class="cost-cat-total" data-calc="catSpace">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="Demolition, plumbing, electrical, flooring, walls, paint">Renovation</span><input class="fi fi-sm cr-input" type="number" data-key="spRenovation" step="10000"><span class="cr-sub" data-calc="spRenovationV">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="Tables, chairs, bar stools, counter, shelving">Furniture</span><input class="fi fi-sm cr-input" type="number" data-key="spFurniture" step="5000"><span class="cr-sub" data-calc="spFurnitureV">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="Pendant lights, track lighting, LED strips. Mood matters">Lighting</span><input class="fi fi-sm cr-input" type="number" data-key="spLighting" step="1000"><span class="cr-sub" data-calc="spLightingV">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="Exterior sign, menu boards, window graphics">Signage</span><input class="fi fi-sm cr-input" type="number" data-key="spSignage" step="1000"><span class="cr-sub" data-calc="spSignageV">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="iPad + receipt printer + card reader. Foodics or POSRocket">POS Hardware</span><input class="fi fi-sm cr-input" type="number" data-key="spPOS" step="1000"><span class="cr-sub" data-calc="spPOSV">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="2-3 split units. Non-negotiable for Egyptian summers">AC System</span><input class="fi fi-sm cr-input" type="number" data-key="spAC" step="5000"><span class="cr-sub" data-calc="spACV">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="Ceiling speakers + amp. Curated playlists, not radio">Sound System</span><input class="fi fi-sm cr-input" type="number" data-key="spSound" step="1000"><span class="cr-sub" data-calc="spSoundV">--</span></div>
+
+    <!-- Launch -->
+    <div class="cost-cat-header">Launch <span class="cost-cat-total" data-calc="catLaunch">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="Logo, brand guide, menu design, packaging design">Brand Identity</span><input class="fi fi-sm cr-input" type="number" data-key="laBrand" step="1000"><span class="cr-sub" data-calc="laBrandV">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="2-3 weeks of beans, milk, syrups, cups, food">Initial Inventory</span><input class="fi fi-sm cr-input" type="number" data-key="laInventory" step="5000"><span class="cr-sub" data-calc="laInventoryV">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="Social media ads, influencer invites, opening event">Launch Marketing</span><input class="fi fi-sm cr-input" type="number" data-key="laMarketing" step="1000"><span class="cr-sub" data-calc="laMarketingV">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="Professional food + space photography for IG/Google">Photography</span><input class="fi fi-sm cr-input" type="number" data-key="laPhoto" step="1000"><span class="cr-sub" data-calc="laPhotoV">--</span></div>
+
+    <!-- Legal -->
+    <div class="cost-cat-header">Legal <span class="cost-cat-total" data-calc="catLegal">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="Commercial register, tax card, health permit, fire safety">Licensing & Permits</span><input class="fi fi-sm cr-input" type="number" data-key="lgLicense" step="1000"><span class="cr-sub" data-calc="lgLicenseV">--</span></div>
+    <div class="cost-row"><span class="cr-name" data-tip="Contract review, lease review, company formation">Lawyer Fees</span><input class="fi fi-sm cr-input" type="number" data-key="lgLawyer" step="1000"><span class="cr-sub" data-calc="lgLawyerV">--</span></div>
+
+    <!-- Deposit -->
+    <div class="cost-cat-header">Deposit <span class="cost-cat-total" data-calc="catDeposit">--</span></div>
+    <div class="cost-row"><span class="cr-name">Monthly Rent (EGP)</span><input class="fi fi-sm cr-input" type="number" data-key="monthlyRent" step="5000"><span class="cr-sub" data-calc="monthlyRentV">--</span></div>
+    <div class="cost-row"><span class="cr-name">Deposit Months</span><input class="fi fi-sm cr-input" type="number" data-key="depositMonths" step="1" min="1" max="12"><span class="cr-sub" data-calc="depositTotalV">--</span></div>
+
+    <!-- Grand Total -->
+    <div class="grand-total-bar">
+      <span>TOTAL STARTUP COST</span>
+      <span class="gt-val" data-calc="totalStartupFull">--</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE: SUPPLIES ==================== -->
+<div class="page" id="page-supplies">
+  <div class="section-label">Monthly Consumables</div>
+  <div class="section-title">Supplies & Inventory</div>
+  <div class="section-sub">Detailed breakdown of all monthly consumables. Edit quantities and prices to match your supplier quotes.</div>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <!-- Coffee Beans -->
+    <div class="cost-cat-header">Coffee Beans <span class="cost-cat-total" data-calc="supCoffeeTotal">--</span></div>
+    <div class="supply-row" style="font-size:.7rem;color:var(--text3);font-weight:600;border-bottom:1px solid var(--border)"><span>ITEM</span><span style="text-align:right">KG/MO</span><span style="text-align:right">EGP/KG</span><span style="text-align:right">MONTHLY</span></div>
+    <div class="supply-row"><span class="sr-name">Espresso Blend</span><input class="fi fi-sm" type="number" data-key="supEspressoKg" step="1" style="width:70px"><input class="fi fi-sm" type="number" data-key="supEspressoPrice" step="50" style="width:80px"><span class="sr-sub" data-calc="supEspressoSub">--</span></div>
+    <div class="supply-row"><span class="sr-name">Single Origin</span><input class="fi fi-sm" type="number" data-key="supOriginKg" step="1" style="width:70px"><input class="fi fi-sm" type="number" data-key="supOriginPrice" step="50" style="width:80px"><span class="sr-sub" data-calc="supOriginSub">--</span></div>
+    <div class="supply-row"><span class="sr-name">Decaf</span><input class="fi fi-sm" type="number" data-key="supDecafKg" step="1" style="width:70px"><input class="fi fi-sm" type="number" data-key="supDecafPrice" step="50" style="width:80px"><span class="sr-sub" data-calc="supDecafSub">--</span></div>
+    <div class="info-box" style="margin-top:.5rem">
+      <strong>Local Roasters:</strong> The Roastery, Brown Nose, 30 North, Cairocoffee. Build relationships -- buy direct for better prices and freshness.<br>
+      <strong>Quality Tiers:</strong> Commercial 300-500 EGP/kg | Specialty (SCA 80-84) 800-1,200 EGP/kg | Premium (SCA 85+) 1,200-2,000 EGP/kg
+    </div>
+
+    <!-- Milk -->
+    <div class="cost-cat-header">Milk <span class="cost-cat-total" data-calc="supMilkTotal">--</span></div>
+    <div class="supply-row" style="font-size:.7rem;color:var(--text3);font-weight:600;border-bottom:1px solid var(--border)"><span>ITEM</span><span style="text-align:right">L/DAY</span><span style="text-align:right">EGP/L</span><span style="text-align:right">MONTHLY</span></div>
+    <div class="supply-row"><span class="sr-name">Full Fat Milk</span><input class="fi fi-sm" type="number" data-key="supFullMilkL" step="1" style="width:70px"><input class="fi fi-sm" type="number" data-key="supFullMilkPrice" step="5" style="width:80px"><span class="sr-sub" data-calc="supFullMilkSub">--</span></div>
+    <div class="supply-row"><span class="sr-name">Oat Milk</span><input class="fi fi-sm" type="number" data-key="supOatMilkL" step="1" style="width:70px"><input class="fi fi-sm" type="number" data-key="supOatMilkPrice" step="5" style="width:80px"><span class="sr-sub" data-calc="supOatMilkSub">--</span></div>
+    <div class="supply-row"><span class="sr-name">Almond Milk <span class="tag tag-blue" style="font-size:.55rem">Phase 2</span></span><input class="fi fi-sm" type="number" data-key="supAlmondMilkL" step="1" style="width:70px"><input class="fi fi-sm" type="number" data-key="supAlmondMilkPrice" step="5" style="width:80px"><span class="sr-sub" data-calc="supAlmondMilkSub">--</span></div>
+    <div class="info-box info-green" style="margin-top:.5rem">
+      <strong>Tip:</strong> Juhayna or Beyti for full fat. Oatly or local brands for oat milk. Almond milk can wait for Phase 2 when demand is proven.
+    </div>
+
+    <!-- Syrups -->
+    <div class="cost-cat-header">Syrups & Flavors <span class="cost-cat-total" data-calc="supSyrupsTotal">--</span></div>
+    <div class="supply-row" style="font-size:.7rem;color:var(--text3);font-weight:600;border-bottom:1px solid var(--border)"><span>ITEM</span><span></span><span style="text-align:right">EGP/MONTH</span><span></span></div>
+    <div class="cost-row"><span class="cr-name">Vanilla</span><input class="fi fi-sm cr-input" type="number" data-key="supVanilla" step="100"><span class="cr-sub" data-calc="supVanillaV">--</span></div>
+    <div class="cost-row"><span class="cr-name">Caramel</span><input class="fi fi-sm cr-input" type="number" data-key="supCaramel" step="100"><span class="cr-sub" data-calc="supCaramelV">--</span></div>
+    <div class="cost-row"><span class="cr-name">Hazelnut</span><input class="fi fi-sm cr-input" type="number" data-key="supHazelnut" step="100"><span class="cr-sub" data-calc="supHazelnutV">--</span></div>
+    <div class="cost-row"><span class="cr-name">Chocolate Sauce</span><input class="fi fi-sm cr-input" type="number" data-key="supChocolate" step="100"><span class="cr-sub" data-calc="supChocolateV">--</span></div>
+    <div class="cost-row"><span class="cr-name">Honey</span><input class="fi fi-sm cr-input" type="number" data-key="supHoney" step="100"><span class="cr-sub" data-calc="supHoneyV">--</span></div>
+    <div style="font-size:.68rem;color:var(--text3);padding:.3rem 0;font-style:italic">Brands: Monin, 1883, DaVinci. Buy in bulk for better pricing.</div>
+
+    <!-- Disposables -->
+    <div class="cost-cat-header">Disposables <span class="cost-cat-total" data-calc="supDispTotal">--</span></div>
+    <div class="supply-row" style="font-size:.7rem;color:var(--text3);font-weight:600;border-bottom:1px solid var(--border)"><span>ITEM</span><span></span><span style="text-align:right">EGP/MONTH</span><span></span></div>
+    <div class="cost-row"><span class="cr-name">Hot Cups (8oz, 12oz, 16oz)</span><input class="fi fi-sm cr-input" type="number" data-key="supHotCups" step="100"><span class="cr-sub" data-calc="supHotCupsV">--</span></div>
+    <div class="cost-row"><span class="cr-name">Cold Cups + Lids</span><input class="fi fi-sm cr-input" type="number" data-key="supColdCups" step="100"><span class="cr-sub" data-calc="supColdCupsV">--</span></div>
+    <div class="cost-row"><span class="cr-name">Napkins</span><input class="fi fi-sm cr-input" type="number" data-key="supNapkins" step="50"><span class="cr-sub" data-calc="supNapkinsV">--</span></div>
+    <div class="cost-row"><span class="cr-name">Takeaway Bags</span><input class="fi fi-sm cr-input" type="number" data-key="supBags" step="50"><span class="cr-sub" data-calc="supBagsV">--</span></div>
+    <div class="cost-row"><span class="cr-name">Paper Straws</span><input class="fi fi-sm cr-input" type="number" data-key="supStraws" step="50"><span class="cr-sub" data-calc="supStrawsV">--</span></div>
+    <div class="cost-row"><span class="cr-name">Stirrers</span><input class="fi fi-sm cr-input" type="number" data-key="supStirrers" step="50"><span class="cr-sub" data-calc="supStirrersV">--</span></div>
+    <div class="info-box info-blue" style="margin-top:.5rem">
+      <strong>Tip:</strong> Branded cups cost 30-50% more but are worth it for brand visibility. Every takeaway cup is a walking ad for Bayt Café.
+    </div>
+
+    <!-- Food / Bakery -->
+    <div class="cost-cat-header">Food / Bakery <span class="cost-cat-total" data-calc="supFoodTotal">--</span></div>
+    <div class="supply-row" style="font-size:.7rem;color:var(--text3);font-weight:600;border-bottom:1px solid var(--border)"><span>ITEM</span><span style="text-align:right">QTY/DAY</span><span style="text-align:right">EGP/ITEM</span><span style="text-align:right">MONTHLY</span></div>
+    <div class="supply-row"><span class="sr-name">Bakery Items (croissants, cookies, cake)</span><input class="fi fi-sm" type="number" data-key="supBakeryQty" step="1" style="width:70px"><input class="fi fi-sm" type="number" data-key="supBakeryCost" step="1" style="width:80px"><span class="sr-sub" data-calc="supBakerySub">--</span></div>
+    <div style="font-size:.68rem;color:var(--text3);padding:.3rem 0;font-style:italic">Calculated as: items/day × cost/item × 30 days</div>
+    <div class="info-box" style="margin-top:.5rem">
+      <strong>Sourcing:</strong> Start by sourcing from local bakeries (lower risk, no equipment needed). Consider in-house baking only after Phase 3 when demand justifies oven investment.
+    </div>
+
+    <!-- Grand total -->
+    <div class="grand-total-bar">
+      <span>TOTAL MONTHLY SUPPLIES</span>
+      <span class="gt-val" data-calc="totalSuppliesFull">--</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE: TEAM ==================== -->
+<div class="page" id="page-team">
+  <div class="section-label">Human Capital</div>
+  <div class="section-title">Team & Hiring</div>
+  <div class="section-sub">Toggle roles on/off. Edit salaries. Labor costs flow directly to the P&L page.</div>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <h3 style="margin-bottom:.75rem">Active Team</h3>
+    <div style="display:grid;grid-template-columns:auto 1fr 120px 50px;gap:.75rem;font-size:.68rem;color:var(--text3);font-weight:600;padding-bottom:.5rem;border-bottom:1px solid var(--border)"><span></span><span>ROLE</span><span style="text-align:right">SALARY/MO</span><span style="text-align:center">ON</span></div>
+
+    <div class="team-row" id="tr-barista1"><div class="tr-icon" style="background:var(--green-glow);color:var(--green)">&#9749;</div><div class="tr-info"><h4>Barista #1</h4><p>AM shift 7am-3pm, experienced preferred</p></div><input class="fi fi-sm" type="number" data-key="salBarista1" step="500" style="text-align:right"><label class="toggle"><input type="checkbox" data-key="onBarista1" checked><span class="slider"></span></label></div>
+    <div class="team-row" id="tr-barista2"><div class="tr-icon" style="background:var(--green-glow);color:var(--green)">&#9749;</div><div class="tr-info"><h4>Barista #2</h4><p>PM shift 2pm-10pm, can be trainee</p></div><input class="fi fi-sm" type="number" data-key="salBarista2" step="500" style="text-align:right"><label class="toggle"><input type="checkbox" data-key="onBarista2" checked><span class="slider"></span></label></div>
+    <div class="team-row" id="tr-cleaner"><div class="tr-icon" style="background:rgba(91,143,199,.12);color:var(--blue)">&#128468;</div><div class="tr-info"><h4>Cleaner</h4><p>Full day, cleaning + restocking + errands</p></div><input class="fi fi-sm" type="number" data-key="salCleaner" step="500" style="text-align:right"><label class="toggle"><input type="checkbox" data-key="onCleaner" checked><span class="slider"></span></label></div>
+    <div class="team-row" id="tr-barista3"><div class="tr-icon" style="background:rgba(155,125,212,.1);color:var(--purple)">&#9749;</div><div class="tr-info"><h4>Barista #3</h4><p>Add when 80+ daily transactions or days-off problems</p></div><input class="fi fi-sm" type="number" data-key="salBarista3" step="500" style="text-align:right"><label class="toggle"><input type="checkbox" data-key="onBarista3"><span class="slider"></span></label></div>
+    <div class="team-row" id="tr-shiftlead"><div class="tr-icon" style="background:rgba(192,139,92,.12);color:var(--copper)">&#11088;</div><div class="tr-info"><h4>Shift Lead</h4><p>Promote best barista after 3+ months</p></div><input class="fi fi-sm" type="number" data-key="salShiftLead" step="500" style="text-align:right"><label class="toggle"><input type="checkbox" data-key="onShiftLead"><span class="slider"></span></label></div>
+    <div class="team-row" id="tr-social"><div class="tr-icon" style="background:rgba(91,143,199,.12);color:var(--blue)">&#128241;</div><div class="tr-info"><h4>Social Media</h4><p>Part-time, add when posting drops below 4x/week</p></div><input class="fi fi-sm" type="number" data-key="salSocial" step="500" style="text-align:right"><label class="toggle"><input type="checkbox" data-key="onSocial"><span class="slider"></span></label></div>
+    <div class="team-row" id="tr-kitchen"><div class="tr-icon" style="background:rgba(199,91,58,.12);color:var(--red)">&#127860;</div><div class="tr-info"><h4>Kitchen Helper</h4><p>Add when expanding food menu</p></div><input class="fi fi-sm" type="number" data-key="salKitchen" step="500" style="text-align:right"><label class="toggle"><input type="checkbox" data-key="onKitchen"><span class="slider"></span></label></div>
+    <div class="team-row" id="tr-manager"><div class="tr-icon" style="background:var(--gold-glow);color:var(--gold)">&#128188;</div><div class="tr-info"><h4>Cafe Manager</h4><p>Only for location #2 or Year 1+</p></div><input class="fi fi-sm" type="number" data-key="salManager" step="1000" style="text-align:right"><label class="toggle"><input type="checkbox" data-key="onManager"><span class="slider"></span></label></div>
+
+    <div style="margin-top:1rem;padding-top:1rem;border-top:2px solid var(--border)">
+      <h3 style="margin-bottom:.75rem;font-size:.9rem">Additional Costs</h3>
+      <div class="pl-row"><span style="color:var(--text2)">Base Salaries Total</span><span class="pl-val" style="color:var(--gold)" data-calc="baseSalaries">--</span></div>
+      <div class="pl-row"><span style="color:var(--text2)">Social Insurance (18.75%)</span><span class="pl-val" data-calc="socialInsurance">--</span></div>
+      <div class="pl-row"><span style="color:var(--text2)">Transport Allowance (<span data-calc="activeStaffCount">0</span> staff x 400/mo)</span><span class="pl-val" data-calc="transportAllowance">--</span></div>
+      <div class="pl-row"><span style="color:var(--text2)">Eid Bonus Provision (1mo/12)</span><span class="pl-val" data-calc="eidBonus">--</span></div>
+    </div>
+
+    <div class="grand-total-bar">
+      <span>TOTAL MONTHLY LABOR</span>
+      <span class="gt-val" data-calc="totalLaborFull">--</span>
+    </div>
+  </div>
+
+  <!-- Hiring Guide -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <h3 style="margin-bottom:.75rem">Hiring Guide</h3>
+    <div class="info-box" style="margin-bottom:1rem">
+      <strong>Where to Find Baristas:</strong> Wuzzuf.net, Facebook Groups ("Specialty Coffee Egypt", "Cairo Jobs"), Instagram DMs to baristas at other cafes, SCA Training Centers, word of mouth, walk-ins with a "Now Hiring" sign.
+    </div>
+
+    <h4 style="font-size:.85rem;font-weight:600;margin-bottom:.75rem">3-Stage Evaluation</h4>
+    <div class="card-grid cols-3" style="margin-bottom:1.25rem">
+      <div class="hire-stage">
+        <h4 style="color:var(--gold)">Stage 1: Phone Screen (15 min)</h4>
+        <ul class="checklist">
+          <li>Why coffee? (passion = retention)</li>
+          <li>What do you drink at home?</li>
+          <li>Where do you live? (commute kills attendance)</li>
+          <li>Availability for shifts?</li>
+        </ul>
+      </div>
+      <div class="hire-stage stg-green">
+        <h4 class="stg-green-text" style="color:var(--green)">Stage 2: In-Person (30 min)</h4>
+        <ul class="checklist">
+          <li>Warm and presentable?</li>
+          <li>Handles pressure scenarios?</li>
+          <li>Clear communication (AR + EN)?</li>
+          <li>Would you want them greeting you daily?</li>
+        </ul>
+      </div>
+      <div class="hire-stage stg-blue">
+        <h4 class="stg-blue-text" style="color:var(--blue)">Stage 3: Bar Test (45 min)</h4>
+        <ul class="checklist">
+          <li>Espresso extraction (dial in grind?)</li>
+          <li>Milk steaming (microfoam, no screaming)</li>
+          <li>Latte art (heart = pass)</li>
+          <li>Drink recipe knowledge</li>
+          <li>Cleanliness and speed</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info-box info-red" style="margin-bottom:1rem">
+      <strong>Red Flags:</strong> Cannot explain why they left previous job | Zero coffee curiosity | Dirty habits during trial | Arrogant attitude | Lives far away (60+ min commute) | Phone addiction | Freezes under pressure | Poor hygiene
+    </div>
+
+    <div class="card-grid cols-2">
+      <div class="info-box info-blue">
+        <strong>SCA Certifications:</strong><br>
+        Foundation: 3,000-6,000 EGP | Intermediate: 5,000-10,000 EGP | Professional: 10,000-20,000+ EGP<br>
+        Training at The Roastery (SCA-accredited, Cairo)
+      </div>
+      <div class="info-box info-green">
+        <strong>Retention Tips:</strong> Pay above market. Clear growth path. Performance bonuses. Respect and consistency in scheduling. Fund education (SCA certs). Provide good equipment (baristas notice).
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE: MENU ==================== -->
+<div class="page" id="page-menu">
+  <div class="section-label">Products</div>
+  <div class="section-title">Menu & Pricing</div>
+  <div class="section-sub">Edit sell prices and ingredient costs. Margins calculate automatically. Revenue projections update live.</div>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="menu-row" style="font-size:.68rem;color:var(--text3);font-weight:600;border-bottom:2px solid var(--border)"><span>ITEM</span><span style="text-align:right">SELL (EGP)</span><span style="text-align:right">COST (EGP)</span><span style="text-align:right">MARGIN</span></div>
+
+    <div style="font-size:.72rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:.75rem 0 .25rem">Hot Drinks</div>
+    <div class="menu-row"><span>Espresso</span><input class="fi fi-sm" type="number" data-key="menuEspressoP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuEspressoC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuEspressoM">--</span></div>
+    <div class="menu-row"><span>Americano</span><input class="fi fi-sm" type="number" data-key="menuAmericanoP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuAmericanoC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuAmericanoM">--</span></div>
+    <div class="menu-row"><span>Latte</span><input class="fi fi-sm" type="number" data-key="menuLatteP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuLatteC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuLatteM">--</span></div>
+    <div class="menu-row"><span>Cappuccino</span><input class="fi fi-sm" type="number" data-key="menuCappP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuCappC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuCappM">--</span></div>
+    <div class="menu-row"><span>Flat White</span><input class="fi fi-sm" type="number" data-key="menuFlatP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuFlatC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuFlatM">--</span></div>
+    <div class="menu-row"><span>Turkish Coffee</span><input class="fi fi-sm" type="number" data-key="menuTurkishP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuTurkishC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuTurkishM">--</span></div>
+    <div class="menu-row"><span>Hot Chocolate</span><input class="fi fi-sm" type="number" data-key="menuHotChocP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuHotChocC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuHotChocM">--</span></div>
+    <div class="menu-row"><span>Tea</span><input class="fi fi-sm" type="number" data-key="menuTeaP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuTeaC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuTeaM">--</span></div>
+
+    <div style="font-size:.72rem;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:.75rem 0 .25rem">Cold Drinks</div>
+    <div class="menu-row"><span>Iced Latte</span><input class="fi fi-sm" type="number" data-key="menuIcedLatteP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuIcedLatteC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuIcedLatteM">--</span></div>
+    <div class="menu-row"><span>Iced Americano</span><input class="fi fi-sm" type="number" data-key="menuIcedAmP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuIcedAmC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuIcedAmM">--</span></div>
+    <div class="menu-row"><span>Cold Brew</span><input class="fi fi-sm" type="number" data-key="menuColdBrewP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuColdBrewC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuColdBrewM">--</span></div>
+    <div class="menu-row"><span>Iced Mocha</span><input class="fi fi-sm" type="number" data-key="menuIcedMochaP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuIcedMochaC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuIcedMochaM">--</span></div>
+
+    <div style="font-size:.72rem;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:.75rem 0 .25rem">Fresh & Food</div>
+    <div class="menu-row"><span>Fresh OJ</span><input class="fi fi-sm" type="number" data-key="menuOJP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuOJC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuOJM">--</span></div>
+    <div class="menu-row"><span>Lemon Mint</span><input class="fi fi-sm" type="number" data-key="menuLemonP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuLemonC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuLemonM">--</span></div>
+    <div class="menu-row"><span>Croissant</span><input class="fi fi-sm" type="number" data-key="menuCroissantP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuCroissantC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuCroissantM">--</span></div>
+    <div class="menu-row"><span>Cookie</span><input class="fi fi-sm" type="number" data-key="menuCookieP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuCookieC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuCookieM">--</span></div>
+    <div class="menu-row"><span>Cake Slice</span><input class="fi fi-sm" type="number" data-key="menuCakeP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuCakeC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuCakeM">--</span></div>
+    <div class="menu-row"><span>Sandwich</span><input class="fi fi-sm" type="number" data-key="menuSandwichP" step="5" style="width:70px;text-align:right"><input class="fi fi-sm" type="number" data-key="menuSandwichC" step="1" style="width:70px;text-align:right"><span class="mr-margin" data-calc="menuSandwichM">--</span></div>
+
+    <div style="border-top:2px solid var(--border);margin-top:1rem;padding-top:1rem;display:flex;justify-content:space-between;font-size:.85rem">
+      <span style="color:var(--text2)">Average Menu Margin</span>
+      <span style="color:var(--green);font-weight:700" data-calc="avgMenuMargin">--</span>
+    </div>
+  </div>
+
+  <!-- Revenue Projection -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <h3 style="margin-bottom:.75rem">Revenue Projection</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1rem">
+      <div>
+        <label class="fi-label">Estimated Daily Customers</label>
+        <input class="fi" type="number" data-key="dailyCustomers" min="1" step="5">
+      </div>
+      <div>
+        <label class="fi-label">Average Ticket (EGP) <span style="font-weight:400;text-transform:none">(auto or override)</span></label>
+        <input class="fi" type="number" data-key="avgTicket" min="1" step="5">
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--border);border-radius:var(--radius-sm);overflow:hidden">
+      <div style="background:var(--bg2);padding:1rem;text-align:center"><div style="font-size:1.2rem;font-weight:800;color:var(--gold)" data-calc="dailyRevenue">--</div><div style="font-size:.65rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Daily Revenue</div></div>
+      <div style="background:var(--bg2);padding:1rem;text-align:center"><div style="font-size:1.2rem;font-weight:800;color:var(--green)" data-calc="monthlyRevCalc">--</div><div style="font-size:.65rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Monthly Revenue</div></div>
+      <div style="background:var(--bg2);padding:1rem;text-align:center"><div style="font-size:1.2rem;font-weight:800;color:var(--copper)" data-calc="avgTicketDisp">--</div><div style="font-size:.65rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Avg Ticket</div></div>
+    </div>
+  </div>
+
+  <!-- Pricing Tips -->
+  <div class="card-grid cols-2">
+    <div class="card">
+      <h3 style="color:var(--gold)">Pricing Psychology</h3>
+      <ul class="checklist">
+        <li><strong>Anchor pricing:</strong> Put your most expensive drink first on the menu. Everything else feels reasonable.</li>
+        <li><strong>Size upsell:</strong> Regular to Large costs you ~5 EGP more. Charge 15 EGP more. 200% markup on the upsell.</li>
+        <li><strong>Add-ons:</strong> Oat milk +15, extra shot +15, syrup +10. Small amounts add up fast.</li>
+        <li><strong>No discount culture:</strong> Never discount your coffee. Give a free cookie instead. Discounts train customers to wait for sales.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--green)">Highest Margin Plays</h3>
+      <ul class="checklist">
+        <li><strong>Cold Brew</strong> -- highest margin drink on the menu. Push it hard in summer.</li>
+        <li><strong>Americano</strong> -- cheap to make, high perceived value. Staff should recommend it.</li>
+        <li><strong>Tea</strong> -- extremely low cost. Good for non-coffee drinkers who come with groups.</li>
+        <li><strong>Combo deals</strong> -- Latte + Croissant: 110 EGP to 95 EGP combo. Customer feels a deal, you still make ~65 EGP margin.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE: P&L ==================== -->
+<div class="page" id="page-pnl">
+  <div class="section-label">Financial Engine</div>
+  <div class="section-title">Live P&L Analysis</div>
+  <div class="section-sub">Everything flows here. All values are pulled from other pages. This is the truth of your business.</div>
+
+  <div class="card-grid cols-2" style="margin-bottom:1.5rem">
+    <!-- Revenue -->
+    <div class="card">
+      <div class="pl-section">Revenue</div>
+      <div class="pl-row"><span>Daily Customers</span><input class="fi fi-sm" type="number" data-key="dailyCustomers" step="5" style="width:80px;text-align:right"></div>
+      <div class="pl-row"><span>Avg Ticket (EGP)</span><span class="pl-val" style="color:var(--gold)" data-calc="avgTicketPL">--</span></div>
+      <div class="pl-row" style="border-bottom:2px solid var(--border)"><span style="font-weight:700">Monthly Revenue</span><span class="pl-val" style="color:var(--green);font-size:1.1rem" data-calc="plRevenue">--</span></div>
+
+      <div class="pl-section">Operating Costs</div>
+      <div class="pl-row"><span>Rent</span><input class="fi fi-sm" type="number" data-key="monthlyRent" step="5000" style="width:100px;text-align:right"></div>
+      <div class="pl-row"><span>Labor (from Team page)</span><span class="pl-val" data-calc="plLabor">--</span></div>
+      <div class="pl-row"><span>Supplies (from Supplies page)</span><span class="pl-val" data-calc="plSupplies">--</span></div>
+      <div class="pl-row"><span>Utilities</span><input class="fi fi-sm" type="number" data-key="opUtilities" step="500" style="width:100px;text-align:right"></div>
+      <div class="pl-row"><span>Internet</span><input class="fi fi-sm" type="number" data-key="opInternet" step="100" style="width:100px;text-align:right"></div>
+      <div class="pl-row"><span>Marketing</span><input class="fi fi-sm" type="number" data-key="opMarketing" step="1000" style="width:100px;text-align:right"></div>
+      <div class="pl-row"><span>Maintenance</span><input class="fi fi-sm" type="number" data-key="opMaintenance" step="500" style="width:100px;text-align:right"></div>
+      <div class="pl-row"><span>Accounting</span><input class="fi fi-sm" type="number" data-key="opAccounting" step="500" style="width:100px;text-align:right"></div>
+      <div class="pl-row"><span>Insurance</span><input class="fi fi-sm" type="number" data-key="opInsurance" step="500" style="width:100px;text-align:right"></div>
+      <div class="pl-row"><span>POS Subscription</span><input class="fi fi-sm" type="number" data-key="opPOS" step="100" style="width:100px;text-align:right"></div>
+      <div class="pl-row"><span>Misc Buffer</span><input class="fi fi-sm" type="number" data-key="opMisc" step="500" style="width:100px;text-align:right"></div>
+      <div class="pl-row" style="border-bottom:2px solid var(--border)"><span style="font-weight:700">Total Monthly Cost</span><span class="pl-val" style="color:var(--red);font-size:1.1rem" data-calc="plTotalCost">--</span></div>
+    </div>
+
+    <!-- Analysis -->
+    <div class="card">
+      <div class="pl-section">Analysis</div>
+      <div style="text-align:center;padding:1.5rem 0;border-bottom:1px solid var(--border)">
+        <div style="font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem">Monthly Profit / Loss</div>
+        <div style="font-size:2.2rem;font-weight:900;letter-spacing:-.02em" data-calc="plProfitLoss">--</div>
+      </div>
+      <div class="pl-row" style="margin-top:.5rem"><span>Break-even Customers/Day</span><span class="pl-val" style="color:var(--blue)" data-calc="plBreakeven">--</span></div>
+      <div class="pl-row"><span>Monthly Burn Rate (if losing)</span><span class="pl-val" style="color:var(--red)" data-calc="plBurnRate">--</span></div>
+      <div class="pl-row"><span>Cash Runway (months)</span><span class="pl-val" data-calc="plRunway">--</span></div>
+      <div class="pl-row"><span>Months to Recoup Startup</span><span class="pl-val" style="color:var(--copper)" data-calc="plRecoup">--</span></div>
+      <div class="pl-row" style="border-bottom:2px solid var(--border)"><span>Startup + 6mo Reserve</span><span class="pl-val" style="color:var(--gold)" data-calc="plReserve">--</span></div>
+
+      <!-- Bar chart -->
+      <div style="margin-top:1rem">
+        <h4 style="font-size:.8rem;font-weight:600;text-align:center;margin-bottom:.5rem;color:var(--text2)">Revenue vs Costs</h4>
+        <div class="bar-chart">
+          <div class="bar-col">
+            <div class="bar-val" style="color:var(--green)" data-calc="barRevVal">--</div>
+            <div class="bar-fill" id="barRevenue" style="background:var(--green)"></div>
+            <div class="bar-label">Revenue</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar-val" style="color:var(--red)" data-calc="barCostVal">--</div>
+            <div class="bar-fill" id="barCosts" style="background:var(--red)"></div>
+            <div class="bar-label">Costs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE: LOCATION ==================== -->
+<div class="page" id="page-location">
+  <div class="section-label">Location Explorer</div>
+  <div class="section-title">Three Neighborhoods, One Winner</div>
+  <div class="section-sub">Each neighborhood has a different personality and price. Maadi offers the best value for a first cafe.</div>
+
+  <div class="card-grid cols-3" style="margin-bottom:1.5rem">
+    <div class="card location-card" style="border-color:var(--gold)">
+      <div class="badge" style="background:var(--gold);color:var(--bg)">Recommended</div>
+      <h3>Maadi (Degla)</h3>
+      <div class="price">30-80K <span>EGP/month</span></div>
+      <p style="font-size:.8rem;color:var(--text2);margin-bottom:.5rem">Tree-lined, walkable, expat-friendly. Strong community, loyal customers, room for specialty.</p>
+      <ul>
+        <li><span style="color:var(--green);margin-right:.3rem">+</span> Best value for money</li>
+        <li><span style="color:var(--green);margin-right:.3rem">+</span> Walkable foot traffic</li>
+        <li><span style="color:var(--green);margin-right:.3rem">+</span> Loyal neighborhood community</li>
+        <li><span style="color:var(--green);margin-right:.3rem">+</span> Expat crowd knows specialty</li>
+        <li><span style="color:var(--red);margin-right:.3rem">-</span> Can feel quiet on weekday mornings</li>
+      </ul>
+    </div>
+    <div class="card location-card">
+      <h3>Zamalek</h3>
+      <div class="price">50-150K <span>EGP/month</span></div>
+      <p style="font-size:.8rem;color:var(--text2);margin-bottom:.5rem">Island prestige. High spending power, cultural, artistic. Intense competition and premium rent.</p>
+      <ul>
+        <li><span style="color:var(--green);margin-right:.3rem">+</span> Prestige address</li>
+        <li><span style="color:var(--green);margin-right:.3rem">+</span> High foot traffic on main streets</li>
+        <li><span style="color:var(--green);margin-right:.3rem">+</span> Instagram-worthy neighborhood</li>
+        <li><span style="color:var(--red);margin-right:.3rem">-</span> Very expensive rent</li>
+        <li><span style="color:var(--red);margin-right:.3rem">-</span> Dense competition (Sufi, Left Bank...)</li>
+      </ul>
+    </div>
+    <div class="card location-card">
+      <h3>5th Settlement</h3>
+      <div class="price">25-70K <span>EGP/month</span></div>
+      <p style="font-size:.8rem;color:var(--text2);margin-bottom:.5rem">Modern, suburban, growing. Cheapest rent but car-dependent. Big potential near AUC/GUC.</p>
+      <ul>
+        <li><span style="color:var(--green);margin-right:.3rem">+</span> Cheapest entry point</li>
+        <li><span style="color:var(--green);margin-right:.3rem">+</span> Growing, underserved for specialty</li>
+        <li><span style="color:var(--green);margin-right:.3rem">+</span> University crowds nearby</li>
+        <li><span style="color:var(--red);margin-right:.3rem">-</span> Car-dependent, low walk-ins</li>
+        <li><span style="color:var(--red);margin-right:.3rem">-</span> Needs strong social media to drive traffic</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(212,165,74,.2);background:linear-gradient(135deg,var(--card) 0%,rgba(212,165,74,.03) 100%)">
+    <h3>Verdict: Rent, Don't Buy</h3>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.7;margin-top:.5rem">
+      For a first cafe, <strong style="color:var(--gold)">renting is the only smart move</strong>. You need capital for equipment, inventory, and surviving months 1-18. Tying up 3-15M EGP in property means less cash for operations. Rent preserves flexibility -- if the location doesn't work, you move. Push for a <strong>5-year lease</strong> with 1-3 months rent-free fitout period and annual increases capped at 7-10%.
+    </p>
+  </div>
+</div>
+
+<!-- ==================== PAGE: COMPETITION ==================== -->
+<div class="page" id="page-competition">
+  <div class="section-label">Know Your Enemy</div>
+  <div class="section-title">The Cilantro Teardown</div>
+  <div class="section-sub">They have 100+ locations. You have quality, personality, and craft. Here is how you win.</div>
+
+  <div class="vs-grid" style="margin-bottom:2rem">
+    <div class="card" style="border-color:var(--red)">
+      <h3 style="color:var(--red);margin-bottom:.75rem">Cilantro's Weaknesses</h3>
+      <ul style="list-style:none">
+        <li style="padding:.35rem 0;font-size:.82rem;color:var(--text2)"><span style="color:var(--red);margin-right:.5rem">&#10005;</span> Generic commercial-grade coffee</li>
+        <li style="padding:.35rem 0;font-size:.82rem;color:var(--text2)"><span style="color:var(--red);margin-right:.5rem">&#10005;</span> Inconsistent, untrained service</li>
+        <li style="padding:.35rem 0;font-size:.82rem;color:var(--text2)"><span style="color:var(--red);margin-right:.5rem">&#10005;</span> Cookie-cutter atmosphere</li>
+        <li style="padding:.35rem 0;font-size:.82rem;color:var(--text2)"><span style="color:var(--red);margin-right:.5rem">&#10005;</span> No specialty options (pour-over, cold brew)</li>
+        <li style="padding:.35rem 0;font-size:.82rem;color:var(--text2)"><span style="color:var(--red);margin-right:.5rem">&#10005;</span> "Overpriced for what you get"</li>
+        <li style="padding:.35rem 0;font-size:.82rem;color:var(--text2)"><span style="color:var(--red);margin-right:.5rem">&#10005;</span> Faceless corporate brand</li>
+      </ul>
+    </div>
+    <div class="vs-divider">VS</div>
+    <div class="card" style="border-color:var(--green)">
+      <h3 style="color:var(--green);margin-bottom:.75rem">Your Advantages</h3>
+      <ul style="list-style:none">
+        <li style="padding:.35rem 0;font-size:.82rem;color:var(--text2)"><span style="color:var(--green);margin-right:.5rem">&#10003;</span> Specialty-grade beans (SCA 80+)</li>
+        <li style="padding:.35rem 0;font-size:.82rem;color:var(--text2)"><span style="color:var(--green);margin-right:.5rem">&#10003;</span> Trained baristas, latte art, consistency</li>
+        <li style="padding:.35rem 0;font-size:.82rem;color:var(--text2)"><span style="color:var(--green);margin-right:.5rem">&#10003;</span> Designed space with character</li>
+        <li style="padding:.35rem 0;font-size:.82rem;color:var(--text2)"><span style="color:var(--green);margin-right:.5rem">&#10003;</span> Pour-over, cold brew, single origins</li>
+        <li style="padding:.35rem 0;font-size:.82rem;color:var(--text2)"><span style="color:var(--green);margin-right:.5rem">&#10003;</span> Better quality at similar price</li>
+        <li style="padding:.35rem 0;font-size:.82rem;color:var(--text2)"><span style="color:var(--green);margin-right:.5rem">&#10003;</span> Founders present, personal, family-run</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Market positioning -->
+  <div class="card" style="text-align:center;padding:2rem">
+    <h3 style="margin-bottom:1.5rem">Market Positioning</h3>
+    <div style="position:relative;width:100%;max-width:450px;margin:0 auto;aspect-ratio:1;border:1px solid var(--border);border-radius:var(--radius)">
+      <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:.6rem;color:var(--text3);padding:.4rem">HIGH PRICE</div>
+      <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);font-size:.6rem;color:var(--text3);padding:.4rem">LOW PRICE</div>
+      <div style="position:absolute;left:0;top:50%;transform:translateY(-50%);font-size:.6rem;color:var(--text3);padding:.4rem">LOW QUALITY</div>
+      <div style="position:absolute;right:0;top:50%;transform:translateY(-50%);font-size:.6rem;color:var(--text3);padding:.4rem">HIGH QUALITY</div>
+      <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--border)"></div>
+      <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:var(--border)"></div>
+      <div style="position:absolute;top:30%;left:35%;font-size:.7rem;color:var(--text3);padding:.25rem .4rem;background:var(--bg2);border-radius:4px" data-tip="Generic cafeterias">Generic Cafes</div>
+      <div style="position:absolute;top:35%;left:55%;font-size:.7rem;color:var(--red);padding:.25rem .4rem;background:rgba(199,91,58,.1);border-radius:4px" data-tip="100+ branches, mid price, commercial quality">Cilantro</div>
+      <div style="position:absolute;top:20%;left:70%;font-size:.7rem;color:var(--purple);padding:.25rem .4rem;background:rgba(155,125,212,.1);border-radius:4px" data-tip="Ultra-premium, high price">Brown Nose</div>
+      <div style="position:absolute;top:40%;left:68%;font-size:.75rem;font-weight:700;color:var(--gold);padding:.35rem .6rem;background:var(--gold-glow);border:1px solid rgba(212,165,74,.3);border-radius:6px;z-index:2" data-tip="Your target: specialty quality, accessible price">&#9733; YOU</div>
+    </div>
+    <p style="font-size:.72rem;color:var(--text3);margin-top:1rem">Hover over each player to see details</p>
+  </div>
+
+  <!-- Customer segments -->
+  <div class="card-grid cols-3" style="margin-top:1.5rem">
+    <div class="card">
+      <h3 style="color:var(--gold)">Young Professionals</h3>
+      <p>25-35, remote workers, freelancers. Need good WiFi, power outlets, and quality coffee. Will become your regulars.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--green)">Expat Community</h3>
+      <p>Already know specialty coffee from abroad. Higher spend. Will be your early advocates and Google reviewers.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--blue)">University Students</h3>
+      <p>Price-sensitive but high volume. Instagram-active. Good for off-peak hours. Offer student combos for loyalty.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE: MILESTONES ==================== -->
+<div class="page" id="page-milestones">
+  <div class="section-label">The Journey</div>
+  <div class="section-title">Milestones, Not Deadlines</div>
+  <div class="section-sub">Every phase advances when real signals confirm readiness -- not when the calendar says so. Earn each level.</div>
+
+  <div class="timeline">
+    <div class="phase">
+      <div class="phase-dot active">0</div>
+      <h3>Phase 0 -- Preparation</h3>
+      <div class="phase-sub">Lease, fitout, equipment, branding, licensing, hiring, training</div>
+      <div class="card" style="padding:1rem">
+        <p style="font-size:.8rem;color:var(--text2);margin-bottom:.75rem">Estimated 2-3 months. Cannot be rushed -- licenses alone take 1-3 months in Egypt.</p>
+        <div class="triggers">
+          <div class="trigger"><span>&#10003;</span> Space built out</div>
+          <div class="trigger"><span>&#10003;</span> Licenses obtained</div>
+          <div class="trigger"><span>&#10003;</span> Equipment tested</div>
+          <div class="trigger"><span>&#10003;</span> Staff trained</div>
+          <div class="trigger"><span>&#10003;</span> Soft opening done</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-dot active">1</div>
+      <h3>Phase 1 -- Launch</h3>
+      <div class="phase-sub">"Get the coffee right." 15 items. 3 staff + you. Survival mode.</div>
+      <div class="card" style="padding:1rem">
+        <p style="font-size:.8rem;color:var(--text2);margin-bottom:.5rem">Focus entirely on consistency and quality. Perfect the basics.</p>
+        <div style="font-size:.68rem;color:var(--text3);font-weight:600;margin-bottom:.5rem">ADVANCE WHEN ALL ARE TRUE FOR 2+ WEEKS:</div>
+        <div class="triggers">
+          <div class="trigger">&#128200; 40+ customers/day</div>
+          <div class="trigger">&#9749; Drink quality stable</div>
+          <div class="trigger">&#9881; No operational fires</div>
+          <div class="trigger">&#128101; Staff run shifts solo</div>
+          <div class="trigger">&#11088; 4.5+ Google stars</div>
+        </div>
+        <div style="margin-top:.5rem;font-size:.72rem;color:var(--gold);font-style:italic">Earliest realistic: 2-4 months.</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-dot future">2</div>
+      <h3>Phase 2 -- Stabilize</h3>
+      <div class="phase-sub">"Build the habit." 20 items. Loyalty card. 3rd barista. Regulars forming.</div>
+      <div class="card" style="padding:1rem">
+        <p style="font-size:.8rem;color:var(--text2);margin-bottom:.5rem">Turn visitors into regulars. Add pour-over and first signature drink.</p>
+        <div class="triggers">
+          <div class="trigger">&#128260; 25-35% repeat rate</div>
+          <div class="trigger">&#128200; 60+ customers/day (3 weeks)</div>
+          <div class="trigger">&#128200; Revenue growing MoM</div>
+          <div class="trigger">&#128241; 1,000+ Instagram followers</div>
+        </div>
+        <div style="margin-top:.5rem;font-size:.72rem;color:var(--gold);font-style:italic">Earliest realistic: 6-9 months from opening.</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-dot future">3</div>
+      <h3>Phase 3 -- Differentiate</h3>
+      <div class="phase-sub">"Why us and nobody else." Signature drinks. Events. In-house baking. 28 items.</div>
+      <div class="card" style="padding:1rem">
+        <div class="triggers">
+          <div class="trigger">&#128200; 80+ customers/day</div>
+          <div class="trigger">&#11088; Signature drink in top 5</div>
+          <div class="trigger">&#128176; Approaching break-even</div>
+          <div class="trigger">&#128240; 1+ press/blog feature</div>
+          <div class="trigger">&#127968; People recommend you by name</div>
+        </div>
+        <div style="margin-top:.5rem;font-size:.72rem;color:var(--gold);font-style:italic">Earliest realistic: 10-14 months from opening.</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-dot future">4</div>
+      <h3>Phase 4 -- Profitability</h3>
+      <div class="phase-sub">"Sustainable business." Full menu. Retail beans. Digital loyalty. 35 items.</div>
+      <div class="card" style="padding:1rem">
+        <div class="triggers">
+          <div class="trigger">&#128176; 3+ months net profit</div>
+          <div class="trigger">&#128200; 100+ customers/day</div>
+          <div class="trigger">&#127939; Cafe runs 2+ days without you</div>
+          <div class="trigger">&#128101; No staff departures in 3+ months</div>
+        </div>
+        <div style="margin-top:.5rem;font-size:.72rem;color:var(--gold);font-style:italic">Earliest realistic: 16-22 months from opening.</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-dot future">5</div>
+      <h3>Phase 5 -- Growth</h3>
+      <div class="phase-sub">"Scale what works." Merchandise. Workshops. Scout location #2.</div>
+      <div class="card" style="padding:1rem">
+        <div class="triggers">
+          <div class="trigger">&#128176; 6+ months profitability</div>
+          <div class="trigger">&#127970; Location #2 identified</div>
+          <div class="trigger">&#128100; Manager candidate found</div>
+          <div class="trigger">&#127775; Brand known city-wide</div>
+        </div>
+        <div style="margin-top:.5rem;font-size:.72rem;color:var(--gold);font-style:italic">Earliest realistic: 22-30 months from opening.</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-dot future" style="font-size:.8rem">&#9733;</div>
+      <h3>Phase 6 -- Empire</h3>
+      <div class="phase-sub">Multiple locations. Own roast. Wholesale. Regional brand.</div>
+      <div class="card" style="padding:1rem;border-color:rgba(212,165,74,.2);background:linear-gradient(135deg,var(--card),rgba(212,165,74,.05))">
+        <p style="font-size:.8rem;color:var(--text2)">Open cafe #2. Hire a manager. Launch own-brand roasted coffee. Wholesale to other cafes. Subscription boxes. Become what Cilantro is today -- but with specialty quality and authentic love.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE: STAND OUT ==================== -->
+<div class="page" id="page-standout">
+  <div class="section-label">The Secret Sauce</div>
+  <div class="section-title">How to Be Unlike Anything Else</div>
+  <div class="section-sub">Cilantro sells coffee. You sell an experience, a community, and a craft.</div>
+
+  <h3 style="font-size:.95rem;font-weight:700;margin-bottom:1rem">Signature Drinks -- Egyptian Flavors Meet Specialty Coffee</h3>
+  <div class="card-grid cols-3" style="margin-bottom:2rem">
+    <div class="sig-drink"><h4>Hibiscus Cold Brew</h4><p>Karkade-infused cold brew. Deeply Egyptian meets specialty. Nobody does this.</p></div>
+    <div class="sig-drink"><h4>Date-Spiced Latte</h4><p>Egyptian dates + cinnamon + espresso. Ramadan special that becomes year-round.</p></div>
+    <div class="sig-drink"><h4>Sahlab Latte</h4><p>Orchid root hot drink as a latte base. Warm, creamy, nostalgic.</p></div>
+    <div class="sig-drink"><h4>Orange Blossom Iced</h4><p>Subtle floral, refreshing, Instagram-worthy. Light and unique.</p></div>
+    <div class="sig-drink"><h4>Egyptian Mocha</h4><p>Dark chocolate + cardamom + double espresso. Rich and aromatic.</p></div>
+  </div>
+
+  <div class="card-grid cols-2" style="margin-bottom:2rem">
+    <div class="card">
+      <h3 style="margin-bottom:.75rem">10 Day-1 Quick Wins</h3>
+      <p style="font-size:.72rem;color:var(--text3);margin-bottom:.75rem">Cost almost nothing. Make you immediately different.</p>
+      <div class="qw"><div class="qw-num">1</div><p>Write tasting notes on a chalkboard next to the espresso machine</p></div>
+      <div class="qw"><div class="qw-num">2</div><p>First customer of the day gets their coffee free (costs 16 EGP, tells 10 people)</p></div>
+      <div class="qw"><div class="qw-num">3</div><p>Put a plant on every table</p></div>
+      <div class="qw"><div class="qw-num">4</div><p>Play a curated playlist, not random radio</p></div>
+      <div class="qw"><div class="qw-num">5</div><p>Offer free water without being asked</p></div>
+      <div class="qw"><div class="qw-num">6</div><p>WiFi password visible everywhere (not a scavenger hunt)</p></div>
+      <div class="qw"><div class="qw-num">7</div><p>Use the customer's name if they've been before</p></div>
+      <div class="qw"><div class="qw-num">8</div><p>Keep the bathroom spotless at all times</p></div>
+      <div class="qw"><div class="qw-num">9</div><p>Let customers see the coffee being made (open bar)</p></div>
+      <div class="qw"><div class="qw-num">10</div><p>Put your story on the wall -- one paragraph about why you opened</p></div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-bottom:.75rem">The Moon Shot</h3>
+      <p style="font-size:.72rem;color:var(--text3);margin-bottom:.75rem">Your growth trajectory, phase by phase.</p>
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:.3rem"><span style="color:var(--gold);font-weight:600">Year 1-2: Best in Neighborhood</span><span class="tag tag-gold">Active</span></div>
+          <div style="height:6px;background:var(--bg2);border-radius:3px;overflow:hidden"><div style="height:100%;width:25%;background:var(--gold);border-radius:3px"></div></div>
+          <p style="font-size:.7rem;color:var(--text3);margin-top:.2rem">"Best coffee in Maadi" -- 150+ customers/day, consistently profitable</p>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:.3rem"><span style="color:var(--green);font-weight:600">Year 2-3: Cairo Destination</span><span class="tag tag-green">Next</span></div>
+          <div style="height:6px;background:var(--bg2);border-radius:3px;overflow:hidden"><div style="height:100%;width:0%;background:var(--green);border-radius:3px"></div></div>
+          <p style="font-size:.7rem;color:var(--text3);margin-top:.2rem">People cross the city to visit. 2-3 locations. Own-roasted coffee brand.</p>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:.3rem"><span style="color:var(--blue);font-weight:600">Year 3-5: Egyptian Brand</span><span class="tag tag-blue">Future</span></div>
+          <div style="height:6px;background:var(--bg2);border-radius:3px;overflow:hidden"><div style="height:100%;width:0%;background:var(--blue);border-radius:3px"></div></div>
+          <p style="font-size:.7rem;color:var(--text3);margin-top:.2rem">5-10 locations. Retail in supermarkets. E-commerce nationwide. Training academy.</p>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:.3rem"><span style="color:var(--purple);font-weight:600">Year 5+: Regional</span><span class="tag tag-purple">Vision</span></div>
+          <div style="height:6px;background:var(--bg2);border-radius:3px;overflow:hidden"><div style="height:100%;width:0%;background:var(--purple);border-radius:3px"></div></div>
+          <p style="font-size:.7rem;color:var(--text3);margin-top:.2rem">GCC expansion (Dubai, Riyadh). Franchise model. Export specialty coffee.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="text-align:center;padding:2.5rem;border-color:rgba(212,165,74,.15);background:linear-gradient(135deg,var(--card),rgba(212,165,74,.04))">
+    <div style="font-size:2rem;margin-bottom:.75rem">&#9749;</div>
+    <h3 class="serif" style="font-size:1.4rem;color:var(--gold);margin-bottom:.5rem">Quality -> Community -> Brand -> Scale</h3>
+    <p style="font-size:.88rem;color:var(--text2);max-width:480px;margin:0 auto">In that order. Never skip a step. The playbook that turns a neighborhood cafe into an empire.</p>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ===========================
+// REACTIVE STATE SYSTEM
+// ===========================
+const DEFAULTS = {
+  // Savings
+  monthlySavingsAED: 10000,
+  currentSavingsEGP: 300000,
+  mudarabahRate: 15,
+  savingsTarget: 2500000,
+  sisterMatch: true,
+
+  // Startup - Equipment
+  eqEspresso: 300000,
+  eqGrinders: 60000,
+  eqWater: 8000,
+  eqFridge: 50000,
+  eqIce: 15000,
+  eqBlenders: 5000,
+  eqPourover: 8000,
+  eqColdbrew: 4000,
+
+  // Startup - Space
+  spRenovation: 400000,
+  spFurniture: 150000,
+  spLighting: 25000,
+  spSignage: 25000,
+  spPOS: 20000,
+  spAC: 50000,
+  spSound: 10000,
+
+  // Startup - Launch
+  laBrand: 30000,
+  laInventory: 40000,
+  laMarketing: 15000,
+  laPhoto: 8000,
+
+  // Startup - Legal
+  lgLicense: 35000,
+  lgLawyer: 15000,
+
+  // Deposit
+  monthlyRent: 50000,
+  depositMonths: 3,
+
+  // Supplies - Coffee
+  supEspressoKg: 18, supEspressoPrice: 1000,
+  supOriginKg: 6, supOriginPrice: 1200,
+  supDecafKg: 3, supDecafPrice: 1200,
+
+  // Supplies - Milk
+  supFullMilkL: 10, supFullMilkPrice: 25,
+  supOatMilkL: 3, supOatMilkPrice: 80,
+  supAlmondMilkL: 0, supAlmondMilkPrice: 90,
+
+  // Supplies - Syrups
+  supVanilla: 1500,
+  supCaramel: 1500,
+  supHazelnut: 800,
+  supChocolate: 1000,
+  supHoney: 700,
+
+  // Supplies - Disposables
+  supHotCups: 2500,
+  supColdCups: 2000,
+  supNapkins: 400,
+  supBags: 700,
+  supStraws: 300,
+  supStirrers: 200,
+
+  // Supplies - Food
+  supBakeryQty: 20,
+  supBakeryCost: 15,
+
+  // Team
+  salBarista1: 6000, onBarista1: true,
+  salBarista2: 5000, onBarista2: true,
+  salCleaner: 3500, onCleaner: true,
+  salBarista3: 6000, onBarista3: false,
+  salShiftLead: 9000, onShiftLead: false,
+  salSocial: 4000, onSocial: false,
+  salKitchen: 4000, onKitchen: false,
+  salManager: 14000, onManager: false,
+
+  // Menu
+  menuEspressoP: 45, menuEspressoC: 8,
+  menuAmericanoP: 55, menuAmericanoC: 9,
+  menuLatteP: 70, menuLatteC: 16,
+  menuCappP: 65, menuCappC: 14,
+  menuFlatP: 75, menuFlatC: 15,
+  menuTurkishP: 40, menuTurkishC: 6,
+  menuHotChocP: 65, menuHotChocC: 12,
+  menuTeaP: 38, menuTeaC: 4,
+  menuIcedLatteP: 80, menuIcedLatteC: 20,
+  menuIcedAmP: 60, menuIcedAmC: 10,
+  menuColdBrewP: 75, menuColdBrewC: 6,
+  menuIcedMochaP: 80, menuIcedMochaC: 18,
+  menuOJP: 50, menuOJC: 18,
+  menuLemonP: 45, menuLemonC: 12,
+  menuCroissantP: 40, menuCroissantC: 15,
+  menuCookieP: 35, menuCookieC: 10,
+  menuCakeP: 65, menuCakeC: 25,
+  menuSandwichP: 80, menuSandwichC: 30,
+
+  // Revenue
+  dailyCustomers: 50,
+  avgTicket: 60,
+
+  // Operating costs
+  opUtilities: 8000,
+  opInternet: 1000,
+  opMarketing: 10000,
+  opMaintenance: 5000,
+  opAccounting: 3000,
+  opInsurance: 3000,
+  opPOS: 1500,
+  opMisc: 5000
+};
+
+// Load from localStorage or use defaults
+let S = {};
+try {
+  const saved = localStorage.getItem('cafePlanState');
+  if (saved) {
+    const parsed = JSON.parse(saved);
+    S = Object.assign({}, DEFAULTS, parsed);
+  } else {
+    S = Object.assign({}, DEFAULTS);
+  }
+} catch(e) {
+  S = Object.assign({}, DEFAULTS);
+}
+
+// Number formatting
+function fmt(n) {
+  if (n === undefined || n === null || isNaN(n)) return '--';
+  if (Math.abs(n) >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+  if (Math.abs(n) >= 1e3) return Math.round(n).toLocaleString('en');
+  return Math.round(n).toString();
+}
+function fmtK(n) {
+  if (n === undefined || n === null || isNaN(n)) return '--';
+  if (Math.abs(n) >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+  if (Math.abs(n) >= 1e4) return (n / 1e3).toFixed(0) + 'K';
+  return Math.round(n).toLocaleString('en');
+}
+
+// Computed values cache
+let C = {};
+
+function calc() {
+  // ---- STARTUP COSTS ----
+  const eqKeys = ['eqEspresso','eqGrinders','eqWater','eqFridge','eqIce','eqBlenders','eqPourover','eqColdbrew'];
+  C.catEquipment = eqKeys.reduce((s,k) => s + (S[k]||0), 0);
+  eqKeys.forEach(k => C[k+'V'] = fmt(S[k]));
+
+  const spKeys = ['spRenovation','spFurniture','spLighting','spSignage','spPOS','spAC','spSound'];
+  C.catSpace = spKeys.reduce((s,k) => s + (S[k]||0), 0);
+  spKeys.forEach(k => C[k+'V'] = fmt(S[k]));
+
+  const laKeys = ['laBrand','laInventory','laMarketing','laPhoto'];
+  C.catLaunch = laKeys.reduce((s,k) => s + (S[k]||0), 0);
+  laKeys.forEach(k => C[k+'V'] = fmt(S[k]));
+
+  const lgKeys = ['lgLicense','lgLawyer'];
+  C.catLegal = lgKeys.reduce((s,k) => s + (S[k]||0), 0);
+  lgKeys.forEach(k => C[k+'V'] = fmt(S[k]));
+
+  C.depositTotal = (S.monthlyRent || 0) * (S.depositMonths || 0);
+  C.catDeposit = C.depositTotal;
+  C.monthlyRentV = fmt(S.monthlyRent);
+  C.depositTotalV = fmt(C.depositTotal);
+
+  C.totalStartupNum = C.catEquipment + C.catSpace + C.catLaunch + C.catLegal + C.catDeposit;
+  C.totalStartup = fmtK(C.totalStartupNum);
+  C.totalStartupFull = fmt(C.totalStartupNum) + ' EGP';
+
+  // Format category totals
+  C.catEquipment = fmt(C.catEquipment);
+  C.catSpace = fmt(C.catSpace);
+  C.catLaunch = fmt(C.catLaunch);
+  C.catLegal = fmt(C.catLegal);
+  C.catDeposit = fmt(C.catDeposit);
+
+  // ---- SUPPLIES ----
+  C.supEspressoSubN = (S.supEspressoKg||0) * (S.supEspressoPrice||0);
+  C.supOriginSubN = (S.supOriginKg||0) * (S.supOriginPrice||0);
+  C.supDecafSubN = (S.supDecafKg||0) * (S.supDecafPrice||0);
+  C.supCoffeeTotalN = C.supEspressoSubN + C.supOriginSubN + C.supDecafSubN;
+
+  C.supEspressoSub = fmt(C.supEspressoSubN);
+  C.supOriginSub = fmt(C.supOriginSubN);
+  C.supDecafSub = fmt(C.supDecafSubN);
+  C.supCoffeeTotal = fmt(C.supCoffeeTotalN);
+
+  C.supFullMilkSubN = (S.supFullMilkL||0) * (S.supFullMilkPrice||0) * 30;
+  C.supOatMilkSubN = (S.supOatMilkL||0) * (S.supOatMilkPrice||0) * 30;
+  C.supAlmondMilkSubN = (S.supAlmondMilkL||0) * (S.supAlmondMilkPrice||0) * 30;
+  C.supMilkTotalN = C.supFullMilkSubN + C.supOatMilkSubN + C.supAlmondMilkSubN;
+
+  C.supFullMilkSub = fmt(C.supFullMilkSubN);
+  C.supOatMilkSub = fmt(C.supOatMilkSubN);
+  C.supAlmondMilkSub = fmt(C.supAlmondMilkSubN);
+  C.supMilkTotal = fmt(C.supMilkTotalN);
+
+  const syrupKeys = ['supVanilla','supCaramel','supHazelnut','supChocolate','supHoney'];
+  C.supSyrupsTotalN = syrupKeys.reduce((s,k) => s + (S[k]||0), 0);
+  C.supSyrupsTotal = fmt(C.supSyrupsTotalN);
+  syrupKeys.forEach(k => C[k+'V'] = fmt(S[k]));
+
+  const dispKeys = ['supHotCups','supColdCups','supNapkins','supBags','supStraws','supStirrers'];
+  C.supDispTotalN = dispKeys.reduce((s,k) => s + (S[k]||0), 0);
+  C.supDispTotal = fmt(C.supDispTotalN);
+  dispKeys.forEach(k => C[k+'V'] = fmt(S[k]));
+
+  C.supBakerySubN = (S.supBakeryQty||0) * (S.supBakeryCost||0) * 30;
+  C.supFoodTotalN = C.supBakerySubN;
+  C.supBakerySub = fmt(C.supBakerySubN);
+  C.supFoodTotal = fmt(C.supFoodTotalN);
+
+  C.totalSuppliesN = C.supCoffeeTotalN + C.supMilkTotalN + C.supSyrupsTotalN + C.supDispTotalN + C.supFoodTotalN;
+  C.totalSuppliesFull = fmt(C.totalSuppliesN) + ' EGP';
+
+  // ---- TEAM / LABOR ----
+  const roles = [
+    {sal:'salBarista1', on:'onBarista1'},
+    {sal:'salBarista2', on:'onBarista2'},
+    {sal:'salCleaner', on:'onCleaner'},
+    {sal:'salBarista3', on:'onBarista3'},
+    {sal:'salShiftLead', on:'onShiftLead'},
+    {sal:'salSocial', on:'onSocial'},
+    {sal:'salKitchen', on:'onKitchen'},
+    {sal:'salManager', on:'onManager'}
+  ];
+  let baseSal = 0;
+  let activeCount = 0;
+  roles.forEach(r => {
+    if (S[r.on]) {
+      baseSal += (S[r.sal]||0);
+      activeCount++;
+    }
+  });
+  C.baseSalaries = fmt(baseSal);
+  C.activeStaffCount = activeCount;
+  C.socialInsuranceN = baseSal * 0.1875;
+  C.socialInsurance = fmt(C.socialInsuranceN);
+  C.transportAllowanceN = activeCount * 400;
+  C.transportAllowance = fmt(C.transportAllowanceN);
+  C.eidBonusN = baseSal / 12;
+  C.eidBonus = fmt(C.eidBonusN);
+  C.totalLaborN = baseSal + C.socialInsuranceN + C.transportAllowanceN + C.eidBonusN;
+  C.totalLaborFull = fmt(C.totalLaborN) + ' EGP';
+
+  // Toggle visual state for disabled roles
+  roles.forEach(r => {
+    const rowId = 'tr-' + r.sal.replace('sal','').toLowerCase();
+    // Map salary keys to row IDs
+  });
+
+  // ---- MENU MARGINS ----
+  const menuItems = [
+    'Espresso','Americano','Latte','Capp','Flat','Turkish','HotChoc','Tea',
+    'IcedLatte','IcedAm','ColdBrew','IcedMocha',
+    'OJ','Lemon','Croissant','Cookie','Cake','Sandwich'
+  ];
+  let marginSum = 0;
+  let marginCount = 0;
+  menuItems.forEach(item => {
+    const price = S['menu'+item+'P'] || 0;
+    const cost = S['menu'+item+'C'] || 0;
+    const margin = price > 0 ? ((price - cost) / price * 100) : 0;
+    C['menu'+item+'M'] = margin.toFixed(0) + '%';
+    if (price > 0) {
+      marginSum += margin;
+      marginCount++;
+    }
+    // Color the margin cell
+    const el = document.querySelector('[data-calc="menu'+item+'M"]');
+    if (el) {
+      el.style.color = margin >= 75 ? 'var(--green)' : margin >= 60 ? 'var(--gold)' : 'var(--red)';
+    }
+  });
+  C.avgMenuMargin = marginCount > 0 ? (marginSum / marginCount).toFixed(0) + '%' : '--';
+
+  // ---- REVENUE ----
+  const avgPrices = menuItems.map(item => S['menu'+item+'P'] || 0).filter(p => p > 0);
+  const calcAvgTicket = avgPrices.length > 0 ? avgPrices.reduce((a,b) => a+b, 0) / avgPrices.length : 60;
+  // Only override with calculated if user has not manually set
+  const avgTicketUsed = S.avgTicket || Math.round(calcAvgTicket);
+  const dailyCust = S.dailyCustomers || 50;
+  C.dailyRevenueN = dailyCust * avgTicketUsed;
+  C.monthlyRevenueN = C.dailyRevenueN * 30;
+  C.dailyRevenue = fmt(C.dailyRevenueN) + ' EGP';
+  C.monthlyRevCalc = fmt(C.monthlyRevenueN) + ' EGP';
+  C.avgTicketDisp = avgTicketUsed + ' EGP';
+  C.monthlyRevenue = fmtK(C.monthlyRevenueN);
+  C.avgTicketPL = avgTicketUsed + ' EGP';
+  C.plRevenue = fmt(C.monthlyRevenueN) + ' EGP';
+
+  // ---- P&L ----
+  C.plLaborN = C.totalLaborN;
+  C.plSuppliesN = C.totalSuppliesN;
+  C.plLabor = fmt(C.plLaborN);
+  C.plSupplies = fmt(C.plSuppliesN);
+
+  C.totalMonthlyOpN = (S.monthlyRent||0) + C.plLaborN + C.plSuppliesN +
+    (S.opUtilities||0) + (S.opInternet||0) + (S.opMarketing||0) +
+    (S.opMaintenance||0) + (S.opAccounting||0) + (S.opInsurance||0) +
+    (S.opPOS||0) + (S.opMisc||0);
+  C.plTotalCost = fmt(C.totalMonthlyOpN) + ' EGP';
+  C.totalMonthlyOp = fmtK(C.totalMonthlyOpN);
+
+  C.plProfitLossN = C.monthlyRevenueN - C.totalMonthlyOpN;
+  C.plProfitLoss = (C.plProfitLossN >= 0 ? '+' : '') + fmt(C.plProfitLossN) + ' EGP';
+  C.monthlyPL = (C.plProfitLossN >= 0 ? '+' : '') + fmtK(C.plProfitLossN);
+
+  // Color the P&L
+  const plEl = document.querySelector('[data-calc="plProfitLoss"]');
+  if (plEl) plEl.style.color = C.plProfitLossN >= 0 ? 'var(--green)' : 'var(--red)';
+  const plDash = document.querySelector('[data-calc="monthlyPL"]');
+  if (plDash) plDash.style.color = C.plProfitLossN >= 0 ? 'var(--green)' : 'var(--red)';
+
+  C.breakEvenN = avgTicketUsed > 0 ? C.totalMonthlyOpN / 30 / avgTicketUsed : 0;
+  C.plBreakeven = Math.ceil(C.breakEvenN) + '/day';
+  C.breakEvenCustomers = Math.ceil(C.breakEvenN);
+
+  C.plBurnRate = C.plProfitLossN < 0 ? fmt(Math.abs(C.plProfitLossN)) + '/mo' : 'N/A (profitable)';
+  const reserveCash = S.currentSavingsEGP || 0;
+  C.plRunway = C.plProfitLossN < 0 ? (Math.abs(C.plProfitLossN) > 0 ? (reserveCash / Math.abs(C.plProfitLossN)).toFixed(1) + ' mo' : '--') : 'Infinite';
+  C.plRecoup = C.plProfitLossN > 0 ? Math.ceil(C.totalStartupNum / C.plProfitLossN) + ' mo' : 'Not yet profitable';
+  C.plReserveN = C.totalStartupNum + (C.totalMonthlyOpN * 6);
+  C.plReserve = fmt(C.plReserveN) + ' EGP';
+
+  // Bar chart
+  const maxBar = Math.max(C.monthlyRevenueN, C.totalMonthlyOpN, 1);
+  const barRevEl = document.getElementById('barRevenue');
+  const barCostEl = document.getElementById('barCosts');
+  if (barRevEl) barRevEl.style.height = Math.round((C.monthlyRevenueN / maxBar) * 150) + 'px';
+  if (barCostEl) barCostEl.style.height = Math.round((C.totalMonthlyOpN / maxBar) * 150) + 'px';
+  C.barRevVal = fmtK(C.monthlyRevenueN);
+  C.barCostVal = fmtK(C.totalMonthlyOpN);
+
+  // ---- SAVINGS CALC ----
+  const monthly = (S.monthlySavingsAED || 0) * 13.6;
+  const current = S.currentSavingsEGP || 0;
+  const rate = (S.mudarabahRate || 0) / 100;
+  const target = S.savingsTarget || 2500000;
+  const half = S.sisterMatch ? target / 2 : target;
+  let balance = current;
+  let months = 0;
+  let totalProfit = 0;
+  const monthlyRate = rate / 12;
+  while (balance < half && months < 240) {
+    const profit = balance * monthlyRate;
+    totalProfit += profit;
+    balance += monthly + profit;
+    months++;
+  }
+  C.savMonths = months >= 240 ? '240+' : months;
+  C.monthsToSave = months >= 240 ? '240+' : months;
+  C.savYourTotal = fmtK(Math.round(balance));
+  C.savProfit = fmtK(Math.round(totalProfit));
+  const openDate = new Date();
+  openDate.setMonth(openDate.getMonth() + months + 3);
+  C.savDate = openDate.toLocaleDateString('en-US', {month:'short', year:'numeric'});
+  C.sisterLabel = S.sisterMatch ? 'Enabled (50/50)' : 'Disabled (solo)';
+
+  // ---- UPDATE DOM ----
+  document.querySelectorAll('[data-calc]').forEach(el => {
+    const key = el.dataset.calc;
+    if (C[key] !== undefined) {
+      el.textContent = C[key];
+    }
+  });
+
+  // Toggle visual for team rows
+  const roleMap = {
+    'onBarista1':'barista1','onBarista2':'barista2','onCleaner':'cleaner',
+    'onBarista3':'barista3','onShiftLead':'shiftlead','onSocial':'social',
+    'onKitchen':'kitchen','onManager':'manager'
+  };
+  Object.entries(roleMap).forEach(([key, id]) => {
+    const row = document.getElementById('tr-'+id);
+    if (row) {
+      if (S[key]) row.classList.remove('disabled-role');
+      else row.classList.add('disabled-role');
+    }
+  });
+
+  // Persist
+  try { localStorage.setItem('cafePlanState', JSON.stringify(S)); } catch(e) {}
+}
+
+// ===========================
+// BIND INPUTS
+// ===========================
+function bindInputs() {
+  document.querySelectorAll('[data-key]').forEach(el => {
+    const key = el.dataset.key;
+    // Set initial value
+    if (el.type === 'checkbox') {
+      el.checked = !!S[key];
+    } else {
+      el.value = S[key] !== undefined ? S[key] : '';
+    }
+    // Listen for changes
+    el.addEventListener('input', () => {
+      if (el.type === 'checkbox') {
+        S[key] = el.checked;
+      } else {
+        S[key] = parseFloat(el.value) || 0;
+      }
+      calc();
+    });
+    el.addEventListener('change', () => {
+      if (el.type === 'checkbox') {
+        S[key] = el.checked;
+      } else {
+        S[key] = parseFloat(el.value) || 0;
+      }
+      calc();
+    });
+  });
+}
+
+// Sync duplicate inputs (e.g. dailyCustomers appears on both menu and P&L pages)
+function syncDuplicateInputs(changedKey, changedEl) {
+  document.querySelectorAll('[data-key="'+changedKey+'"]').forEach(el => {
+    if (el !== changedEl) {
+      if (el.type === 'checkbox') el.checked = S[changedKey];
+      else el.value = S[changedKey];
+    }
+  });
+}
+
+// Override input handler to sync duplicates
+function setupDuplicateSync() {
+  document.querySelectorAll('[data-key]').forEach(el => {
+    const key = el.dataset.key;
+    el.addEventListener('input', () => syncDuplicateInputs(key, el));
+    el.addEventListener('change', () => syncDuplicateInputs(key, el));
+  });
+}
+
+// ===========================
+// SPA NAVIGATION
+// ===========================
+function navigateTo(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+  const page = document.getElementById('page-' + pageId);
+  if (page) page.classList.add('active');
+  const link = document.querySelector('.sidebar-nav a[data-page="'+pageId+'"]');
+  if (link) link.classList.add('active');
+  // Close mobile sidebar
+  document.querySelector('.sidebar').classList.remove('open');
+  document.querySelector('.mobile-overlay').classList.remove('open');
+  // Scroll to top
+  window.scrollTo(0, 0);
+  // Trigger reveal animations for newly visible page
+  setTimeout(() => {
+    if (page) {
+      page.querySelectorAll('.reveal').forEach(el => {
+        revealObserver.observe(el);
+      });
+    }
+  }, 50);
+}
+
+document.querySelectorAll('.sidebar-nav a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    navigateTo(link.dataset.page);
+  });
+});
+
+// ===========================
+// SCROLL REVEAL WITHIN PAGES
+// ===========================
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.1, rootMargin: '0px 0px -30px 0px'});
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ===========================
+// INIT
+// ===========================
+bindInputs();
+setupDuplicateSync();
+calc();
+</script>
+</body>
+</html>
