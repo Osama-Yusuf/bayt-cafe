@@ -419,128 +419,54 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <div class="page" id="page-savings">
   <div class="section-label">Financial Planning</div>
   <div class="section-title">Savings & Timeline</div>
-  <div class="section-sub">With halal Mudarabah profit-sharing and your sister matching 50/50 -- here is exactly when you can open.</div>
+  <div class="section-sub">Plan how to accumulate capital to buy your café space. Add partners, adjust numbers, see when you can open.</div>
 
   <!-- Calculator -->
-  <div class="card" style="margin-bottom:2rem">
-    <h3 style="margin-bottom:.3rem">Savings Calculator</h3>
-    <p style="font-size:.78rem;color:var(--text2);margin-bottom:1.25rem">Adjust your numbers to see when you can launch.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:1rem">
+  <div class="card" style="margin-bottom:1.5rem">
+    <h3 style="margin-bottom:1.25rem">Savings Calculator</h3>
+
+    <!-- Partners -->
+    <div id="partners-list"></div>
+    <button onclick="addPartner()" style="background:transparent;border:1px dashed var(--border-light);color:var(--text2);padding:.5rem 1rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.75rem;font-family:inherit;transition:var(--transition);margin-bottom:1.25rem;width:100%" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--border-light)';this.style.color='var(--text2)'">+ Add Partner</button>
+
+    <!-- Gold + Target -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem">
       <div>
-        <label class="fi-label">Monthly Savings (AED)</label>
-        <input class="fi" type="number" data-key="monthlySavingsAED" min="0" step="500">
+        <label class="fi-label">Gold Reserves — Liquidation Value (EGP)</label>
+        <input class="fi" type="number" data-key="goldReserves" min="0" step="10000">
       </div>
       <div>
-        <label class="fi-label">Current Savings (EGP)</label>
-        <input class="fi" type="number" data-key="currentSavingsEGP" min="0" step="10000">
-      </div>
-      <div>
-        <label class="fi-label">Expected Profit Rate - Mudarabah (%)</label>
-        <input class="fi" type="number" data-key="mudarabahRate" min="0" max="30" step="1">
-      </div>
-      <div>
-        <label class="fi-label">Target Amount (EGP, both partners)</label>
+        <label class="fi-label">Target: Property Purchase Price (EGP)</label>
         <input class="fi" type="number" data-key="savingsTarget" min="500000" step="100000">
       </div>
-      <div>
-        <label class="fi-label" style="margin-bottom:.5rem">Sister Matches 50/50</label>
-        <div class="toggle-wrap">
-          <label class="toggle"><input type="checkbox" data-key="sisterMatch" checked><span class="slider"></span></label>
-          <span style="font-size:.8rem;color:var(--text2)" data-calc="sisterLabel">Enabled</span>
-        </div>
-      </div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-top:1rem">
-      <div style="background:var(--bg2);padding:1rem;text-align:center"><div style="font-size:1.3rem;font-weight:800;color:var(--gold)" data-calc="savMonths">--</div><div style="font-size:.65rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Months to Target</div></div>
-      <div style="background:var(--bg2);padding:1rem;text-align:center"><div style="font-size:1.3rem;font-weight:800;color:var(--gold)" data-calc="savYourTotal">--</div><div style="font-size:.65rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Your 50% Total</div></div>
-      <div style="background:var(--bg2);padding:1rem;text-align:center"><div style="font-size:1.3rem;font-weight:800;color:var(--green)" data-calc="savProfit">--</div><div style="font-size:.65rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Profit Share Earned</div></div>
-      <div style="background:var(--bg2);padding:1rem;text-align:center"><div style="font-size:1.3rem;font-weight:800;color:var(--copper)" data-calc="savDate">--</div><div style="font-size:.65rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Estimated Open Date</div></div>
+
+    <!-- Optional Mudarabah -->
+    <div style="display:flex;align-items:center;gap:1.5rem;padding:.75rem 1rem;background:var(--bg2);border-radius:var(--radius-sm);margin-bottom:1.25rem;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:.6rem">
+        <label class="toggle" style="flex-shrink:0"><input type="checkbox" data-key="useMudarabah"><span class="slider"></span></label>
+        <span style="font-size:.78rem;color:var(--text2)">Mudarabah profit sharing</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:.4rem">
+        <span style="font-size:.72rem;color:var(--text3)">Rate:</span>
+        <input class="fi fi-sm" type="number" data-key="mudarabahRate" min="0" max="30" step="1" style="width:55px">
+        <span style="font-size:.72rem;color:var(--text3)">%</span>
+      </div>
+      <span style="font-size:.68rem;color:var(--text3);font-style:italic">Optional — halal profit-sharing on cash portion</span>
+    </div>
+
+    <!-- Results -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:var(--radius-sm);overflow:hidden">
+      <div style="background:var(--bg2);padding:1.15rem;text-align:center"><div style="font-size:1.5rem;font-weight:800;color:var(--gold)" data-calc="savMonths">--</div><div style="font-size:.62rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Months to Target</div></div>
+      <div style="background:var(--bg2);padding:1.15rem;text-align:center"><div style="font-size:1.5rem;font-weight:800;color:var(--green)" data-calc="savYourTotal">--</div><div style="font-size:.62rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Total Accumulated</div></div>
+      <div style="background:var(--bg2);padding:1.15rem;text-align:center"><div style="font-size:1.5rem;font-weight:800;color:var(--copper)" data-calc="savDate">--</div><div style="font-size:.62rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Estimated Buy Date</div></div>
     </div>
   </div>
 
-  <!-- Why Real Assets Beat Cash in Egypt -->
-  <h3 style="font-size:1rem;font-weight:700;margin-bottom:.5rem">Why Real Assets Beat Cash in Egypt</h3>
-  <p style="font-size:.8rem;color:var(--text2);margin-bottom:1rem">Cash in a savings account loses purchasing power with every devaluation. Property and gold don't.</p>
-  <div class="card-grid cols-3" style="margin-bottom:2rem">
-    <div class="card">
-      <div class="card-icon" style="background:rgba(199,91,58,.12);color:var(--red)">&#128184;</div>
-      <h3>Cash (Mudarabah)</h3>
-      <div style="font-size:1.1rem;font-weight:700;color:var(--red);margin:.4rem 0">15-18% nominal<br><span style="font-size:.75rem;color:var(--text3)">but 25-30% inflation = negative real return</span></div>
-      <p>If another devaluation hits, your savings lose 30-50% purchasing power overnight. Mudarabah can't keep up.</p>
-      <span class="tag tag-red" style="position:absolute;top:.75rem;right:.75rem">Risky in Egypt</span>
-    </div>
-    <div class="card" style="border-color:rgba(212,165,74,.25)">
-      <div class="card-icon" style="background:var(--gold-glow);color:var(--gold)">&#127974;</div>
-      <h3>Commercial Property</h3>
-      <div style="font-size:1.1rem;font-weight:700;color:var(--gold);margin:.4rem 0">5-7% rent + 15-25% appreciation<br><span style="font-size:.75rem;color:var(--green)">= 20-32% total in devaluation years</span></div>
-      <p>Real asset. Value skyrockets with devaluation. Rent increases with inflation. Tenant handles maintenance. If café fails, asset still stands.</p>
-      <span class="tag tag-gold" style="position:absolute;top:.75rem;right:.75rem">Devaluation Shield</span>
-    </div>
-    <div class="card" style="border-color:rgba(91,168,114,.25)">
-      <div class="card-icon" style="background:var(--green-glow);color:var(--green)">&#129351;</div>
-      <h3>Gold</h3>
-      <div style="font-size:1.1rem;font-weight:700;color:var(--green);margin:.4rem 0">Tracks devaluation perfectly<br><span style="font-size:.75rem;color:var(--text2)">highly liquid, sell anytime</span></div>
-      <p>Best inflation hedge. When EGP drops, gold in EGP rises. Buy gradually. Sell when ready to deploy capital. Halal, liquid, safe.</p>
-      <span class="tag tag-green" style="position:absolute;top:.75rem;right:.75rem">Inflation Hedge</span>
-    </div>
-  </div>
-
-  <!-- The Plan: Own Your Space -->
-  <h3 style="font-size:1rem;font-weight:700;margin-bottom:.5rem">The Plan: Buy the Café's Own Space</h3>
-  <p style="font-size:.8rem;color:var(--text2);margin-bottom:1rem">Don't rent. Don't buy a separate investment property. Buy the space Bayt Café will operate in. Zero rent forever.</p>
-  <div class="card" style="margin-bottom:2rem;border-color:rgba(212,165,74,.15);background:linear-gradient(135deg,var(--card),rgba(212,165,74,.03))">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-bottom:1.5rem">
-      <div style="text-align:center;padding:1.25rem;background:var(--bg2);border-radius:var(--radius-sm)">
-        <div style="font-size:1.8rem;font-weight:800;color:var(--gold)">~2M</div>
-        <div style="font-size:.7rem;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-top:.2rem">Target Property Price</div>
-        <div style="font-size:.72rem;color:var(--text3);margin-top:.3rem">Small shop, pay in cash</div>
-      </div>
-      <div style="text-align:center;padding:1.25rem;background:var(--bg2);border-radius:var(--radius-sm)">
-        <div style="font-size:1.8rem;font-weight:800;color:var(--green)">60K</div>
-        <div style="font-size:.7rem;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-top:.2rem">Combined Monthly Savings</div>
-        <div style="font-size:.72rem;color:var(--text3);margin-top:.3rem">30K each (you + sister)</div>
-      </div>
-      <div style="text-align:center;padding:1.25rem;background:var(--bg2);border-radius:var(--radius-sm)">
-        <div style="font-size:1.8rem;font-weight:800;color:var(--copper)">~12 mo</div>
-        <div style="font-size:.7rem;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-top:.2rem">To Reach Target</div>
-        <div style="font-size:.72rem;color:var(--text3);margin-top:.3rem">720K savings + gold reserves = ~2M</div>
-      </div>
-    </div>
-    <div style="font-size:.78rem;color:var(--text2);line-height:1.7">
-      <strong style="color:var(--gold)">The math:</strong> 60K/month × 12 months = 720K EGP in new savings. Add your existing gold savings to reach ~2M. Buy the space in cash — no debt, no riba. If you're a little short, you can stretch a few more months or negotiate.
-    </div>
-    <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.78rem;color:var(--text2);line-height:1.7">
-      <strong style="color:var(--green)">Why this wins over renting + investment property:</strong> Renting a café at 40-50K/month means 500-600K/year going to a landlord. By owning, that money stays in your pocket. Over 3 years that's 1.5M+ saved — almost the cost of the property itself.
-    </div>
-  </div>
-
-  <!-- Recommended Timeline -->
-  <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem">Timeline</h3>
-  <div class="card-grid cols-3" style="margin-bottom:1rem">
-    <div class="card" style="border-top:3px solid var(--gold)">
-      <div style="font-size:.65rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.1em">Month 1-6</div>
-      <h3 style="margin-top:.4rem">Save & Scout</h3>
-      <p>Save 60K/month (30K each). Keep savings in gold + AED to protect against devaluation. Visit cafés. Take a barista course. Sister scouts commercial spaces in target areas.</p>
-    </div>
-    <div class="card" style="border-top:3px solid var(--green)">
-      <div style="font-size:.65rem;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:.1em">Month 6-10</div>
-      <h3 style="margin-top:.4rem">Find & Buy</h3>
-      <p>Continue saving. Finalize a small commercial space to buy. Negotiate cash price. Begin branding and licensing in parallel.</p>
-    </div>
-    <div class="card" style="border-top:3px solid var(--blue)">
-      <div style="font-size:.65rem;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:.1em">Month 10-14</div>
-      <h3 style="margin-top:.4rem">Build Out</h3>
-      <p>Renovate your own space — full control, no landlord. Equipment, permits, hiring, barista training. Remaining savings cover startup costs.</p>
-    </div>
-  </div>
-  <div class="card" style="border-top:3px solid var(--copper);margin-bottom:2rem">
-    <div style="font-size:.65rem;color:var(--copper);font-weight:700;text-transform:uppercase;letter-spacing:.1em">Month 14-16</div>
-    <h3 style="margin-top:.4rem">Grand Opening — Bismillah</h3>
-    <p>You own the space. Zero rent. If the café doesn't work out, you rent the space and collect income. If it thrives, you own the asset and the business. Either way, you win.</p>
-  </div>
-
-  <div class="info-box">
-    <strong>What to look for in the space:</strong> Ground floor, street-level, visible signage, 40-80 sqm, good water/drainage/electrical, AC-ready, near foot traffic. Doesn't need to be café-ready — you'll renovate it. Pay in cash for best price.
+  <!-- One clean summary -->
+  <div class="card" style="border-color:rgba(212,165,74,.12);background:linear-gradient(135deg,var(--card),rgba(212,165,74,.03))">
+    <h3 style="margin-bottom:.5rem">Why Own Instead of Rent</h3>
+    <p style="font-size:.82rem;color:var(--text2);line-height:1.7">Renting at 40-50K/month means 500-600K/year going to a landlord. Over 3 years that's 1.5M+ — almost the property cost itself. By owning: zero rent, full control, no lease expiry risk, and if the café doesn't work out you rent the space and collect income. In Egypt's economy, real assets beat cash — property appreciates with every devaluation, cash doesn't.</p>
   </div>
 </div>
 
@@ -1674,11 +1600,16 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 // ===========================
 const DEFAULTS = {
   // Savings
+  monthlySavingsYou: 30000,
+  monthlySavingsSister: 30000,
+  currentSavingsSister: 300000,
+  goldReserves: 500000,
+  useMudarabah: false,
+  mudarabahPct: 40,
   monthlySavingsAED: 10000,
   currentSavingsEGP: 300000,
   mudarabahRate: 15,
-  savingsTarget: 2500000,
-  sisterMatch: true,
+  savingsTarget: 2000000,
 
   // Startup - Equipment
   eqEspresso: 300000,
@@ -2024,29 +1955,34 @@ function calc() {
   C.barCostVal = fmtK(C.totalMonthlyOpN);
 
   // ---- SAVINGS CALC ----
-  const monthly = (S.monthlySavingsAED || 0) * 13.6;
-  const current = S.currentSavingsEGP || 0;
-  const rate = (S.mudarabahRate || 0) / 100;
-  const target = S.savingsTarget || 2500000;
-  const half = S.sisterMatch ? target / 2 : target;
-  let balance = current;
+  const monthlyCombined = S._partnerMonthly || 0;
+  const currentCombined = S._partnerCurrent || 0;
+  const gold = S.goldReserves || 0;
+  const target = S.savingsTarget || 2000000;
+  const useMud = S.useMudarabah || false;
+  const rate = useMud ? (S.mudarabahRate || 0) / 100 : 0;
+  const monthlyRate = rate / 12;
+
+  const targetAfterGold = Math.max(target - gold, 0);
+  let balance = currentCombined;
   let months = 0;
   let totalProfit = 0;
-  const monthlyRate = rate / 12;
-  while (balance < half && months < 240) {
-    const profit = balance * monthlyRate;
-    totalProfit += profit;
-    balance += monthly + profit;
-    months++;
+  if (balance + gold >= target) {
+    months = 0;
+  } else {
+    while (balance < targetAfterGold && months < 240) {
+      const profit = useMud ? balance * monthlyRate : 0;
+      totalProfit += profit;
+      balance += monthlyCombined + profit;
+      months++;
+    }
   }
   C.savMonths = months >= 240 ? '240+' : months;
   C.monthsToSave = months >= 240 ? '240+' : months;
-  C.savYourTotal = fmtK(Math.round(balance));
-  C.savProfit = fmtK(Math.round(totalProfit));
+  C.savYourTotal = fmtK(Math.round(balance + gold));
   const openDate = new Date();
   openDate.setMonth(openDate.getMonth() + months + 3);
   C.savDate = openDate.toLocaleDateString('en-US', {month:'short', year:'numeric'});
-  C.sisterLabel = S.sisterMatch ? 'Enabled (50/50)' : 'Disabled (solo)';
 
   // ---- PARTNERSHIP ----
   C.partnerSisterCapital = (100 - (S.partnerYourCapital || 50)) + '%';
@@ -2205,6 +2141,63 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 // ===========================
 // INIT
 // ===========================
+// ===========================
+// DYNAMIC PARTNERS
+// ===========================
+let partners = JSON.parse(localStorage.getItem('bayt_partners') || 'null') || [
+  {name:'You', monthly:30000, current:300000},
+  {name:'Partner', monthly:30000, current:300000}
+];
+
+function savePartners(){
+  localStorage.setItem('bayt_partners', JSON.stringify(partners));
+}
+
+function renderPartners(){
+  const list = document.getElementById('partners-list');
+  if(!list) return;
+  list.innerHTML = partners.map((p,i) => `
+    <div style="display:grid;grid-template-columns:${partners.length>1?'1fr':'0'} 1fr 1fr ${partners.length>1?'32px':'0'};gap:.75rem;align-items:end;margin-bottom:.75rem">
+      ${partners.length>1?`<div>
+        ${i===0?'<label class="fi-label">Name</label>':''}
+        <input class="fi" type="text" value="${p.name}" onchange="partners[${i}].name=this.value;savePartners();recalcPartners()" style="font-size:.82rem">
+      </div>`:''}
+      <div>
+        ${i===0?'<label class="fi-label">Monthly Savings (EGP)</label>':''}
+        <input class="fi" type="number" value="${p.monthly}" min="0" step="1000" onchange="partners[${i}].monthly=parseFloat(this.value)||0;savePartners();recalcPartners()">
+      </div>
+      <div>
+        ${i===0?'<label class="fi-label">Current Savings (EGP)</label>':''}
+        <input class="fi" type="number" value="${p.current}" min="0" step="10000" onchange="partners[${i}].current=parseFloat(this.value)||0;savePartners();recalcPartners()">
+      </div>
+      ${partners.length>1?`<button onclick="removePartner(${i})" style="background:transparent;border:1px solid var(--border);color:var(--text3);width:32px;height:38px;border-radius:6px;cursor:pointer;font-size:.9rem;transition:var(--transition)" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--red)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text3)'">&times;</button>`:''}
+    </div>
+  `).join('');
+}
+
+function addPartner(){
+  partners.push({name:'Partner '+(partners.length+1), monthly:0, current:0});
+  savePartners(); renderPartners(); recalcPartners();
+}
+
+function removePartner(i){
+  if(partners.length<=1) return;
+  partners.splice(i,1);
+  savePartners(); renderPartners(); recalcPartners();
+}
+
+function recalcPartners(){
+  S._partnerMonthly = partners.reduce((s,p)=>s+p.monthly, 0);
+  S._partnerCurrent = partners.reduce((s,p)=>s+p.current, 0);
+  calc();
+}
+
+function initPartners(){
+  renderPartners();
+  recalcPartners();
+}
+
+initPartners();
 bindInputs();
 setupDuplicateSync();
 calc();
