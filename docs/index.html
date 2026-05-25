@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Bayt Café — بيت كافيه</title>
+<title>Café Planner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
 <style>
@@ -39,9 +39,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .sidebar-nav a .nav-icon{width:22px;text-align:center;font-size:.95rem;flex-shrink:0}
 .sidebar-footer{padding:1rem 1.25rem;border-top:1px solid var(--border);font-size:.65rem;color:var(--text3);text-align:center}
 
-/* Mobile hamburger */
-.hamburger{display:none;position:fixed;top:1rem;left:1rem;z-index:300;width:40px;height:40px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;align-items:center;justify-content:center;color:var(--gold);font-size:1.2rem}
-.mobile-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:190}
+/* Mobile hamburger - REMOVED (dead code) */
 
 /* Read-more toggle */
 .rm-toggle{background:none;border:none;color:var(--gold);font-size:.78rem;font-weight:600;cursor:pointer;padding:.3rem 0;font-family:inherit}
@@ -72,7 +70,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     flex-direction:column;
     gap:.2rem;
     padding:.45rem .25rem;
-    font-size:.58rem;
+    font-size:.65rem;
     font-weight:600;
     border-left:none !important;
     border-bottom:none;
@@ -103,8 +101,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     padding:1.25rem 1rem!important;
     padding-bottom:calc(72px + env(safe-area-inset-bottom, 0px))!important;
   }
-  .hamburger{display:none}
-  .mobile-overlay{display:none!important}
+  /* hamburger and overlay removed */
 
   /* General mobile fixes */
   section,.page{padding:1.5rem 1rem}
@@ -176,7 +173,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   .metric{padding:.75rem .5rem}
   .m-val{font-size:1rem}
   .m-label{font-size:.55rem}
-  .sidebar-nav a{padding:.3rem .35rem;font-size:.55rem}
+  .sidebar-nav a{padding:.3rem .35rem;font-size:.62rem}
   .sidebar-nav a .nav-icon{font-size:.95rem}
 }
 
@@ -359,9 +356,27 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;display:inline-block}
 
-/* Scroll reveal within pages */
-.reveal{opacity:0;transform:translateY(20px);transition:all .6s cubic-bezier(.4,0,.2,1)}
-.reveal.visible{opacity:1;transform:none}
+/* Grid utility classes */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px}
+@media(max-width:768px){
+  .grid-2,.grid-3{grid-template-columns:1fr}
+}
+
+/* Pie chart */
+.cost-pie-wrap{display:flex;gap:2rem;align-items:center;flex-wrap:wrap;justify-content:center}
+.cost-pie{width:180px;height:180px;border-radius:50%;position:relative;flex-shrink:0}
+.cost-pie::after{content:'';position:absolute;inset:40px;border-radius:50%;background:var(--card)}
+.cost-pie-legend{display:flex;flex-direction:column;gap:.4rem}
+.pie-leg{display:flex;align-items:center;gap:.5rem;font-size:.75rem}
+.pie-leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.pie-leg-val{color:var(--gold);font-weight:600;margin-left:auto;font-variant-numeric:tabular-nums}
+
+/* Input validation */
+.fi-warn{border-color:var(--red) !important;box-shadow:0 0 0 2px rgba(199,91,58,.15)}
+
+/* Progress ring */
+.progress-ring{position:relative;display:inline-block}
 
 /* ===== CHECKLIST PAGE ===== */
 .cl-phase{margin-bottom:2rem}
@@ -373,7 +388,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .cl-item:last-child{border-bottom:none}
 .cl-item.checked .cl-title{text-decoration:line-through;color:var(--text3)}
 .cl-item.checked .cl-desc{color:var(--text3);opacity:.6}
-.cl-check{position:relative;width:22px;height:22px;flex-shrink:0;margin-top:1px}
+.cl-check{width:44px;height:44px;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;position:relative}
 .cl-check input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;z-index:2;margin:0}
 .cl-check .cl-box{width:22px;height:22px;border:2px solid var(--border-light);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:.7rem;transition:all .25s ease;background:var(--bg)}
 .cl-check input:checked+.cl-box{background:var(--gold);border-color:var(--gold);color:var(--bg);box-shadow:0 0 12px var(--gold-glow)}
@@ -527,10 +542,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   </div>
 </div>
 
-<!-- MOBILE HAMBURGER -->
-<button class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.mobile-overlay').classList.toggle('open')">&#9776;</button>
-<div class="mobile-overlay" onclick="document.querySelector('.sidebar').classList.remove('open');this.classList.remove('open')"></div>
-
 <!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sidebar-logo">
@@ -545,7 +556,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     <a data-page="strategy"><span class="nav-icon">&#9813;</span>Strategy</a>
     <a data-page="faith"><span class="nav-icon">&#9770;</span>Faith</a>
   </nav>
-  <div class="sidebar-footer">All numbers in EGP<br>Rate: ~13.6 EGP = 1 AED<button class="sidebar-restart" onclick="restartOnboarding()">Restart Setup</button></div>
+  <div class="sidebar-footer">All numbers in EGP<button class="sidebar-restart" onclick="restartOnboarding()">Restart Setup</button></div>
 </aside>
 
 <!-- MAIN CONTENT -->
@@ -566,7 +577,15 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     <div class="metric"><div class="m-val" style="color:var(--purple)" data-calc="monthsToSave">--</div><div class="m-label">Months to Save Target</div></div>
   </div>
 
-  <h3 style="font-size:.95rem;font-weight:700;margin-bottom:1rem;color:var(--text2)">Market Snapshot</h3>
+  <h3 style="font-size:.95rem;font-weight:700;margin-bottom:1rem;color:var(--text2)">Where Your Money Goes (Monthly)</h3>
+  <div class="card" style="margin-bottom:2rem">
+    <div class="cost-pie-wrap">
+      <div class="cost-pie" id="cost-pie"></div>
+      <div class="cost-pie-legend" id="cost-pie-legend"></div>
+    </div>
+  </div>
+
+  <h3 style="font-size:.95rem;font-weight:700;margin-bottom:1rem;color:var(--text2)">Egypt Market Context</h3>
   <div class="card-grid cols-4">
     <div class="card" style="text-align:center">
       <div style="font-size:2rem;font-weight:800;color:var(--gold)">2x</div>
@@ -593,6 +612,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <button onclick="restartOnboarding()" style="background:var(--card);border:1px solid var(--border);color:var(--text2);padding:.5rem 1rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.75rem;font-family:inherit;transition:var(--transition)" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">&#9881; Re-run Setup</button>
       <button onclick="if(confirm('Reset ALL data to defaults? This clears your custom numbers, partners, areas, and checklists.')){localStorage.clear();location.reload()}" style="background:var(--card);border:1px solid var(--border);color:var(--text2);padding:.5rem 1rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.75rem;font-family:inherit;transition:var(--transition)" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--red)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">&#128465; Reset Everything</button>
       <button onclick="var d=JSON.stringify({state:S,partners:partners,areas:AREAS},null,2);var b=new Blob([d],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=(S.cafeName||'cafe')+'-plan.json';a.click()" style="background:var(--card);border:1px solid var(--border);color:var(--text2);padding:.5rem 1rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.75rem;font-family:inherit;transition:var(--transition)" onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='var(--border)'">&#128190; Export Data</button>
+      <button onclick="document.getElementById('import-file').click()" style="background:var(--card);border:1px solid var(--border);color:var(--text2);padding:.5rem 1rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.75rem;font-family:inherit;transition:var(--transition)" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--border)'">&#128194; Import Data</button>
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(this)">
     </div>
   </div>
 </div>
@@ -621,14 +642,14 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <button onclick="addPartner()" style="background:transparent;border:1px dashed var(--border-light);color:var(--text2);padding:.5rem 1rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.75rem;font-family:inherit;transition:var(--transition);margin-bottom:1.25rem;width:100%" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--border-light)';this.style.color='var(--text2)'">+ Add Partner</button>
 
       <!-- Gold + Target -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem">
+      <div class="grid-2" style="margin-bottom:1.25rem">
         <div>
           <label class="fi-label">Gold Reserves — Liquidation Value (EGP)</label>
           <input class="fi" type="number" data-key="goldReserves" min="0" step="10000" inputmode="numeric">
         </div>
         <div>
           <label class="fi-label" data-calc="targetLabel">Target: Property Purchase Price (EGP)</label>
-          <input class="fi" type="number" data-key="savingsTarget" min="500000" step="100000">
+          <input class="fi" type="number" data-key="savingsTarget" min="500000" step="100000" inputmode="numeric">
         </div>
       </div>
 
@@ -647,10 +668,26 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       </div>
 
       <!-- Results -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:var(--radius-sm);overflow:hidden">
+      <div class="grid-3" style="background:var(--border);border-radius:var(--radius-sm);overflow:hidden">
         <div style="background:var(--bg2);padding:1.15rem;text-align:center"><div style="font-size:1.5rem;font-weight:800;color:var(--gold)" data-calc="savMonths">--</div><div style="font-size:.62rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Months to Target</div></div>
         <div style="background:var(--bg2);padding:1.15rem;text-align:center"><div style="font-size:1.5rem;font-weight:800;color:var(--green)" data-calc="savYourTotal">--</div><div style="font-size:.62rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Total Accumulated</div></div>
         <div style="background:var(--bg2);padding:1.15rem;text-align:center"><div style="font-size:1.5rem;font-weight:800;color:var(--copper)" data-calc="savDate">--</div><div style="font-size:.62rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em" data-calc="dateLabel">Estimated Buy Date</div></div>
+      </div>
+
+      <!-- Progress ring -->
+      <div style="text-align:center;margin-top:1.5rem">
+        <div class="progress-ring" id="savings-ring">
+          <svg width="120" height="120" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="52" fill="none" stroke="var(--border)" stroke-width="8"/>
+            <circle cx="60" cy="60" r="52" fill="none" stroke="var(--gold)" stroke-width="8" stroke-linecap="round"
+              stroke-dasharray="326.7" stroke-dashoffset="326.7" id="ring-progress"
+              style="transform:rotate(-90deg);transform-origin:center;transition:stroke-dashoffset .6s ease"/>
+          </svg>
+          <div class="ring-text" id="ring-text" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column">
+            <div style="font-size:1.5rem;font-weight:800;color:var(--gold)" data-calc="savPct">0%</div>
+            <div style="font-size:.6rem;color:var(--text3);text-transform:uppercase">of target</div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -729,7 +766,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <div class="cl-item" data-cl="p2_roaster_samples"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Contact coffee roasters for samples and wholesale pricing</div><div class="cl-desc">The Roastery, Brown Nose, 30 North, Cairocoffee</div></div></div>
       <div class="cl-item" data-cl="p2_bakery_partners"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Contact bakery partners for daily supply terms</div><div class="cl-desc">Negotiate pricing, delivery schedule, return policy</div></div></div>
       <div class="cl-item" data-cl="p2_social_accounts"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Set up Instagram and TikTok accounts</div><div class="cl-desc">Start posting behind-the-scenes content</div></div></div>
-      <div class="cl-item" data-cl="p2_domain"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Register domain and create coming-soon page</div><div class="cl-desc">baytcafe.com -- simple, clean, with email signup</div></div></div>
+      <div class="cl-item" data-cl="p2_domain"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Register domain and create coming-soon page</div><div class="cl-desc">Your domain -- simple, clean, with email signup</div></div></div>
     </div>
 
     <!-- Phase 3 -->
@@ -1008,7 +1045,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <div class="cost-row"><span class="cr-name">Paper Straws</span><input class="fi fi-sm cr-input" type="number" data-key="supStraws" step="50"><span class="cr-sub" data-calc="supStrawsV">--</span></div>
       <div class="cost-row"><span class="cr-name">Stirrers</span><input class="fi fi-sm cr-input" type="number" data-key="supStirrers" step="50"><span class="cr-sub" data-calc="supStirrersV">--</span></div>
       <div class="info-box info-blue" style="margin-top:.5rem">
-        <strong>Tip:</strong> Branded cups cost 30-50% more but are worth it for brand visibility. Every takeaway cup is a walking ad for Bayt Caf&eacute;.
+        <strong>Tip:</strong> Branded cups cost 30-50% more but are worth it for brand visibility. Every takeaway cup is a walking ad for <span data-calc="cafeNameDisplay">your cafe</span>.
       </div>
 
       <!-- Food / Bakery -->
@@ -1358,11 +1395,18 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     <div class="section-title">Live P&L Analysis</div>
     <div class="section-sub">Everything flows here. All values are pulled from other pages. This is the truth of your business.</div>
 
+    <div style="display:flex;gap:.5rem;margin-bottom:1.5rem">
+      <button onclick="saveSnapshot()" class="snap-btn" style="background:var(--card);border:1px solid var(--border);color:var(--text2);padding:.4rem .8rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.72rem;font-family:inherit">&#128247; Save Snapshot</button>
+      <button onclick="clearSnapshot()" class="snap-btn" style="background:var(--card);border:1px solid var(--border);color:var(--text3);padding:.4rem .8rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.72rem;font-family:inherit">Clear</button>
+      <span id="snap-label" style="font-size:.7rem;color:var(--text3);align-self:center"></span>
+    </div>
+    <div id="snap-compare"></div>
+
     <div class="card-grid cols-2" style="margin-bottom:1.5rem">
       <!-- Revenue -->
       <div class="card">
         <div class="pl-section">Revenue</div>
-        <div class="pl-row"><span>Daily Customers</span><input class="fi fi-sm" type="number" data-key="dailyCustomers" step="5" style="width:80px;text-align:right"></div>
+        <div class="pl-row"><span>Daily Customers</span><input class="fi fi-sm" type="number" data-key="dailyCustomers" step="5" style="width:80px;text-align:right" inputmode="numeric"></div>
         <div class="pl-row"><span>Avg Ticket (EGP)</span><span class="pl-val" style="color:var(--gold)" data-calc="avgTicketPL">--</span></div>
         <div class="pl-row" style="border-bottom:2px solid var(--border)"><span style="font-weight:700">Monthly Revenue</span><span class="pl-val" style="color:var(--green);font-size:1.1rem" data-calc="plRevenue">--</span></div>
 
@@ -1420,6 +1464,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   <div class="page-tabs">
     <button class="page-tab active" data-tab="strategy-competition">Competition</button>
     <button class="page-tab" data-tab="strategy-milestones">Milestones</button>
+    <button class="page-tab" data-tab="strategy-marketing">Marketing</button>
   </div>
 
   <!-- TAB: Competition -->
@@ -1548,6 +1593,14 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <p style="font-size:.85rem;color:var(--text2)">In that order. Never skip a step.</p>
     </div>
     </div>
+
+    <!-- Custom Competitors -->
+    <div style="margin-top:2.5rem;padding-top:1.5rem;border-top:2px solid var(--border)">
+      <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem">Your Competitors</h3>
+      <p style="font-size:.78rem;color:var(--text2);margin-bottom:1rem">Add local competitors with their pricing to compare against yours.</p>
+      <div id="competitors-list"></div>
+      <button onclick="addCompetitor()" style="background:transparent;border:1px dashed var(--border);color:var(--text2);padding:.5rem 1rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.75rem;font-family:inherit;width:100%;transition:var(--transition)" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">+ Add Competitor</button>
+    </div>
   </div>
 
   <!-- TAB: Milestones -->
@@ -1581,7 +1634,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
           <p style="font-size:.8rem;color:var(--text2);margin-bottom:.5rem">Perfect the basics. Consistency above everything.</p>
           <div style="font-size:.68rem;color:var(--text3);font-weight:600;margin-bottom:.5rem">ADVANCE WHEN ALL ARE TRUE FOR 2+ WEEKS:</div>
           <div class="triggers">
-            <div class="trigger">&#128200; 40+ customers/day</div>
+            <div class="trigger" data-milestone="milestone_40cust">&#128200; 40+ customers/day</div>
             <div class="trigger">&#9749; Drink quality stable</div>
             <div class="trigger">&#9881; No operational fires</div>
             <div class="trigger">&#128101; Staff run shifts solo</div>
@@ -1600,7 +1653,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 
           <div class="triggers">
             <div class="trigger">&#128260; 25-35% repeat rate</div>
-            <div class="trigger">&#128200; 60+ customers/day (3 weeks)</div>
+            <div class="trigger" data-milestone="milestone_60cust">&#128200; 60+ customers/day (3 weeks)</div>
             <div class="trigger">&#128200; Revenue growing MoM</div>
             <div class="trigger">&#128241; 1,000+ Instagram followers</div>
           </div>
@@ -1614,9 +1667,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         <div class="phase-sub">"Why us and nobody else." Signature drinks. Events. In-house baking. 28 items.</div>
         <div class="card" style="padding:1rem">
           <div class="triggers">
-            <div class="trigger">&#128200; 80+ customers/day</div>
+            <div class="trigger" data-milestone="milestone_80cust">&#128200; 80+ customers/day</div>
             <div class="trigger">&#11088; Signature drink in top 5</div>
-            <div class="trigger">&#128176; Approaching break-even</div>
+            <div class="trigger" data-milestone="milestone_breakeven">&#128176; Approaching break-even</div>
             <div class="trigger">&#128240; 1+ press/blog feature</div>
             <div class="trigger">&#127968; People recommend you by name</div>
           </div>
@@ -1630,8 +1683,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         <div class="phase-sub">"Sustainable business." Full menu. Retail beans. Digital loyalty. 35 items.</div>
         <div class="card" style="padding:1rem">
           <div class="triggers">
-            <div class="trigger">&#128176; 3+ months net profit</div>
-            <div class="trigger">&#128200; 100+ customers/day</div>
+            <div class="trigger" data-milestone="milestone_profitable">&#128176; 3+ months net profit</div>
+            <div class="trigger" data-milestone="milestone_100cust">&#128200; 100+ customers/day</div>
             <div class="trigger">&#127939; Cafe runs 2+ days without you</div>
             <div class="trigger">&#128101; No staff departures in 3+ months</div>
           </div>
@@ -1661,6 +1714,67 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         <div class="card" style="padding:1rem;border-color:rgba(212,165,74,.2);background:linear-gradient(135deg,var(--card),rgba(212,165,74,.05))">
           <p style="font-size:.8rem;color:var(--text2)">Cafe #2, own-brand roasted coffee, wholesale, subscription boxes.</p>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: Marketing -->
+  <div class="tab-panel" id="tab-strategy-marketing">
+    <div class="section-label">Growth</div>
+    <div class="section-title">Marketing Plan</div>
+    <div class="section-sub">Your marketing budget is <span style="color:var(--gold);font-weight:700" data-calc="plMarketingVal">--</span>/month. Here's how to spend it.</div>
+
+    <div class="card" style="margin-bottom:1.5rem">
+      <h3 style="margin-bottom:.75rem">Monthly Marketing Budget Allocation</h3>
+      <div class="cost-row"><span class="cr-name">Social Media Ads (Instagram/Facebook/TikTok)</span><input class="fi fi-sm cr-input" type="number" data-key="mktSocial" step="500" inputmode="numeric"><span class="cr-sub" data-calc="mktSocialV">--</span></div>
+      <div class="cost-row"><span class="cr-name">Influencer Collaborations</span><input class="fi fi-sm cr-input" type="number" data-key="mktInfluencer" step="500" inputmode="numeric"><span class="cr-sub" data-calc="mktInfluencerV">--</span></div>
+      <div class="cost-row"><span class="cr-name">Content Creation (photography/video)</span><input class="fi fi-sm cr-input" type="number" data-key="mktContent" step="500" inputmode="numeric"><span class="cr-sub" data-calc="mktContentV">--</span></div>
+      <div class="cost-row"><span class="cr-name">Google Maps / Local SEO</span><input class="fi fi-sm cr-input" type="number" data-key="mktSEO" step="500" inputmode="numeric"><span class="cr-sub" data-calc="mktSEOV">--</span></div>
+      <div class="cost-row"><span class="cr-name">Events & Tastings</span><input class="fi fi-sm cr-input" type="number" data-key="mktEvents" step="500" inputmode="numeric"><span class="cr-sub" data-calc="mktEventsV">--</span></div>
+      <div class="cost-row"><span class="cr-name">Print (flyers, business cards)</span><input class="fi fi-sm cr-input" type="number" data-key="mktPrint" step="500" inputmode="numeric"><span class="cr-sub" data-calc="mktPrintV">--</span></div>
+      <div class="grand-total-bar">
+        <span>TOTAL MARKETING</span>
+        <span class="gt-val" data-calc="mktTotalFull">--</span>
+      </div>
+      <div style="font-size:.7rem;color:var(--text3);margin-top:.5rem;font-style:italic">This total is a planning breakdown of your P&amp;L marketing line item.</div>
+    </div>
+
+    <h3 style="font-size:.95rem;font-weight:700;margin-bottom:1rem">Channel Strategy</h3>
+    <div class="card-grid cols-2" style="margin-bottom:1.5rem">
+      <div class="card">
+        <h3 style="color:var(--gold);font-size:.9rem">&#128247; Instagram & TikTok</h3>
+        <p>Post 5x/week on Instagram, 3x/week on TikTok. Mix: 40% product shots, 30% behind-the-scenes, 20% community, 10% education. Reply to every comment and DM within 2 hours.</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--green);font-size:.9rem">&#127775; Influencer Playbook</h3>
+        <p>Invite 2-3 micro-influencers per month (5K-50K followers). Free drinks + photos. Ask for a story + post. Micro-influencers convert better than celebrities for local businesses.</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--blue);font-size:.9rem">&#128205; Google Maps & Reviews</h3>
+        <p>Claim your Google Business listing day 1. Add professional photos. Ask every happy customer for a review. Target: 50 reviews in first 3 months, 4.7+ stars.</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--copper);font-size:.9rem">&#127881; Events & Community</h3>
+        <p>Monthly coffee cupping (free, 15-20 people). Quarterly latte art throwdown. Partner with local gym/bookstore for cross-promotion. Every event = 20+ social media posts from attendees.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-bottom:.5rem">Content Calendar Template</h3>
+      <p style="font-size:.78rem;color:var(--text2);margin-bottom:.75rem">A simple weekly rhythm that keeps your social media consistent without burning out.</p>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>Day</th><th>Instagram</th><th>TikTok</th><th>Type</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">Saturday</td><td>Drink photo</td><td>Making-of reel</td><td style="color:var(--gold)">Product</td></tr>
+            <tr><td style="font-weight:600">Sunday</td><td>Behind-the-scenes</td><td>--</td><td style="color:var(--copper)">BTS</td></tr>
+            <tr><td style="font-weight:600">Monday</td><td>Customer spotlight</td><td>--</td><td style="color:var(--green)">Community</td></tr>
+            <tr><td style="font-weight:600">Tuesday</td><td>Coffee education</td><td>Quick tip</td><td style="color:var(--blue)">Education</td></tr>
+            <tr><td style="font-weight:600">Wednesday</td><td>New item / seasonal</td><td>--</td><td style="color:var(--gold)">Product</td></tr>
+            <tr><td style="font-weight:600">Thursday</td><td>Story polls / Q&A</td><td>Trending sound</td><td style="color:var(--purple)">Engagement</td></tr>
+            <tr><td style="font-weight:600">Friday</td><td>Weekend vibe</td><td>Fun / team</td><td style="color:var(--copper)">BTS</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -1723,7 +1837,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     <div class="ram-section">
       <h3><span style="color:var(--blue)">&#128227;</span> Marketing Opportunities</h3>
       <div class="ram-item"><strong>Decor:</strong> Lanterns (fanous), crescent, warm lighting. Transform the space.</div>
-      <div class="ram-item"><strong>"Iftar at Bayt"</strong> -- position as a gathering spot. Double loyalty stamps.</div>
+      <div class="ram-item"><strong>"Iftar at <span data-calc="cafeNameDisplay">your cafe</span>"</strong> -- position as a gathering spot. Double loyalty stamps.</div>
       <div class="read-more">
         <div class="rm-preview"></div>
         <div class="rm-full" style="display:none">
@@ -1808,7 +1922,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:1.5rem">
+      <div class="grid-2" style="gap:1px;background:var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:1.5rem">
         <div style="background:var(--bg2);padding:1rem;text-align:center">
           <div style="font-size:1.2rem;font-weight:800;color:var(--text)" data-calc="zkNetAssets">--</div>
           <div style="font-size:.65rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Net Zakatable Assets</div>
@@ -1874,7 +1988,6 @@ const DEFAULTS = {
   // Savings
   goldReserves: 500000,
   useMudarabah: false,
-  currentSavingsEGP: 300000,
   mudarabahRate: 15,
   savingsTarget: 3500000,
 
@@ -1999,11 +2112,19 @@ const DEFAULTS = {
   zkReceivables: 0,
   zkDebts: 0,
   zkExpenses: 0,
-  zkNisab: 350000
+  zkNisab: 350000,
+
+  // Marketing
+  mktSocial: 4000,
+  mktInfluencer: 2000,
+  mktContent: 2000,
+  mktSEO: 1000,
+  mktEvents: 500,
+  mktPrint: 500
 };
 
 // Load from localStorage or use defaults (with version check)
-const STATE_VERSION = 4;
+const STATE_VERSION = 5;
 let S = {};
 try {
   const saved = localStorage.getItem('cafePlanState');
@@ -2039,6 +2160,15 @@ function fmtK(n) {
 
 // Computed values cache
 let C = {};
+
+// Debounced localStorage save
+var _saveTimer = null;
+function debouncedSave() {
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(function() {
+    try { localStorage.setItem('cafePlanState', JSON.stringify(S)); } catch(e) {}
+  }, 500);
+}
 
 function calc() {
   // ---- STARTUP COSTS ----
@@ -2214,7 +2344,7 @@ function calc() {
   C.breakEvenCustomers = Math.ceil(C.breakEvenN);
 
   C.plBurnRate = C.plProfitLossN < 0 ? fmt(Math.abs(C.plProfitLossN)) + '/mo' : 'N/A (profitable)';
-  const reserveCash = S._partnerCurrent || S.currentSavingsEGP || 0;
+  const reserveCash = S._partnerCurrent || 0;
   C.plRunway = C.plProfitLossN < 0 ? (Math.abs(C.plProfitLossN) > 0 ? (reserveCash / Math.abs(C.plProfitLossN)).toFixed(1) + ' mo' : '--') : 'Infinite';
   C.plRecoup = C.plProfitLossN > 0 ? Math.ceil(C.totalStartupNum / C.plProfitLossN) + ' mo' : 'Not yet profitable';
   C.plReserveN = C.totalStartupNum + (C.totalMonthlyOpN * 6);
@@ -2315,6 +2445,17 @@ function calc() {
     C.dateLabel = 'Estimated Open Date';
   }
 
+  // ---- MARKETING (compute before DOM update) ----
+  const mktKeysEarly = ['mktSocial','mktInfluencer','mktContent','mktSEO','mktEvents','mktPrint'];
+  C.mktTotalN = mktKeysEarly.reduce((s,k) => s + (S[k]||0), 0);
+  C.mktTotalFull = fmt(C.mktTotalN) + ' EGP';
+  mktKeysEarly.forEach(k => C[k+'V'] = fmt(S[k]));
+  C.plMarketingVal = fmt(S.opMarketing || 0) + ' EGP';
+
+  // ---- SAVINGS PROGRESS (compute before DOM update) ----
+  const savPctN = target > 0 ? Math.min(((S._partnerCurrent||0) + (S.goldReserves||0)) / target * 100, 100) : 0;
+  C.savPct = Math.round(savPctN) + '%';
+
   // ---- UPDATE DOM ----
   document.querySelectorAll('[data-calc]').forEach(el => {
     const key = el.dataset.calc;
@@ -2337,8 +2478,101 @@ function calc() {
     }
   });
 
-  // Persist
-  try { localStorage.setItem('cafePlanState', JSON.stringify(S)); } catch(e) {}
+  // ---- PIE CHART ----
+  const pieEl = document.getElementById('cost-pie');
+  const legEl = document.getElementById('cost-pie-legend');
+  if (pieEl && legEl) {
+    const rent = S.monthlyRent || 0;
+    const labor = C.totalLaborN || 0;
+    const supplies = C.totalSuppliesN || 0;
+    const marketing = S.opMarketing || 0;
+    const other = (S.opUtilities||0)+(S.opInternet||0)+(S.opMaintenance||0)+(S.opAccounting||0)+(S.opInsurance||0)+(S.opPOS||0)+(S.opMisc||0);
+    const total = rent+labor+supplies+marketing+other;
+    if (total > 0) {
+      const pct = v => (v/total*100).toFixed(1);
+      const segs = [
+        {label:'Rent',val:rent,color:'var(--red)'},
+        {label:'Labor',val:labor,color:'var(--gold)'},
+        {label:'Supplies',val:supplies,color:'var(--copper)'},
+        {label:'Marketing',val:marketing,color:'var(--green)'},
+        {label:'Other',val:other,color:'var(--blue)'}
+      ].filter(s=>s.val>0);
+      let deg = 0;
+      const gradParts = segs.map(s => {
+        const start = deg;
+        deg += (s.val/total)*360;
+        return s.color+' '+start.toFixed(1)+'deg '+deg.toFixed(1)+'deg';
+      });
+      pieEl.style.background = 'conic-gradient('+gradParts.join(',')+')';
+      legEl.innerHTML = segs.map(s =>
+        '<div class="pie-leg"><div class="pie-leg-dot" style="background:'+s.color+'"></div>'+s.label+' ('+pct(s.val)+'%)<span class="pie-leg-val">'+fmt(s.val)+'</span></div>'
+      ).join('');
+    }
+  }
+
+  // ---- MILESTONE AUTO-CHECKS ----
+  C.milestone_40cust = (S.dailyCustomers || 0) >= 40;
+  C.milestone_60cust = (S.dailyCustomers || 0) >= 60;
+  C.milestone_80cust = (S.dailyCustomers || 0) >= 80;
+  C.milestone_100cust = (S.dailyCustomers || 0) >= 100;
+  C.milestone_profitable = C.plProfitLossN > 0;
+  C.milestone_breakeven = C.plProfitLossN >= 0;
+
+  // ---- SNAPSHOT COMPARISON ----
+  const snapEl = document.getElementById('snap-compare');
+  if (snapEl && snapshot) {
+    const diff = (curr, prev) => {
+      const d = curr - prev;
+      const color = d > 0 ? 'var(--green)' : d < 0 ? 'var(--red)' : 'var(--text3)';
+      const sign = d > 0 ? '+' : '';
+      return '<span style="color:'+color+';font-size:.7rem;font-weight:600">'+sign+fmt(d)+'</span>';
+    };
+    snapEl.innerHTML = '<div class="card" style="margin-bottom:1.5rem;border-color:rgba(155,125,212,.2)">' +
+      '<div style="font-size:.72rem;color:var(--purple);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem">vs Snapshot: '+snapshot.label+'</div>' +
+      '<div class="grid-3" style="gap:.75rem">' +
+        '<div style="text-align:center"><div style="font-size:.65rem;color:var(--text3)">Revenue</div><div>'+fmt(C.monthlyRevenueN)+' '+diff(C.monthlyRevenueN,snapshot.revenue)+'</div></div>' +
+        '<div style="text-align:center"><div style="font-size:.65rem;color:var(--text3)">Costs</div><div>'+fmt(C.totalMonthlyOpN)+' '+diff(-C.totalMonthlyOpN,-snapshot.cost)+'</div></div>' +
+        '<div style="text-align:center"><div style="font-size:.65rem;color:var(--text3)">Profit</div><div>'+fmt(C.plProfitLossN)+' '+diff(C.plProfitLossN,snapshot.profit)+'</div></div>' +
+      '</div></div>';
+  } else if (snapEl) {
+    snapEl.innerHTML = '';
+  }
+
+  // ---- SAVINGS PROGRESS RING ----
+  const ringEl = document.getElementById('ring-progress');
+  if (ringEl) {
+    const circ = 2 * Math.PI * 52;
+    ringEl.setAttribute('stroke-dashoffset', (circ - (circ * savPctN / 100)).toFixed(1));
+  }
+
+  // ---- UPDATE DOM (continued) ----
+  // Milestone auto-checks
+  document.querySelectorAll('[data-milestone]').forEach(el => {
+    const key = el.dataset.milestone;
+    const met = C[key];
+    if (met) {
+      el.style.background = 'var(--green-glow)';
+      el.style.borderColor = 'rgba(91,168,114,.3)';
+      el.style.color = 'var(--green)';
+    } else {
+      el.style.background = 'var(--bg2)';
+      el.style.borderColor = 'var(--border)';
+      el.style.color = 'var(--text2)';
+    }
+  });
+
+  // Input validation
+  const warnIf = (key, cond) => {
+    document.querySelectorAll('[data-key="'+key+'"]').forEach(el => {
+      if (cond) el.classList.add('fi-warn');
+      else el.classList.remove('fi-warn');
+    });
+  };
+  warnIf('dailyCustomers', (S.dailyCustomers||0) <= 0);
+  warnIf('monthlyRent', S.strategy === 'rent' && (S.monthlyRent||0) <= 0);
+
+  // Persist (debounced)
+  debouncedSave();
 }
 
 // ===========================
@@ -2460,55 +2694,56 @@ function renderAreaCards() {
 }
 
 // ===========================
-// BIND INPUTS
+// BIND INPUTS (event delegation — runs once, never duplicates)
 // ===========================
 function bindInputs() {
+  // Set initial values from state (no event listeners here)
   document.querySelectorAll('[data-key]').forEach(el => {
     const key = el.dataset.key;
-    // Set initial value
     if (el.type === 'checkbox') {
       el.checked = !!S[key];
     } else {
-      el.value = S[key] !== undefined ? S[key] : '';
-    }
-    // Listen for changes
-    el.addEventListener('input', () => {
-      if (el.type === 'checkbox') {
-        S[key] = el.checked;
-      } else {
-        S[key] = parseFloat(el.value) || 0;
-      }
-      calc();
-    });
-    el.addEventListener('change', () => {
-      if (el.type === 'checkbox') {
-        S[key] = el.checked;
-      } else {
-        S[key] = parseFloat(el.value) || 0;
-      }
-      calc();
-    });
-  });
-}
-
-// Sync duplicate inputs (e.g. dailyCustomers appears on both menu and P&L pages)
-function syncDuplicateInputs(changedKey, changedEl) {
-  document.querySelectorAll('[data-key="'+changedKey+'"]').forEach(el => {
-    if (el !== changedEl) {
-      if (el.type === 'checkbox') el.checked = S[changedKey];
-      else el.value = S[changedKey];
+      if (S[key] !== undefined) el.value = S[key];
     }
   });
 }
 
-// Override input handler to sync duplicates
-function setupDuplicateSync() {
-  document.querySelectorAll('[data-key]').forEach(el => {
-    const key = el.dataset.key;
-    el.addEventListener('input', () => syncDuplicateInputs(key, el));
-    el.addEventListener('change', () => syncDuplicateInputs(key, el));
+// Single delegated event handler (runs once at init, never duplicated)
+document.addEventListener('input', function(e) {
+  const el = e.target;
+  const key = el.dataset ? el.dataset.key : null;
+  if (!key) return;
+  if (el.type === 'checkbox') {
+    S[key] = el.checked;
+  } else {
+    S[key] = parseFloat(el.value) || 0;
+  }
+  // Sync duplicate inputs with same key
+  document.querySelectorAll('[data-key="'+key+'"]').forEach(other => {
+    if (other !== el) {
+      if (other.type === 'checkbox') other.checked = S[key];
+      else other.value = S[key];
+    }
   });
-}
+  calc();
+});
+document.addEventListener('change', function(e) {
+  const el = e.target;
+  const key = el.dataset ? el.dataset.key : null;
+  if (!key) return;
+  if (el.type === 'checkbox') {
+    S[key] = el.checked;
+  } else {
+    S[key] = parseFloat(el.value) || 0;
+  }
+  document.querySelectorAll('[data-key="'+key+'"]').forEach(other => {
+    if (other !== el) {
+      if (other.type === 'checkbox') other.checked = S[key];
+      else other.value = S[key];
+    }
+  });
+  calc();
+});
 
 // ===========================
 // SPA NAVIGATION
@@ -2522,7 +2757,6 @@ function navigateTo(pageId) {
   if (link) link.classList.add('active');
   // Close mobile sidebar
   document.querySelector('.sidebar').classList.remove('open');
-  document.querySelector('.mobile-overlay').classList.remove('open');
   // Scroll to top
   window.scrollTo(0, 0);
   // Persist current page
@@ -2532,14 +2766,6 @@ function navigateTo(pageId) {
   if (savedTab) {
     switchTab(savedTab);
   }
-  // Trigger reveal animations for newly visible page
-  setTimeout(() => {
-    if (page) {
-      page.querySelectorAll('.reveal').forEach(el => {
-        revealObserver.observe(el);
-      });
-    }
-  }, 50);
 }
 
 function switchTab(tabId) {
@@ -2554,9 +2780,6 @@ function switchTab(tabId) {
   if (btn) btn.classList.add('active');
   window.scrollTo(0, 0);
   localStorage.setItem('bayt_currentTab_' + parent.id, tabId);
-  setTimeout(() => {
-    panel.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-  }, 50);
 }
 
 function goTo(pageId, tabId) {
@@ -2575,19 +2798,7 @@ document.querySelectorAll('.page-tab').forEach(btn => {
   btn.addEventListener('click', () => switchTab(btn.dataset.tab));
 });
 
-// ===========================
-// SCROLL REVEAL WITHIN PAGES
-// ===========================
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      revealObserver.unobserve(e.target);
-    }
-  });
-}, {threshold: 0.1, rootMargin: '0px 0px -30px 0px'});
-
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+// (revealObserver removed — no elements use the reveal class)
 
 // ===========================
 // INIT
@@ -2652,7 +2863,6 @@ function initPartners(){
 
 initPartners();
 bindInputs();
-setupDuplicateSync();
 calc();
 renderAreaCards();
 
@@ -2734,6 +2944,132 @@ function resetChecklist() {
 }
 
 initChecklists();
+
+// ===========================
+// SNAPSHOT COMPARISON
+// ===========================
+var snapshot = JSON.parse(localStorage.getItem('bayt_snapshot') || 'null');
+
+function saveSnapshot() {
+  snapshot = {
+    label: (S.cafeName||'Plan') + ' — ' + new Date().toLocaleDateString(),
+    revenue: C.monthlyRevenueN,
+    cost: C.totalMonthlyOpN,
+    profit: C.plProfitLossN,
+    rent: S.monthlyRent,
+    labor: C.totalLaborN,
+    supplies: C.totalSuppliesN,
+    customers: S.dailyCustomers,
+    area: C.selectedAreaName
+  };
+  localStorage.setItem('bayt_snapshot', JSON.stringify(snapshot));
+  document.getElementById('snap-label').textContent = 'Saved: ' + snapshot.label;
+  calc();
+}
+
+function clearSnapshot() {
+  snapshot = null;
+  localStorage.removeItem('bayt_snapshot');
+  document.getElementById('snap-label').textContent = '';
+  calc();
+}
+
+// ===========================
+// IMPORT DATA
+// ===========================
+function importData(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var data = JSON.parse(e.target.result);
+      if (data.state) {
+        Object.assign(S, data.state);
+        S._version = STATE_VERSION;
+      }
+      if (data.partners) {
+        partners = data.partners;
+        savePartners();
+        renderPartners();
+      }
+      if (data.areas) {
+        AREAS = data.areas;
+        saveAreas();
+        renderAreaCards();
+      }
+      calc();
+      bindInputs();
+      alert('Data imported successfully!');
+    } catch(err) {
+      alert('Error importing data: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+// ===========================
+// CUSTOM COMPETITORS
+// ===========================
+var competitors = JSON.parse(localStorage.getItem('bayt_competitors') || '[]');
+function saveCompetitors() { localStorage.setItem('bayt_competitors', JSON.stringify(competitors)); }
+
+function addCompetitor() {
+  competitors.push({name:'Competitor '+(competitors.length+1), latte:0, americano:0, cappuccino:0, notes:''});
+  saveCompetitors();
+  renderCompetitors();
+}
+
+function removeCompetitor(i) {
+  competitors.splice(i,1);
+  saveCompetitors();
+  renderCompetitors();
+}
+
+function updateCompetitor(i, field, val) {
+  competitors[i][field] = field==='name'||field==='notes' ? val : (parseFloat(val)||0);
+  saveCompetitors();
+  renderCompetitors();
+}
+
+function renderCompetitors() {
+  var el = document.getElementById('competitors-list');
+  if (!el) return;
+  if (competitors.length === 0) { el.innerHTML = ''; return; }
+
+  var yourLatte = S.menuLatteP || 70;
+  var yourAm = S.menuAmericanoP || 55;
+  var yourCap = S.menuCappP || 65;
+
+  el.innerHTML = competitors.map(function(c,i) {
+    var priceDiff = function(yours, theirs) {
+      if (!theirs) return '';
+      var d = yours - theirs;
+      var color = d < 0 ? 'var(--green)' : d > 0 ? 'var(--red)' : 'var(--text3)';
+      var label = d < 0 ? 'cheaper' : d > 0 ? 'pricier' : 'same';
+      return '<span style="font-size:.65rem;color:'+color+'">You\'re '+Math.abs(d)+' '+label+'</span>';
+    };
+    return '<div class="card" style="margin-bottom:.75rem;position:relative">' +
+      '<button onclick="removeCompetitor('+i+')" style="position:absolute;top:.5rem;right:.5rem;background:transparent;border:1px solid var(--border);color:var(--text3);width:24px;height:24px;border-radius:4px;cursor:pointer;font-size:.75rem" onmouseover="this.style.color=\'var(--red)\'" onmouseout="this.style.color=\'var(--text3)\'">&times;</button>' +
+      '<input value="'+(c.name||'')+'" onchange="updateCompetitor('+i+',\'name\',this.value)" style="background:transparent;border:none;color:var(--text);font-size:.95rem;font-weight:700;font-family:inherit;width:80%;padding:0;margin-bottom:.75rem">' +
+      '<div class="grid-3" style="gap:.75rem;margin-bottom:.75rem">' +
+        '<div><div style="font-size:.65rem;color:var(--text3);margin-bottom:.2rem">Latte Price</div><input type="number" value="'+(c.latte||'')+'" onchange="updateCompetitor('+i+',\'latte\',this.value)" class="fi fi-sm" style="width:100%" inputmode="numeric" placeholder="0"><div style="margin-top:.2rem">'+priceDiff(yourLatte, c.latte)+'</div></div>' +
+        '<div><div style="font-size:.65rem;color:var(--text3);margin-bottom:.2rem">Americano Price</div><input type="number" value="'+(c.americano||'')+'" onchange="updateCompetitor('+i+',\'americano\',this.value)" class="fi fi-sm" style="width:100%" inputmode="numeric" placeholder="0"><div style="margin-top:.2rem">'+priceDiff(yourAm, c.americano)+'</div></div>' +
+        '<div><div style="font-size:.65rem;color:var(--text3);margin-bottom:.2rem">Cappuccino Price</div><input type="number" value="'+(c.cappuccino||'')+'" onchange="updateCompetitor('+i+',\'cappuccino\',this.value)" class="fi fi-sm" style="width:100%" inputmode="numeric" placeholder="0"><div style="margin-top:.2rem">'+priceDiff(yourCap, c.cappuccino)+'</div></div>' +
+      '</div>' +
+      '<input value="'+(c.notes||'')+'" onchange="updateCompetitor('+i+',\'notes\',this.value)" placeholder="Notes (strengths, weaknesses, location...)" style="width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.5rem .75rem;color:var(--text2);font-size:.78rem;font-family:inherit">' +
+    '</div>';
+  }).join('');
+}
+
+renderCompetitors();
+
+// Init snapshot label
+if (snapshot) {
+  var snapLabelEl = document.getElementById('snap-label');
+  if (snapLabelEl) snapLabelEl.textContent = 'Saved: ' + snapshot.label;
+}
 
 // ===========================
 // ONBOARDING FLOW
@@ -3240,7 +3576,6 @@ initChecklists();
     renderPartners();
     recalcPartners();
     bindInputs();
-    setupDuplicateSync();
     calc();
     renderAreaCards();
 
