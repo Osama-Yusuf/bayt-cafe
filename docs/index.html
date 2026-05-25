@@ -159,6 +159,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   /* Savings calculator row */
   .savings-row{grid-template-columns:1fr !important}
 
+  /* Vehicle rows — stack on mobile */
+  #vehicle-rows > div{grid-template-columns:1fr !important;gap:.4rem !important}
+
   /* General overflow prevention */
   *{max-width:100%}
   input[type="number"],input[type="text"]{max-width:100%;box-sizing:border-box}
@@ -633,49 +636,127 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     <div class="section-title">Savings & Timeline</div>
     <div class="section-sub" id="savingsSubtitle">Plan how to accumulate capital. Add partners, adjust numbers, see when you can open.</div>
 
-    <!-- Calculator -->
+    <!-- Partners -->
     <div class="card" style="margin-bottom:1.5rem">
       <h3 style="margin-bottom:1.25rem">Savings Calculator</h3>
-
-      <!-- Partners -->
       <div id="partners-list"></div>
       <button onclick="addPartner()" style="background:transparent;border:1px dashed var(--border-light);color:var(--text2);padding:.5rem 1rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.75rem;font-family:inherit;transition:var(--transition);margin-bottom:1.25rem;width:100%" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--border-light)';this.style.color='var(--text2)'">+ Add Partner</button>
+    </div>
 
-      <!-- Gold + Target -->
-      <div class="grid-2" style="margin-bottom:1.25rem">
-        <div>
-          <label class="fi-label">Gold Reserves — Liquidation Value (EGP)</label>
-          <input class="fi" type="number" data-key="goldReserves" min="0" step="10000" inputmode="numeric">
-        </div>
-        <div>
-          <label class="fi-label" data-calc="targetLabel">Target: Property Purchase Price (EGP)</label>
-          <input class="fi" type="number" data-key="savingsTarget" min="500000" step="100000" inputmode="numeric">
+    <!-- Savings Strategy -->
+    <div class="card" style="margin-bottom:1.5rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+        <h3 style="margin:0">Savings Strategy</h3>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <span style="font-size:.7rem;color:var(--text3)">Simple</span>
+          <label class="toggle"><input type="checkbox" data-key="splitMode"><span class="slider"></span></label>
+          <span style="font-size:.7rem;color:var(--text3)">Split</span>
         </div>
       </div>
 
-      <!-- Optional Mudarabah -->
-      <div style="display:flex;align-items:center;gap:1.5rem;padding:.75rem 1rem;background:var(--bg2);border-radius:var(--radius-sm);margin-bottom:1.25rem;flex-wrap:wrap">
-        <div style="display:flex;align-items:center;gap:.6rem">
-          <label class="toggle" style="flex-shrink:0"><input type="checkbox" data-key="useMudarabah"><span class="slider"></span></label>
-          <span style="font-size:.78rem;color:var(--text2)">Mudarabah profit sharing</span>
+      <!-- Simple Mode: pick one vehicle -->
+      <div id="savings-simple">
+        <div class="grid-2" style="margin-bottom:1rem">
+          <div>
+            <label class="fi-label">Saving In</label>
+            <select class="fi" data-key="savingsVehicle" style="appearance:auto">
+              <option value="gold">Gold (physical/digital)</option>
+              <option value="mudarabah">Mudarabah (profit-sharing)</option>
+              <option value="forex">Foreign Currency (USD/AED/EUR)</option>
+              <option value="stocks">Stocks (EGX / halal funds)</option>
+              <option value="egp">EGP Cash</option>
+            </select>
+          </div>
+          <div>
+            <label class="fi-label">Expected Annual Return (%)</label>
+            <input class="fi" type="number" data-key="savingsReturn" min="0" max="50" step="1" inputmode="numeric">
+          </div>
         </div>
-        <div style="display:flex;align-items:center;gap:.4rem">
-          <span style="font-size:.72rem;color:var(--text3)">Rate:</span>
-          <input class="fi fi-sm" type="number" data-key="mudarabahRate" min="0" max="30" step="1" style="width:55px">
-          <span style="font-size:.72rem;color:var(--text3)">%</span>
-        </div>
-        <span style="font-size:.68rem;color:var(--text3);font-style:italic">Optional — halal profit-sharing on cash portion</span>
       </div>
 
-      <!-- Results -->
-      <div class="grid-3" style="background:var(--border);border-radius:var(--radius-sm);overflow:hidden">
+      <!-- Split Mode: allocate across vehicles -->
+      <div id="savings-split" style="display:none">
+        <p style="font-size:.72rem;color:var(--text3);margin-bottom:.75rem">Allocate your monthly savings across vehicles. Total must be 100%.</p>
+        <div id="vehicle-rows"></div>
+        <div style="display:flex;justify-content:space-between;padding:.5rem 0;font-size:.78rem;font-weight:700;border-top:1px solid var(--border);margin-top:.5rem">
+          <span>Total Allocation</span>
+          <span id="alloc-total" style="color:var(--gold)">100%</span>
+        </div>
+      </div>
+
+      <!-- Existing Capital -->
+      <div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border)">
+        <div class="grid-2">
+          <div>
+            <label class="fi-label">Gold Reserves — Current Value (EGP)</label>
+            <input class="fi" type="number" data-key="goldReserves" min="0" step="10000" inputmode="numeric">
+          </div>
+          <div>
+            <label class="fi-label" data-calc="targetLabel">Target Amount (EGP)</label>
+            <input class="fi" type="number" data-key="savingsTarget" min="500000" step="100000" inputmode="numeric">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rental Income (Optional) -->
+    <div class="card" style="margin-bottom:1.5rem">
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem">
+        <label class="toggle"><input type="checkbox" data-key="hasRentalIncome"><span class="slider"></span></label>
+        <h3 style="margin:0;font-size:.95rem">Rental Income</h3>
+        <span style="font-size:.7rem;color:var(--text3)">— optional passive income stream</span>
+      </div>
+
+      <div id="rental-section" style="display:none">
+        <div style="display:flex;gap:.5rem;margin-bottom:1rem">
+          <button class="page-tab active" id="rental-own-btn" onclick="S.rentalPhase='own';calc();bindInputs()" style="font-size:.72rem;padding:.35rem .75rem">I already have rental property</button>
+          <button class="page-tab" id="rental-saving-btn" onclick="S.rentalPhase='saving';calc();bindInputs()" style="font-size:.72rem;padding:.35rem .75rem">I'm saving to buy one</button>
+        </div>
+
+        <!-- Already own -->
+        <div id="rental-own">
+          <div>
+            <label class="fi-label">Monthly Rental Income (EGP)</label>
+            <input class="fi" type="number" data-key="rentalIncome" min="0" step="1000" inputmode="numeric">
+          </div>
+          <p style="font-size:.72rem;color:var(--text3);margin-top:.4rem">This adds to your monthly savings capacity.</p>
+        </div>
+
+        <!-- Saving to buy -->
+        <div id="rental-saving" style="display:none">
+          <div class="grid-2" style="margin-bottom:.75rem">
+            <div>
+              <label class="fi-label">Property Purchase Price (EGP)</label>
+              <input class="fi" type="number" data-key="rentalPropertyPrice" min="0" step="50000" inputmode="numeric">
+            </div>
+            <div>
+              <label class="fi-label">Expected Monthly Rent Once Bought (EGP)</label>
+              <input class="fi" type="number" data-key="rentalExpectedRent" min="0" step="1000" inputmode="numeric">
+            </div>
+          </div>
+          <div class="grid-3" style="background:var(--border);border-radius:var(--radius-sm);overflow:hidden">
+            <div style="background:var(--bg2);padding:.75rem;text-align:center"><div style="font-size:1.1rem;font-weight:800;color:var(--copper)" data-calc="rentalBuyMonth">--</div><div style="font-size:.58rem;color:var(--text3);text-transform:uppercase;margin-top:.15rem">Buy Property at Month</div></div>
+            <div style="background:var(--bg2);padding:.75rem;text-align:center"><div style="font-size:1.1rem;font-weight:800;color:var(--green)" data-calc="rentalIncomeStart">--</div><div style="font-size:.58rem;color:var(--text3);text-transform:uppercase;margin-top:.15rem">Rent Income Starts</div></div>
+            <div style="background:var(--bg2);padding:.75rem;text-align:center"><div style="font-size:1.1rem;font-weight:800;color:var(--gold)" data-calc="cafeOpenMonth">--</div><div style="font-size:.58rem;color:var(--text3);text-transform:uppercase;margin-top:.15rem">Café Opens at Month</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="card" style="margin-bottom:1.5rem">
+      <h3 style="margin-bottom:1rem">Projection</h3>
+      <div class="grid-3" style="background:var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:1rem">
         <div style="background:var(--bg2);padding:1.15rem;text-align:center"><div style="font-size:1.5rem;font-weight:800;color:var(--gold)" data-calc="savMonths">--</div><div style="font-size:.62rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Months to Target</div></div>
         <div style="background:var(--bg2);padding:1.15rem;text-align:center"><div style="font-size:1.5rem;font-weight:800;color:var(--green)" data-calc="savYourTotal">--</div><div style="font-size:.62rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Total Accumulated</div></div>
-        <div style="background:var(--bg2);padding:1.15rem;text-align:center"><div style="font-size:1.5rem;font-weight:800;color:var(--copper)" data-calc="savDate">--</div><div style="font-size:.62rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em" data-calc="dateLabel">Estimated Buy Date</div></div>
+        <div style="background:var(--bg2);padding:1.15rem;text-align:center"><div style="font-size:1.5rem;font-weight:800;color:var(--copper)" data-calc="savDate">--</div><div style="font-size:.62rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em" data-calc="dateLabel">Estimated Open Date</div></div>
       </div>
 
+      <!-- Vehicle breakdown (split mode only) -->
+      <div id="vehicle-breakdown" style="display:none;margin-bottom:1rem"></div>
+
       <!-- Progress ring -->
-      <div style="text-align:center;margin-top:1.5rem">
+      <div style="text-align:center">
         <div class="progress-ring" id="savings-ring">
           <svg width="120" height="120" viewBox="0 0 120 120">
             <circle cx="60" cy="60" r="52" fill="none" stroke="var(--border)" stroke-width="8"/>
@@ -683,7 +764,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
               stroke-dasharray="326.7" stroke-dashoffset="326.7" id="ring-progress"
               style="transform:rotate(-90deg);transform-origin:center;transition:stroke-dashoffset .6s ease"/>
           </svg>
-          <div class="ring-text" id="ring-text" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column">
             <div style="font-size:1.5rem;font-weight:800;color:var(--gold)" data-calc="savPct">0%</div>
             <div style="font-size:.6rem;color:var(--text3);text-transform:uppercase">of target</div>
           </div>
@@ -1987,9 +2068,25 @@ const DEFAULTS = {
 
   // Savings
   goldReserves: 500000,
-  useMudarabah: false,
-  mudarabahRate: 15,
   savingsTarget: 3500000,
+  splitMode: false,
+  savingsVehicle: 'gold',
+  savingsReturn: 15,
+  allocGold: 40,
+  allocMudarabah: 20,
+  allocForex: 30,
+  allocStocks: 0,
+  allocEgp: 10,
+  returnGold: 15,
+  returnMudarabah: 15,
+  returnForex: 0,
+  returnStocks: 12,
+  returnEgp: 0,
+  hasRentalIncome: false,
+  rentalPhase: 'own',
+  rentalIncome: 0,
+  rentalPropertyPrice: 1500000,
+  rentalExpectedRent: 15000,
 
   // Startup - Equipment
   eqEspresso: 300000,
@@ -2124,7 +2221,7 @@ const DEFAULTS = {
 };
 
 // Load from localStorage or use defaults (with version check)
-const STATE_VERSION = 5;
+const STATE_VERSION = 6;
 let S = {};
 try {
   const saved = localStorage.getItem('cafePlanState');
@@ -2363,30 +2460,86 @@ function calc() {
   const monthlyCombined = S._partnerMonthly || 0;
   const currentCombined = S._partnerCurrent || 0;
   const gold = S.goldReserves || 0;
-  const target = S.savingsTarget || 2000000;
-  const useMud = S.useMudarabah || false;
-  const rate = useMud ? (S.mudarabahRate || 0) / 100 : 0;
-  const monthlyRate = rate / 12;
+  const target = S.savingsTarget || 3500000;
+  const rentalMonthly = (S.hasRentalIncome && S.rentalPhase === 'own') ? (S.rentalIncome || 0) : 0;
 
-  const targetAfterGold = Math.max(target - gold, 0);
-  let balance = currentCombined;
-  let months = 0;
-  let totalProfit = 0;
-  if (balance + gold >= target) {
-    months = 0;
+  // Vehicle returns
+  const vehicles = [
+    {id:'gold', label:'Gold', color:'var(--gold)', alloc: S.allocGold||0, ret: S.returnGold||0},
+    {id:'mudarabah', label:'Mudarabah', color:'var(--green)', alloc: S.allocMudarabah||0, ret: S.returnMudarabah||0},
+    {id:'forex', label:'Foreign Currency', color:'var(--blue)', alloc: S.allocForex||0, ret: S.returnForex||0},
+    {id:'stocks', label:'Stocks', color:'var(--purple)', alloc: S.allocStocks||0, ret: S.returnStocks||0},
+    {id:'egp', label:'EGP Cash', color:'var(--text3)', alloc: S.allocEgp||0, ret: S.returnEgp||0}
+  ];
+
+  let monthlyRate, effectiveMonthly;
+  if (S.splitMode) {
+    // Split mode: weighted average return
+    const totalAlloc = vehicles.reduce((s,v) => s + v.alloc, 0) || 1;
+    const weightedReturn = vehicles.reduce((s,v) => s + (v.alloc/totalAlloc) * v.ret, 0);
+    monthlyRate = weightedReturn / 100 / 12;
+    effectiveMonthly = monthlyCombined + rentalMonthly;
   } else {
-    while (balance < targetAfterGold && months < 240) {
-      const profit = useMud ? balance * monthlyRate : 0;
-      totalProfit += profit;
-      balance += monthlyCombined + profit;
-      months++;
-    }
+    // Simple mode: single vehicle
+    const ret = S.savingsReturn || 0;
+    monthlyRate = ret / 100 / 12;
+    effectiveMonthly = monthlyCombined + rentalMonthly;
   }
-  C.savMonths = months >= 240 ? '240+' : months;
-  C.monthsToSave = months >= 240 ? '240+' : months;
-  C.savYourTotal = fmtK(Math.round(balance + gold));
+
+  // Property-first model
+  let propertyBuyMonth = 0;
+  let cafeTarget = target;
+  if (S.hasRentalIncome && S.rentalPhase === 'saving') {
+    const propPrice = S.rentalPropertyPrice || 0;
+    const propRent = S.rentalExpectedRent || 0;
+    // Phase 1: save toward property
+    let bal1 = currentCombined + gold;
+    let m1 = 0;
+    while (bal1 < propPrice && m1 < 240) {
+      bal1 += monthlyCombined + (bal1 * monthlyRate);
+      m1++;
+    }
+    propertyBuyMonth = m1;
+    // Phase 2: property bought, rent kicks in, save toward cafe
+    let bal2 = bal1 - propPrice; // remaining after purchase
+    let m2 = 0;
+    while (bal2 < cafeTarget && m2 < 240) {
+      bal2 += monthlyCombined + propRent + (bal2 * monthlyRate);
+      m2++;
+    }
+    C.rentalBuyMonth = propertyBuyMonth;
+    C.rentalIncomeStart = propertyBuyMonth + 1;
+    C.cafeOpenMonth = propertyBuyMonth + m2 + 3;
+    C.savMonths = propertyBuyMonth + m2;
+    C.monthsToSave = C.savMonths;
+    C.savYourTotal = fmtK(Math.round(bal2 + propPrice));
+  } else {
+    // Standard: just save toward target
+    const targetAfterGold = Math.max(target - gold, 0);
+    let balance = currentCombined;
+    let months = 0;
+    let totalGrowth = 0;
+    if (currentCombined + gold >= target) {
+      months = 0;
+    } else {
+      while (balance < targetAfterGold && months < 240) {
+        const growth = balance * monthlyRate;
+        totalGrowth += growth;
+        balance += effectiveMonthly + growth;
+        months++;
+      }
+    }
+    C.savMonths = months >= 240 ? '240+' : months;
+    C.monthsToSave = months >= 240 ? '240+' : months;
+    C.savYourTotal = fmtK(Math.round(balance + gold));
+    C.rentalBuyMonth = '--';
+    C.rentalIncomeStart = '--';
+    C.cafeOpenMonth = months >= 240 ? '240+' : months + 3;
+  }
+
   const openDate = new Date();
-  openDate.setMonth(openDate.getMonth() + months + 3);
+  const totalMonths = typeof C.savMonths === 'number' ? C.savMonths : parseInt(C.savMonths) || 0;
+  openDate.setMonth(openDate.getMonth() + totalMonths + 3);
   C.savDate = openDate.toLocaleDateString('en-US', {month:'short', year:'numeric'});
 
   // ---- PARTNERSHIP ----
@@ -2452,9 +2605,61 @@ function calc() {
   mktKeysEarly.forEach(k => C[k+'V'] = fmt(S[k]));
   C.plMarketingVal = fmt(S.opMarketing || 0) + ' EGP';
 
-  // ---- SAVINGS PROGRESS (compute before DOM update) ----
-  const savPctN = target > 0 ? Math.min(((S._partnerCurrent||0) + (S.goldReserves||0)) / target * 100, 100) : 0;
+  // ---- SAVINGS PROGRESS + UI ----
+  // Progress ring
+  const savPctN = target > 0 ? Math.min(((currentCombined||0) + (gold||0)) / target * 100, 100) : 0;
   C.savPct = Math.round(savPctN) + '%';
+  const ringEl = document.getElementById('ring-progress');
+  if (ringEl) {
+    const circ = 2 * Math.PI * 52;
+    ringEl.setAttribute('stroke-dashoffset', (circ - (circ * savPctN / 100)).toFixed(1));
+  }
+
+  // Vehicle breakdown (split mode)
+  const bdEl = document.getElementById('vehicle-breakdown');
+  if (bdEl && S.splitMode) {
+    const totalAlloc = vehicles.reduce((s,v) => s + v.alloc, 0) || 1;
+    bdEl.style.display = 'block';
+    bdEl.innerHTML = vehicles.filter(v => v.alloc > 0).map(v => {
+      const monthlyAmt = Math.round(effectiveMonthly * (v.alloc / totalAlloc));
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:.35rem 0;border-bottom:1px solid var(--border);font-size:.78rem">' +
+        '<div style="display:flex;align-items:center;gap:.5rem"><div style="width:8px;height:8px;border-radius:2px;background:'+v.color+'"></div>'+v.label+' ('+v.alloc+'%)</div>' +
+        '<div style="color:var(--text2)">'+fmt(monthlyAmt)+'/mo @ '+v.ret+'%/yr</div>' +
+      '</div>';
+    }).join('');
+  } else if (bdEl) {
+    bdEl.style.display = 'none';
+  }
+
+  // Show/hide UI sections
+  const simpleEl = document.getElementById('savings-simple');
+  const splitEl = document.getElementById('savings-split');
+  if (simpleEl) simpleEl.style.display = S.splitMode ? 'none' : 'block';
+  if (splitEl) splitEl.style.display = S.splitMode ? 'block' : 'none';
+
+  const rentalEl = document.getElementById('rental-section');
+  if (rentalEl) rentalEl.style.display = S.hasRentalIncome ? 'block' : 'none';
+
+  const ownEl = document.getElementById('rental-own');
+  const savingEl = document.getElementById('rental-saving');
+  const ownBtn = document.getElementById('rental-own-btn');
+  const savingBtn = document.getElementById('rental-saving-btn');
+  if (ownEl && savingEl) {
+    ownEl.style.display = S.rentalPhase === 'own' ? 'block' : 'none';
+    savingEl.style.display = S.rentalPhase === 'saving' ? 'block' : 'none';
+  }
+  if (ownBtn && savingBtn) {
+    ownBtn.classList.toggle('active', S.rentalPhase === 'own');
+    savingBtn.classList.toggle('active', S.rentalPhase === 'saving');
+  }
+
+  // Alloc total
+  const allocTotalEl = document.getElementById('alloc-total');
+  if (allocTotalEl) {
+    const allocTotal = (S.allocGold||0)+(S.allocMudarabah||0)+(S.allocForex||0)+(S.allocStocks||0)+(S.allocEgp||0);
+    allocTotalEl.textContent = allocTotal + '%';
+    allocTotalEl.style.color = allocTotal === 100 ? 'var(--green)' : 'var(--red)';
+  }
 
   // ---- UPDATE DOM ----
   document.querySelectorAll('[data-calc]').forEach(el => {
@@ -2536,13 +2741,6 @@ function calc() {
       '</div></div>';
   } else if (snapEl) {
     snapEl.innerHTML = '';
-  }
-
-  // ---- SAVINGS PROGRESS RING ----
-  const ringEl = document.getElementById('ring-progress');
-  if (ringEl) {
-    const circ = 2 * Math.PI * 52;
-    ringEl.setAttribute('stroke-dashoffset', (circ - (circ * savPctN / 100)).toFixed(1));
   }
 
   // ---- UPDATE DOM (continued) ----
@@ -2702,6 +2900,8 @@ function bindInputs() {
     const key = el.dataset.key;
     if (el.type === 'checkbox') {
       el.checked = !!S[key];
+    } else if (el.tagName === 'SELECT') {
+      el.value = S[key] || '';
     } else {
       if (S[key] !== undefined) el.value = S[key];
     }
@@ -2715,6 +2915,8 @@ document.addEventListener('input', function(e) {
   if (!key) return;
   if (el.type === 'checkbox') {
     S[key] = el.checked;
+  } else if (el.tagName === 'SELECT') {
+    S[key] = el.value;
   } else {
     S[key] = parseFloat(el.value) || 0;
   }
@@ -2733,8 +2935,17 @@ document.addEventListener('change', function(e) {
   if (!key) return;
   if (el.type === 'checkbox') {
     S[key] = el.checked;
+  } else if (el.tagName === 'SELECT') {
+    S[key] = el.value;
   } else {
     S[key] = parseFloat(el.value) || 0;
+  }
+  // Auto-set return based on vehicle selection (simple mode)
+  if (key === 'savingsVehicle') {
+    const returnMap = {gold:15, mudarabah:15, forex:0, stocks:12, egp:0};
+    S.savingsReturn = returnMap[S[key]] || 0;
+    const retInput = document.querySelector('[data-key="savingsReturn"]');
+    if (retInput) retInput.value = S.savingsReturn;
   }
   document.querySelectorAll('[data-key="'+key+'"]').forEach(other => {
     if (other !== el) {
@@ -2861,7 +3072,34 @@ function initPartners(){
   recalcPartners();
 }
 
+function renderVehicleRows() {
+  const el = document.getElementById('vehicle-rows');
+  if (!el) return;
+  const vlist = [
+    {key:'Gold', color:'var(--gold)', icon:'🥇', desc:'Physical gold or gold accounts — tracks devaluation'},
+    {key:'Mudarabah', color:'var(--green)', icon:'🕌', desc:'Islamic profit-sharing — halal, expected not guaranteed'},
+    {key:'Forex', color:'var(--blue)', icon:'💱', desc:'USD, AED, EUR — preserves value against EGP drops'},
+    {key:'Stocks', color:'var(--purple)', icon:'📈', desc:'EGX or halal equity funds — higher risk, higher potential'},
+    {key:'Egp', color:'var(--text3)', icon:'💵', desc:'Egyptian pounds — liquid but loses to inflation'}
+  ];
+  el.innerHTML = vlist.map(function(v) {
+    return '<div style="display:grid;grid-template-columns:1fr 70px 70px;gap:.5rem;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--border)">' +
+      '<div style="display:flex;align-items:center;gap:.5rem">' +
+        '<span style="font-size:1rem">'+v.icon+'</span>' +
+        '<div><div style="font-size:.8rem;font-weight:600;color:var(--text)">'+v.key+'</div>' +
+        '<div style="font-size:.62rem;color:var(--text3)">'+v.desc+'</div></div>' +
+      '</div>' +
+      '<div><input class="fi fi-sm" type="number" data-key="alloc'+v.key+'" min="0" max="100" step="5" style="width:100%;text-align:center" inputmode="numeric"></div>' +
+      '<div><input class="fi fi-sm" type="number" data-key="return'+v.key+'" min="0" max="50" step="1" style="width:100%;text-align:center" inputmode="numeric"></div>' +
+    '</div>';
+  }).join('') +
+  '<div style="display:grid;grid-template-columns:1fr 70px 70px;gap:.5rem;font-size:.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;padding:.25rem 0">' +
+    '<div></div><div style="text-align:center">Allocation %</div><div style="text-align:center">Return %/yr</div>' +
+  '</div>';
+}
+
 initPartners();
+renderVehicleRows();
 bindInputs();
 calc();
 renderAreaCards();
