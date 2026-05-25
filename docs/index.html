@@ -683,7 +683,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   <div class="page-tabs">
     <button class="page-tab active" data-tab="costs-startup">Startup</button>
     <button class="page-tab" data-tab="costs-supplies">Supplies</button>
-    <button class="page-tab" data-tab="costs-suppliers">Suppliers</button>
     <button class="page-tab" data-tab="costs-team">Team & Hiring</button>
   </div>
 
@@ -807,13 +806,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         <span class="gt-val" data-calc="totalSuppliesFull">--</span>
       </div>
     </div>
-  </div>
-
-  <!-- TAB: Suppliers -->
-  <div class="tab-panel" id="tab-costs-suppliers">
-    <div class="section-label">Directory</div>
-    <div class="section-title">Supplier Directory</div>
-    <div class="section-sub">Actual suppliers in Cairo, organized by category. Prices are estimates from 2025-2026 -- always get fresh quotes. Prices in Egypt change frequently due to inflation.</div>
+    <!-- Supplier Directory (merged) -->
+    <div style="margin-top:3rem;padding-top:2rem;border-top:2px solid var(--border)">
+    <div class="section-label" style="margin-bottom:.5rem">Directory</div>
+    <h3 style="font-size:1.3rem;font-weight:800;margin-bottom:.3rem">Supplier Directory</h3>
+    <p style="font-size:.8rem;color:var(--text2);margin-bottom:1.5rem">Actual suppliers in Cairo. Prices are estimates from 2025-2026 — always get fresh quotes.</p>
 
     <!-- Coffee Roasters -->
     <div class="sup-section">
@@ -933,6 +930,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
           </tbody>
         </table>
       </div>
+    </div>
     </div>
   </div>
 
@@ -1183,7 +1181,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   <div class="page-tabs">
     <button class="page-tab active" data-tab="strategy-competition">Competition</button>
     <button class="page-tab" data-tab="strategy-milestones">Milestones</button>
-    <button class="page-tab" data-tab="strategy-standout">Stand Out</button>
   </div>
 
   <!-- TAB: Competition -->
@@ -1250,6 +1247,67 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         <h3 style="color:var(--blue)">University Students</h3>
         <p>Price-sensitive but high volume. Instagram-active. Good for off-peak hours. Offer student combos for loyalty.</p>
       </div>
+    </div>
+
+    <!-- Stand Out (merged) -->
+    <div style="margin-top:3rem;padding-top:2rem;border-top:2px solid var(--border)">
+    <div class="section-label" style="margin-bottom:.5rem">The Secret Sauce</div>
+    <h3 style="font-size:1.3rem;font-weight:800;margin-bottom:.3rem">How to Stand Out</h3>
+    <p style="font-size:.8rem;color:var(--text2);margin-bottom:1.5rem">Cilantro sells coffee. You sell an experience, a community, and a craft.</p>
+
+    <h3 style="font-size:.95rem;font-weight:700;margin-bottom:1rem">Signature Drinks — Egyptian Flavors Meet Specialty Coffee</h3>
+    <div class="card-grid cols-3" style="margin-bottom:2rem">
+      <div class="sig-drink"><h4>Hibiscus Cold Brew</h4><p>Karkade-infused cold brew. Deeply Egyptian meets specialty. Nobody does this.</p></div>
+      <div class="sig-drink"><h4>Date-Spiced Latte</h4><p>Egyptian dates + cinnamon + espresso. Ramadan special that becomes year-round.</p></div>
+      <div class="sig-drink"><h4>Sahlab Latte</h4><p>Orchid root hot drink as a latte base. Warm, creamy, nostalgic.</p></div>
+      <div class="sig-drink"><h4>Orange Blossom Iced</h4><p>Subtle floral, refreshing, Instagram-worthy. Light and unique.</p></div>
+      <div class="sig-drink"><h4>Egyptian Mocha</h4><p>Dark chocolate + cardamom + double espresso. Rich and aromatic.</p></div>
+    </div>
+
+    <div class="card-grid cols-2" style="margin-bottom:2rem">
+      <div class="card">
+        <h3 style="margin-bottom:.75rem">10 Day-1 Quick Wins</h3>
+        <p style="font-size:.72rem;color:var(--text3);margin-bottom:.75rem">Cost almost nothing. Make you immediately different.</p>
+        <div class="qw"><div class="qw-num">1</div><p>Write tasting notes on a chalkboard next to the espresso machine</p></div>
+        <div class="qw"><div class="qw-num">2</div><p>First customer of the day gets their coffee free (costs 16 EGP, tells 10 people)</p></div>
+        <div class="qw"><div class="qw-num">3</div><p>Put a plant on every table</p></div>
+        <div class="qw"><div class="qw-num">4</div><p>Play a curated playlist, not random radio</p></div>
+        <div class="qw"><div class="qw-num">5</div><p>Offer free water without being asked</p></div>
+        <div class="qw"><div class="qw-num">6</div><p>WiFi password visible everywhere (not a scavenger hunt)</p></div>
+        <div class="qw"><div class="qw-num">7</div><p>Use the customer's name if they've been before</p></div>
+        <div class="qw"><div class="qw-num">8</div><p>Keep the bathroom spotless at all times</p></div>
+        <div class="qw"><div class="qw-num">9</div><p>Let customers see the coffee being made (open bar)</p></div>
+        <div class="qw"><div class="qw-num">10</div><p>Put your story on the wall — one paragraph about why you opened</p></div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-bottom:.75rem">The Moon Shot</h3>
+        <p style="font-size:.72rem;color:var(--text3);margin-bottom:.75rem">Growth trajectory, phase by phase.</p>
+        <div style="display:flex;flex-direction:column;gap:1rem">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:.3rem"><span style="color:var(--gold);font-weight:600">Year 1-2: Best in Neighborhood</span><span class="tag tag-gold">Active</span></div>
+            <div style="height:6px;background:var(--bg2);border-radius:3px;overflow:hidden"><div style="height:100%;width:25%;background:var(--gold);border-radius:3px"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:.3rem"><span style="color:var(--green);font-weight:600">Year 2-3: Cairo Destination</span><span class="tag tag-green">Next</span></div>
+            <div style="height:6px;background:var(--bg2);border-radius:3px;overflow:hidden"><div style="height:100%;width:0%;background:var(--green);border-radius:3px"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:.3rem"><span style="color:var(--blue);font-weight:600">Year 3-5: Egyptian Brand</span><span class="tag tag-blue">Future</span></div>
+            <div style="height:6px;background:var(--bg2);border-radius:3px;overflow:hidden"><div style="height:100%;width:0%;background:var(--blue);border-radius:3px"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:.3rem"><span style="color:var(--purple);font-weight:600">Year 5+: Regional</span><span class="tag tag-purple">Vision</span></div>
+            <div style="height:6px;background:var(--bg2);border-radius:3px;overflow:hidden"><div style="height:100%;width:0%;background:var(--purple);border-radius:3px"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="text-align:center;padding:2rem;border-color:rgba(212,165,74,.15);background:linear-gradient(135deg,var(--card),rgba(212,165,74,.04))">
+      <h3 class="serif" style="font-size:1.3rem;color:var(--gold);margin-bottom:.5rem">Quality &#8594; Community &#8594; Brand &#8594; Scale</h3>
+      <p style="font-size:.85rem;color:var(--text2)">In that order. Never skip a step.</p>
+    </div>
     </div>
   </div>
 
@@ -1367,71 +1425,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     </div>
   </div>
 
-  <!-- TAB: Stand Out -->
-  <div class="tab-panel" id="tab-strategy-standout">
-    <div class="section-label">The Secret Sauce</div>
-    <div class="section-title">How to Be Unlike Anything Else</div>
-    <div class="section-sub">Cilantro sells coffee. You sell an experience, a community, and a craft.</div>
-
-    <h3 style="font-size:.95rem;font-weight:700;margin-bottom:1rem">Signature Drinks -- Egyptian Flavors Meet Specialty Coffee</h3>
-    <div class="card-grid cols-3" style="margin-bottom:2rem">
-      <div class="sig-drink"><h4>Hibiscus Cold Brew</h4><p>Karkade-infused cold brew. Deeply Egyptian meets specialty. Nobody does this.</p></div>
-      <div class="sig-drink"><h4>Date-Spiced Latte</h4><p>Egyptian dates + cinnamon + espresso. Ramadan special that becomes year-round.</p></div>
-      <div class="sig-drink"><h4>Sahlab Latte</h4><p>Orchid root hot drink as a latte base. Warm, creamy, nostalgic.</p></div>
-      <div class="sig-drink"><h4>Orange Blossom Iced</h4><p>Subtle floral, refreshing, Instagram-worthy. Light and unique.</p></div>
-      <div class="sig-drink"><h4>Egyptian Mocha</h4><p>Dark chocolate + cardamom + double espresso. Rich and aromatic.</p></div>
-    </div>
-
-    <div class="card-grid cols-2" style="margin-bottom:2rem">
-      <div class="card">
-        <h3 style="margin-bottom:.75rem">10 Day-1 Quick Wins</h3>
-        <p style="font-size:.72rem;color:var(--text3);margin-bottom:.75rem">Cost almost nothing. Make you immediately different.</p>
-        <div class="qw"><div class="qw-num">1</div><p>Write tasting notes on a chalkboard next to the espresso machine</p></div>
-        <div class="qw"><div class="qw-num">2</div><p>First customer of the day gets their coffee free (costs 16 EGP, tells 10 people)</p></div>
-        <div class="qw"><div class="qw-num">3</div><p>Put a plant on every table</p></div>
-        <div class="qw"><div class="qw-num">4</div><p>Play a curated playlist, not random radio</p></div>
-        <div class="qw"><div class="qw-num">5</div><p>Offer free water without being asked</p></div>
-        <div class="qw"><div class="qw-num">6</div><p>WiFi password visible everywhere (not a scavenger hunt)</p></div>
-        <div class="qw"><div class="qw-num">7</div><p>Use the customer's name if they've been before</p></div>
-        <div class="qw"><div class="qw-num">8</div><p>Keep the bathroom spotless at all times</p></div>
-        <div class="qw"><div class="qw-num">9</div><p>Let customers see the coffee being made (open bar)</p></div>
-        <div class="qw"><div class="qw-num">10</div><p>Put your story on the wall -- one paragraph about why you opened</p></div>
-      </div>
-
-      <div class="card">
-        <h3 style="margin-bottom:.75rem">The Moon Shot</h3>
-        <p style="font-size:.72rem;color:var(--text3);margin-bottom:.75rem">Your growth trajectory, phase by phase.</p>
-        <div style="display:flex;flex-direction:column;gap:1rem">
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:.3rem"><span style="color:var(--gold);font-weight:600">Year 1-2: Best in Neighborhood</span><span class="tag tag-gold">Active</span></div>
-            <div style="height:6px;background:var(--bg2);border-radius:3px;overflow:hidden"><div style="height:100%;width:25%;background:var(--gold);border-radius:3px"></div></div>
-            <p style="font-size:.7rem;color:var(--text3);margin-top:.2rem">"Best coffee in Maadi" -- 150+ customers/day, consistently profitable</p>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:.3rem"><span style="color:var(--green);font-weight:600">Year 2-3: Cairo Destination</span><span class="tag tag-green">Next</span></div>
-            <div style="height:6px;background:var(--bg2);border-radius:3px;overflow:hidden"><div style="height:100%;width:0%;background:var(--green);border-radius:3px"></div></div>
-            <p style="font-size:.7rem;color:var(--text3);margin-top:.2rem">People cross the city to visit. 2-3 locations. Own-roasted coffee brand.</p>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:.3rem"><span style="color:var(--blue);font-weight:600">Year 3-5: Egyptian Brand</span><span class="tag tag-blue">Future</span></div>
-            <div style="height:6px;background:var(--bg2);border-radius:3px;overflow:hidden"><div style="height:100%;width:0%;background:var(--blue);border-radius:3px"></div></div>
-            <p style="font-size:.7rem;color:var(--text3);margin-top:.2rem">5-10 locations. Retail in supermarkets. E-commerce nationwide. Training academy.</p>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:.3rem"><span style="color:var(--purple);font-weight:600">Year 5+: Regional</span><span class="tag tag-purple">Vision</span></div>
-            <div style="height:6px;background:var(--bg2);border-radius:3px;overflow:hidden"><div style="height:100%;width:0%;background:var(--purple);border-radius:3px"></div></div>
-            <p style="font-size:.7rem;color:var(--text3);margin-top:.2rem">GCC expansion (Dubai, Riyadh). Franchise model. Export specialty coffee.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card" style="text-align:center;padding:2.5rem;border-color:rgba(212,165,74,.15);background:linear-gradient(135deg,var(--card),rgba(212,165,74,.04))">
-      <div style="font-size:2rem;margin-bottom:.75rem">&#9749;</div>
-      <h3 class="serif" style="font-size:1.4rem;color:var(--gold);margin-bottom:.5rem">Quality -> Community -> Brand -> Scale</h3>
-      <p style="font-size:.88rem;color:var(--text2);max-width:480px;margin:0 auto">In that order. Never skip a step. The playbook that turns a neighborhood cafe into an empire.</p>
-    </div>
-  </div>
 </div>
 
 <!-- ==================== PAGE: FAITH (2 tabs) ==================== -->
