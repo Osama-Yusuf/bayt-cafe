@@ -74,7 +74,7 @@ All of these must be true simultaneously:
 - [ ] **Consistent daily traffic:** 40+ customers/day for 2+ consecutive weeks
 - [ ] **Drink quality stable:** No complaints about consistency for 2+ weeks
 - [ ] **Operations smooth:** No major operational issues (equipment, supply, staffing) for 2+ weeks
-- [ ] **Staff independent:** Baristas can run a full shift without owner/sister intervention
+- [ ] **Staff independent:** Baristas can run a full shift without founders intervention
 - [ ] **Cash flow tracked:** You know your daily revenue, COGS, and margin numbers
 - [ ] **Customer feedback positive:** 4.5+ stars on Google, regulars emerging
 

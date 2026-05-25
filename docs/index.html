@@ -581,7 +581,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   <div class="tab-panel" id="tab-planning-partnership">
     <div class="section-label">Legal Framework</div>
     <div class="section-title">Partnership Framework</div>
-    <div class="section-sub">You and your sister -- agree on these before spending a single pound. Review with a lawyer to make it official.</div>
+    <div class="section-sub">Agree on these with your partner(s) before spending a single pound. Review with a lawyer to make it official.</div>
 
     <div class="info-box info-red" style="margin-bottom:1.5rem">
       <strong>Disclaimer:</strong> This is NOT legal advice. It is a framework to guide your discussions. Hire a lawyer to formalize everything into a proper Musharakah partnership agreement under Egyptian commercial law.
@@ -592,16 +592,16 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <h3><span class="p-num">1</span> Ownership & Capital</h3>
       <div class="p-field"><span>Ownership Split</span><span style="color:var(--gold);font-weight:700">50 / 50</span></div>
       <div class="p-field"><span>Your Capital Contribution (%)</span><input class="fi fi-sm" type="number" data-key="partnerYourCapital" min="0" max="100" step="5" style="width:100px;text-align:right"></div>
-      <div class="p-field"><span>Sister's Capital Contribution (%)</span><span style="color:var(--gold);font-weight:600" data-calc="partnerSisterCapital">50%</span></div>
+      <div class="p-field"><span>Partner's Capital Contribution (%)</span><span style="color:var(--gold);font-weight:600" data-calc="partnerOtherCapital">50%</span></div>
       <div class="p-item"><strong>What counts as capital:</strong> Cash contributed, equipment purchased, deposits paid. Time invested is separate from capital -- it is compensated through profit share and/or management salary.</div>
-      <div class="p-item"><strong>Additional capital later:</strong> If one partner contributes more capital after launch, document it. Options: (a) treat as a profit-sharing loan, (b) adjust ownership proportionally, or (c) treat as a loan with no riba -- repaid from profits before distribution. Agree on which approach upfront.</div>
+      <div class="p-item"><strong>Additional capital later:</strong> If one partner contributes more capital after launch, document it. Options: (a) treat as additional Musharakah capital and adjust profit share, (b) adjust ownership proportionally, or (c) treat as qard hasan (goodwill loan) — repaid from profits before distribution, no markup. Agree upfront.</div>
     </div>
 
     <!-- Section 2: Roles -->
     <div class="p-card">
       <h3><span class="p-num">2</span> Roles & Responsibilities</h3>
       <div class="p-item"><strong>You (Remote Partner):</strong> Financial planning, budgets, and forecasting. Systems and tech (POS setup, automation, analytics). Strategic decisions and business development. Bookkeeping oversight and P&L review.</div>
-      <div class="p-item"><strong>Sister (On-Ground Partner):</strong> Daily operations and cafe management. Supplier relationships and procurement. Staff management, scheduling, and training. On-ground logistics in Cairo -- permits, maintenance, emergencies.</div>
+      <div class="p-item"><strong>Partner B (On-Ground):</strong> Daily operations and cafe management. Supplier relationships and procurement. Staff management, scheduling, and training. On-ground logistics — permits, maintenance, emergencies.</div>
       <div class="p-item" style="border-left:3px solid var(--gold);padding-left:1rem;margin-top:.5rem">
         <strong>Decision Framework:</strong><br>
         Day-to-day decisions under <input class="fi fi-sm" type="number" data-key="partnerDayThreshold" step="1000" style="width:90px;text-align:right;display:inline-block"> EGP -- whoever is on-ground decides.<br>
@@ -1619,13 +1619,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 // ===========================
 const DEFAULTS = {
   // Savings
-  monthlySavingsYou: 30000,
-  monthlySavingsSister: 30000,
-  currentSavingsSister: 300000,
   goldReserves: 500000,
   useMudarabah: false,
-  mudarabahPct: 40,
-  monthlySavingsAED: 10000,
   currentSavingsEGP: 300000,
   mudarabahRate: 15,
   savingsTarget: 3500000,
@@ -1966,7 +1961,7 @@ function calc() {
   C.breakEvenCustomers = Math.ceil(C.breakEvenN);
 
   C.plBurnRate = C.plProfitLossN < 0 ? fmt(Math.abs(C.plProfitLossN)) + '/mo' : 'N/A (profitable)';
-  const reserveCash = S.currentSavingsEGP || 0;
+  const reserveCash = S._partnerCurrent || S.currentSavingsEGP || 0;
   C.plRunway = C.plProfitLossN < 0 ? (Math.abs(C.plProfitLossN) > 0 ? (reserveCash / Math.abs(C.plProfitLossN)).toFixed(1) + ' mo' : '--') : 'Infinite';
   C.plRecoup = C.plProfitLossN > 0 ? Math.ceil(C.totalStartupNum / C.plProfitLossN) + ' mo' : 'Not yet profitable';
   C.plReserveN = C.totalStartupNum + (C.totalMonthlyOpN * 6);
@@ -2012,7 +2007,7 @@ function calc() {
   C.savDate = openDate.toLocaleDateString('en-US', {month:'short', year:'numeric'});
 
   // ---- PARTNERSHIP ----
-  C.partnerSisterCapital = (100 - (S.partnerYourCapital || 50)) + '%';
+  C.partnerOtherCapital = (100 - (S.partnerYourCapital || 50)) + '%';
   C.partnerDistribute = (100 - (S.partnerReinvest || 50)) + '%';
 
   // ---- ZAKAT ----

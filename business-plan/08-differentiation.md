@@ -109,16 +109,16 @@ These drinks connect Egyptian flavors with specialty coffee. No other café in C
 
 ### 7. Founders' Presence (Your Superpower)
 
-**What:** You and your sister being there — greeting regulars, fixing problems, tasting every new batch. A sibling team running the show together.
+**What:** The founding team being there — greeting regulars, fixing problems, tasting every new batch. Real people running the show, not a faceless chain.
 
-**Why it works:** Cilantro is faceless. Corporate. Nobody knows who runs it. When customers know the founders, see a brother-sister team who genuinely care — that builds loyalty chains literally cannot replicate. A family business has authenticity no corporate brand can fake.
+**Why it works:** Cilantro is faceless. Corporate. Nobody knows who runs it. When customers know the founders, see them genuinely care — that builds loyalty chains literally cannot replicate. A founder-led business has authenticity no corporate brand can fake.
 
 **How:**
-- At least one of you at the café every single day for the first year
+- At least one founder at the café every single day for the first year
 - Greet every customer personally for the first month
 - Learn 50 regulars' names and orders by Month 3
-- Share your story: "We're a brother and sister who named our café 'Home' because that's how coffee should feel" — it's personal and unforgettable
-- Both visible on social media — faces of the brand, not hidden behind a logo
+- Share your story: "We named our café 'Home' because that's how coffee should feel" — personal and unforgettable
+- Founders visible on social media — faces of the brand, not hidden behind a logo
 
 ### 8. Sustainability as a Practice (Not a Slogan)
 

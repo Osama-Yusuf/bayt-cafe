@@ -66,15 +66,25 @@ All figures in Egyptian Pounds (EGP). Reference rate: ~50 EGP = 1 USD.
 |------|-----|------|-------|
 | Typically 2-3 months rent upfront | 60,000 | 450,000 | Depends on area. See Location Strategy. |
 
+### Key Money — خلو رجل (Critical Hidden Cost)
+
+| Location Quality | Low | High | Notes |
+|-----------------|-----|------|-------|
+| Side street, weak traffic | 0 | 500,000 | Some spots have no key money |
+| Tier 2 decent street | 500,000 | 2,000,000 | Typical for most café-viable locations |
+| Road 9 / prime Degla / Korba | 2,000,000 | 5,000,000+ | Premium spots rarely listed publicly |
+
+One-time, non-refundable payment to the previous tenant. **Always ask: "إيه قيمة الخلو؟"** before getting excited about a low rent number.
+
 ---
 
-### Total One-Time Startup Cost
+### Total One-Time Startup Cost (Including Key Money)
 
 | Scenario | Estimate |
 |----------|----------|
-| **Budget / Minimal (small space, used equipment, Maadi/5th Settlement)** | ~800,000 – 1,200,000 EGP |
-| **Mid-Range (proper fitout, new equipment, good location)** | ~1,500,000 – 2,000,000 EGP |
-| **Premium (Zamalek, full custom design, top equipment)** | ~2,500,000 – 3,500,000+ EGP |
+| **Budget (side street, low key money, used equipment)** | ~1,500,000 – 2,500,000 EGP |
+| **Mid-Range (Tier 2 street, proper fitout, new equipment)** | ~2,500,000 – 4,000,000 EGP |
+| **Premium (prime street, full design, top equipment)** | ~4,000,000 – 6,000,000+ EGP |
 
 ---
 

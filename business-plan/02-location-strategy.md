@@ -86,21 +86,6 @@
 
 **Total upfront for buying:** 2,000,000 – 15,000,000 EGP depending on area
 
-### Option C: Buy a Separate Investment Property → Use Rental Income to Fund Café
-
-This is a creative strategy. Here's the math:
-
-| Scenario | Details |
-|----------|---------|
-| Buy a residential apartment in a good area | ~1,500,000 – 3,000,000 EGP |
-| Expected monthly rent from that apartment | 10,000 – 25,000 EGP/month |
-| Your café rent (Maadi) | 35,000 – 50,000 EGP/month |
-| **Gap you still need to cover** | **10,000 – 40,000 EGP/month** |
-
-**Verdict on Option C:** The rental income won't fully cover café rent in most scenarios. You'd need to buy a property worth 4-6M EGP to generate enough rent (40-60K/month) to cover a Maadi café lease. At that capital level, you're better off funding operations directly.
-
-**However**, if you already own property or can buy one that generates passive income, it's a great safety net — not a primary funding mechanism.
-
 ### The Clear Winner: Rent
 
 For a **first-time café owner**, renting is the only sensible choice:
@@ -108,7 +93,7 @@ For a **first-time café owner**, renting is the only sensible choice:
 1. **Capital preservation** — You need every pound for equipment, inventory, marketing, and surviving the first 12-18 months
 2. **Flexibility** — If the location doesn't work, you can move after the lease term
 3. **Focus** — Managing a property AND a new business is a distraction
-4. **Risk management** — Most cafés are not profitable until month 6-18. Don't add a mortgage to that stress
+4. **Risk management** — Most cafés are not profitable until month 6-18. Don't add a property purchase to that stress
 
 ---
 

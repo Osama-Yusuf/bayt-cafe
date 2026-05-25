@@ -14,7 +14,7 @@ A sibling partnership building Cairo's next great specialty café. Where coffee 
 | 06 | [Staffing Guide](06-staffing-guide.md) | Roles, hiring, evaluating baristas, salary benchmarks |
 | 07 | [Milestone Roadmap](07-milestone-roadmap.md) | Phased growth plan from pre-launch through Year 2 |
 | 08 | [Differentiation](08-differentiation.md) | How to be unique, brand identity, experience design |
-| 09 | [Financial Strategy](09-financial-strategy.md) | Halal savings plan — Mudarabah vs property, with math |
+| 09 | [Financial Strategy](09-financial-strategy.md) | Halal savings plan — gold + AED strategy, real Maadi pricing |
 
 ## Market Snapshot (2025-2026)
 
@@ -29,7 +29,7 @@ A sibling partnership building Cairo's next great specialty café. Where coffee 
 
 | Metric | Range |
 |--------|-------|
-| **Total Startup Cost** | 1,000,000 – 2,500,000 EGP |
+| **Total Startup Cost (incl. key money)** | 2,500,000 – 6,000,000 EGP |
 | **Monthly Operating Cost** | 110,000 – 280,000 EGP |
 | **Monthly Rent (Maadi)** | 30,000 – 80,000 EGP |
 | **Monthly Rent (Zamalek)** | 50,000 – 150,000 EGP |

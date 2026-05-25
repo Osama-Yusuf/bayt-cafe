@@ -4,7 +4,7 @@
 
 | Role | Needed at Launch? | Monthly Cost (EGP) | Justification |
 |------|:-----------------:|--------------------:|---------------|
-| **You + Sister (Co-Founders)** | Yes | Your draw | You two ARE the management for Year 1. Non-negotiable. |
+| **Co-Founders** | Yes | Your draw | You ARE the management for Year 1. Non-negotiable. |
 | **Barista x2** | Yes | 5,000–8,000 each | Core operation. One AM, one PM, overlap at peak. |
 | **Cleaner / Office Boy** | Yes | 3,000–4,500 | Culturally expected in Egypt. Handles cleaning, restocking, errands. |
 | **3rd Barista** | Month 2-3 | 5,000–7,000 | Covers days off and peak periods. |
@@ -22,19 +22,19 @@
 ### Pre-Opening (Month -2 to 0)
 
 ```
-YOU + SISTER (full-time, managing everything together)
+FOUNDERS (full-time, managing everything together)
 ├── Barista #1 (hire 2-3 weeks before opening, train during soft opening)
 ├── Barista #2 (hire 2-3 weeks before opening)
 └── Cleaner (hire 1 week before opening)
 
-Total staff: 3 + you two
+Total staff: 3 + founders
 Monthly labor: ~16,000-23,000 EGP
 ```
 
 ### Phase 1: Stabilization (Month 1-3)
 
 ```
-YOU + SISTER (still full-time, filling every gap)
+FOUNDERS (still full-time, filling every gap)
 ├── Barista #1 — AM shift (7am-3pm)
 ├── Barista #2 — PM shift (2pm-10pm)
 ├── Barista #3 — hired Month 2 (covers days off, peak overlap)
@@ -47,7 +47,7 @@ Monthly labor: ~25,000-35,000 EGP
 ### Phase 2: Growth (Month 4-6)
 
 ```
-YOU + SISTER (can start alternating days off)
+FOUNDERS (can start alternating days off)
 ├── Shift Lead (promoted from Barista #1 or #2, raise to 8,000-10,000)
 ├── Barista #2
 ├── Barista #3
