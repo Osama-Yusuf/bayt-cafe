@@ -2788,13 +2788,13 @@ initChecklists();
           '<div class="ob-subtitle">Pick a name or type your own. You can always change it later.</div>' +
           '<div class="ob-input-group" style="margin-bottom:1.5rem">' +
             '<label>Café Name</label>' +
-            '<input id="ob-cafe-name" type="text" value="'+(n||'')+'" placeholder="Type a name..." oninput="obData.cafeName=this.value" style="text-align:center;font-size:1.3rem">' +
+            '<input id="ob-cafe-name" type="text" value="'+(n||'')+'" placeholder="Type a name..." oninput="window._obSetName(this.value)" style="text-align:center;font-size:1.3rem">' +
           '</div>' +
           '<div style="font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.6rem">Or pick a suggestion:</div>' +
           '<div style="display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin-bottom:1.5rem">' +
             suggestions.map(function(s){
               var active = n === s;
-              return '<button onclick="obData.cafeName=\''+s+'\';document.getElementById(\'ob-cafe-name\').value=\''+s+'\';window._obSet(\'cafeName\',\''+s+'\')" style="background:'+(active?'var(--gold-glow)':'var(--card)')+';border:1px solid '+(active?'var(--gold)':'var(--border)')+';color:'+(active?'var(--gold)':'var(--text2)')+';padding:.4rem .8rem;border-radius:100px;font-size:.75rem;cursor:pointer;font-family:inherit;transition:var(--transition)">'+s+'</button>';
+              return '<button onclick="window._obSetName(\''+s+'\')" style="background:'+(active?'var(--gold-glow)':'var(--card)')+';border:1px solid '+(active?'var(--gold)':'var(--border)')+';color:'+(active?'var(--gold)':'var(--text2)')+';padding:.4rem .8rem;border-radius:100px;font-size:.75rem;cursor:pointer;font-family:inherit;transition:var(--transition)">'+s+'</button>';
             }).join('') +
           '</div>' +
           buildNav(true, true);
@@ -3086,6 +3086,13 @@ initChecklists();
       obCurrentStep--;
       renderCurrentStep();
     }
+  };
+
+  window._obSetName = function(name){
+    obData.cafeName = name;
+    var el = document.getElementById('ob-cafe-name');
+    if(el) el.value = name;
+    renderCurrentStep();
   };
 
   window._obSet = function(key, val){
