@@ -382,16 +382,25 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .progress-ring{position:relative;display:inline-block}
 
 /* ===== CHECKLIST PAGE ===== */
-.cl-phase{margin-bottom:2rem;border:2px solid transparent;border-radius:var(--radius);padding:.5rem;transition:border-color .2s}
+.cl-phase{margin-bottom:.75rem;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .3s}
 .cl-phase.drag-over{border-color:var(--gold);background:rgba(212,165,74,.03)}
+.cl-phase.phase-complete{border-color:rgba(91,168,114,.25)}
+.cl-phase-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);padding:0 1rem}
+.cl-phase.open .cl-phase-body{max-height:5000px;padding:.5rem 1rem 1rem}
 .cl-item.cl-drop-above{border-top:2px solid var(--gold) !important}
 .cl-del{background:none;border:1px solid transparent;color:var(--text3);cursor:pointer;font-size:1rem;padding:.2rem .5rem;flex-shrink:0;border-radius:4px;opacity:0;transition:all .2s;font-family:inherit}
 .cl-item:hover .cl-del{opacity:.5}
 .cl-del:hover{opacity:1 !important;color:var(--red);border-color:var(--red)}
-.cl-phase-header{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0;border-bottom:2px solid var(--border);margin-bottom:.75rem}
-.cl-phase-header h3{font-size:1rem;font-weight:700}
-.cl-phase-progress{font-size:.75rem;color:var(--text2)}
+.cl-phase-header{display:flex;justify-content:space-between;align-items:center;padding:.85rem 1rem;cursor:pointer;user-select:none;transition:var(--transition)}
+.cl-phase-header:hover{background:rgba(255,255,255,.02)}
+.cl-phase-header h3{font-size:.9rem;font-weight:700;display:flex;align-items:center;gap:.6rem}
+.cl-phase-chevron{font-size:.55rem;color:var(--text3);transition:transform .25s;flex-shrink:0}
+.cl-phase.open .cl-phase-chevron{transform:rotate(90deg)}
+.cl-phase-progress{font-size:.72rem;color:var(--text2);display:flex;align-items:center;gap:.6rem}
 .cl-phase-progress strong{color:var(--gold)}
+.cl-phase-bar{width:60px;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.cl-phase-bar-fill{height:100%;border-radius:2px;transition:width .4s ease}
+.cl-phase-badge{font-size:.55rem;font-weight:700;padding:.15rem .4rem;border-radius:100px;text-transform:uppercase;letter-spacing:.05em}
 .cl-item{display:flex;align-items:flex-start;gap:.75rem;padding:.55rem 0;border-bottom:1px solid var(--border);transition:var(--transition)}
 .cl-item:last-child{border-bottom:none}
 .cl-item.checked .cl-title{text-decoration:line-through;color:var(--text3)}
@@ -3326,6 +3335,15 @@ var CL_DEFAULTS = {
 var clData = JSON.parse(localStorage.getItem('bayt_checklist_v3') || 'null') || JSON.parse(JSON.stringify(CL_DEFAULTS));
 function saveCl(){ localStorage.setItem('bayt_checklist_v3', JSON.stringify(clData)); }
 
+var clOpenPhases = JSON.parse(localStorage.getItem('bayt_cl_open') || 'null') || {1:true};
+function saveClOpen(){ localStorage.setItem('bayt_cl_open', JSON.stringify(clOpenPhases)); }
+
+function clTogglePhase(p){
+  clOpenPhases[p] = !clOpenPhases[p];
+  saveClOpen();
+  renderChecklist();
+}
+
 function renderChecklist(){
   var container = document.getElementById('checklist-container');
   if(!container) return;
@@ -3333,33 +3351,65 @@ function renderChecklist(){
   var totalAll=0, checkedAll=0;
   var esc = function(s){return (s||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;');};
 
+  // Calculate per-phase completion first to detect auto-advance
+  var phaseStats = {};
+  var firstIncomplete = null;
+  phases.forEach(function(p){
+    var items = (clData[p] && clData[p].items) || [];
+    var checked = items.filter(function(it){return localStorage.getItem('bayt_cl_'+it.id)==='1';}).length;
+    phaseStats[p] = {total:items.length, checked:checked, complete: checked===items.length && items.length>0};
+    totalAll += items.length;
+    checkedAll += checked;
+    if(!phaseStats[p].complete && firstIncomplete===null) firstIncomplete = p;
+  });
+
+  // Auto-open first incomplete phase if nothing is manually open
+  var anyOpen = phases.some(function(p){ return clOpenPhases[p]; });
+  if(!anyOpen && firstIncomplete!==null){
+    clOpenPhases[firstIncomplete] = true;
+    saveClOpen();
+  }
+
   container.innerHTML = phases.map(function(p){
     var phase = clData[p];
     if(!phase) return '';
-    var items = phase.items || [];
-    var checked = items.filter(function(it){return localStorage.getItem('bayt_cl_'+it.id)==='1';}).length;
-    totalAll += items.length;
-    checkedAll += checked;
+    var st = phaseStats[p];
+    var pct = st.total > 0 ? Math.round(st.checked / st.total * 100) : 0;
+    var isOpen = !!clOpenPhases[p];
+    var isComplete = st.complete;
+    var barColor = isComplete ? 'var(--green)' : phase.color;
+    var badge = isComplete
+      ? '<span class="cl-phase-badge" style="background:var(--green-glow);color:var(--green)">Complete ✓</span>'
+      : st.checked > 0
+        ? '<span class="cl-phase-badge" style="background:rgba(212,165,74,.1);color:var(--gold)">In Progress</span>'
+        : '<span class="cl-phase-badge" style="background:var(--bg2);color:var(--text3)">Not Started</span>';
 
-    return '<div class="cl-phase" data-phase="'+p+'" ondragover="event.preventDefault();this.classList.add(\'drag-over\')" ondragleave="this.classList.remove(\'drag-over\')" ondrop="clDrop(event,'+p+')">' +
-      '<div class="cl-phase-header">' +
-        '<h3 style="color:'+phase.color+'">Phase '+p+': '+phase.name+' <span style="font-size:.75rem;font-weight:400;color:var(--text2)">('+phase.sub+')</span></h3>' +
-        '<div class="cl-phase-progress"><strong>'+checked+'</strong> / '+items.length+'</div>' +
+    return '<div class="cl-phase'+(isOpen?' open':'')+(isComplete?' phase-complete':'')+'" data-phase="'+p+'" ondragover="event.preventDefault();this.classList.add(\'drag-over\')" ondragleave="this.classList.remove(\'drag-over\')" ondrop="clDrop(event,'+p+')">' +
+      '<div class="cl-phase-header" onclick="clTogglePhase('+p+')">' +
+        '<h3 style="color:'+phase.color+'"><span class="cl-phase-chevron">&#9654;</span>Phase '+p+': '+phase.name+'</h3>' +
+        '<div class="cl-phase-progress">' +
+          badge +
+          '<div class="cl-phase-bar"><div class="cl-phase-bar-fill" style="width:'+pct+'%;background:'+barColor+'"></div></div>' +
+          '<span><strong>'+st.checked+'</strong>/'+st.total+'</span>' +
+        '</div>' +
       '</div>' +
-      items.map(function(it,idx){
-        var isChecked = localStorage.getItem('bayt_cl_'+it.id)==='1';
-        return '<div class="cl-item'+(isChecked?' checked':'')+'" data-cl="'+it.id+'" draggable="true" data-phase="'+p+'" data-idx="'+idx+'" ondragstart="clDragStart(event)" ondragend="clDragEnd(event)" ondragover="event.preventDefault();event.stopPropagation();document.querySelectorAll(\'.cl-item\').forEach(function(x){x.classList.remove(\'cl-drop-above\')});this.classList.add(\'cl-drop-above\')">' +
-          '<div class="cl-check" onclick="clToggle(\''+it.id+'\')"><input type="checkbox"'+(isChecked?' checked':'')+' onclick="event.stopPropagation();clToggle(\''+it.id+'\')">' +
-            '<div class="cl-box"></div></div>' +
-          '<span class="ki-grip" style="color:var(--text3);font-size:.65rem;cursor:grab;flex-shrink:0;user-select:none">⠿</span>' +
-          '<div style="flex:1;min-width:0">' +
-            '<input value="'+esc(it.t)+'" onchange="clEdit('+p+','+idx+',\'t\',this.value)" style="background:none;border:none;border-bottom:1px solid transparent;color:var(--text);font-size:.85rem;font-weight:600;font-family:inherit;width:100%;padding:.1rem 0;transition:var(--transition)" onfocus="this.style.borderBottomColor=\'var(--border)\'" onblur="this.style.borderBottomColor=\'transparent\'">' +
-            '<input value="'+esc(it.d)+'" onchange="clEdit('+p+','+idx+',\'d\',this.value)" style="background:none;border:none;border-bottom:1px solid transparent;color:var(--text3);font-size:.72rem;font-family:inherit;width:100%;padding:.1rem 0;transition:var(--transition)" onfocus="this.style.borderBottomColor=\'var(--border)\'" onblur="this.style.borderBottomColor=\'transparent\'">' +
-          '</div>' +
-          '<button class="cl-del" onclick="clRemove('+p+','+idx+')">&times;</button>' +
-        '</div>';
-      }).join('') +
-      '<button onclick="clAdd('+p+')" class="kanban-add" style="margin-top:.3rem">+ Add item</button>' +
+      '<div class="cl-phase-body">' +
+        '<div style="font-size:.7rem;color:var(--text3);margin-bottom:.5rem">'+phase.sub+'</div>' +
+        (phase.items||[]).map(function(it,idx){
+          var isChecked = localStorage.getItem('bayt_cl_'+it.id)==='1';
+          return '<div class="cl-item'+(isChecked?' checked':'')+'" data-cl="'+it.id+'" draggable="true" data-phase="'+p+'" data-idx="'+idx+'" ondragstart="clDragStart(event)" ondragend="clDragEnd(event)" ondragover="event.preventDefault();event.stopPropagation();document.querySelectorAll(\'.cl-item\').forEach(function(x){x.classList.remove(\'cl-drop-above\')});this.classList.add(\'cl-drop-above\')">' +
+            '<div class="cl-check" onclick="clToggle(\''+it.id+'\')"><input type="checkbox"'+(isChecked?' checked':'')+' onclick="event.stopPropagation();clToggle(\''+it.id+'\')">' +
+              '<div class="cl-box"></div></div>' +
+            '<span class="ki-grip" style="color:var(--text3);font-size:.65rem;cursor:grab;flex-shrink:0;user-select:none">⠿</span>' +
+            '<div style="flex:1;min-width:0">' +
+              '<input value="'+esc(it.t)+'" onchange="clEdit('+p+','+idx+',\'t\',this.value)" style="background:none;border:none;border-bottom:1px solid transparent;color:var(--text);font-size:.85rem;font-weight:600;font-family:inherit;width:100%;padding:.1rem 0;transition:var(--transition)" onfocus="this.style.borderBottomColor=\'var(--border)\'" onblur="this.style.borderBottomColor=\'transparent\'">' +
+              '<input value="'+esc(it.d)+'" onchange="clEdit('+p+','+idx+',\'d\',this.value)" style="background:none;border:none;border-bottom:1px solid transparent;color:var(--text3);font-size:.72rem;font-family:inherit;width:100%;padding:.1rem 0;transition:var(--transition)" onfocus="this.style.borderBottomColor=\'var(--border)\'" onblur="this.style.borderBottomColor=\'transparent\'">' +
+            '</div>' +
+            '<button class="cl-del" onclick="clRemove('+p+','+idx+')">&times;</button>' +
+          '</div>';
+        }).join('') +
+        '<button onclick="clAdd('+p+')" class="kanban-add" style="margin-top:.5rem">+ Add item</button>' +
+      '</div>' +
     '</div>';
   }).join('');
 
@@ -3372,6 +3422,17 @@ function renderChecklist(){
 function clToggle(id){
   if(localStorage.getItem('bayt_cl_'+id)==='1') localStorage.removeItem('bayt_cl_'+id);
   else localStorage.setItem('bayt_cl_'+id,'1');
+  // Auto-advance: if current phase is now complete, collapse it and open next
+  var phases = Object.keys(clData).map(Number).sort();
+  phases.forEach(function(p,i){
+    var items = (clData[p]&&clData[p].items)||[];
+    var checked = items.filter(function(it){return localStorage.getItem('bayt_cl_'+it.id)==='1';}).length;
+    if(checked===items.length && items.length>0 && clOpenPhases[p]){
+      clOpenPhases[p] = false;
+      if(phases[i+1]!==undefined) clOpenPhases[phases[i+1]] = true;
+      saveClOpen();
+    }
+  });
   renderChecklist();
 }
 function clEdit(phase,idx,field,val){ if(clData[phase]&&clData[phase].items[idx]) clData[phase].items[idx][field]=val; saveCl(); }
