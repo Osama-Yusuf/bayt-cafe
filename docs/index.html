@@ -478,7 +478,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <aside class="sidebar">
   <div class="sidebar-logo">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 110 8h-1M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
-    <span>BAYT CAF&Eacute;</span>
+    <span data-calc="cafeNameUpper">BAYT CAFÉ</span>
   </div>
   <nav class="sidebar-nav">
     <a data-page="dashboard" class="active"><span class="nav-icon">&#9673;</span>Dashboard</a>
@@ -496,9 +496,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 
 <!-- ==================== PAGE: DASHBOARD ==================== -->
 <div class="page active" id="page-dashboard">
-  <div class="section-label"><span class="pulse-dot"></span> Bayt Caf&eacute; — Business Plan 2026</div>
-  <h1 class="section-title" style="font-size:clamp(2rem,5vw,3.2rem)">Bayt <span class="serif" style="color:var(--gold)">Caf&eacute;</span> <span style="font-size:.5em;color:var(--text2);font-weight:400">بيت كافيه</span></h1>
-  <p class="section-sub">A sibling partnership building Cairo's next great specialty caf&eacute;. Where coffee feels like home. Every number is editable. Every calculation updates live.</p>
+  <div class="section-label"><span class="pulse-dot"></span> <span data-calc="cafeNameDisplay">Bayt Café</span> — Business Plan</div>
+  <h1 class="section-title" style="font-size:clamp(2rem,5vw,3.2rem)"><span data-calc="cafeNameDisplay" class="serif" style="color:var(--gold)">Bayt Café</span></h1>
+  <p class="section-sub">Your specialty café business planner. Every number is editable. Every calculation updates live.</p>
 
   <div class="card-grid cols-3" style="margin-bottom:2rem">
     <div class="metric"><div class="m-val" style="color:var(--gold)" data-calc="totalStartup">--</div><div class="m-label">Total Startup Cost</div></div>
@@ -1799,6 +1799,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 // ===========================
 const DEFAULTS = {
   // Strategy
+  cafeName: 'Bayt Café',
   strategy: 'rent',
 
   // Savings
@@ -1933,7 +1934,7 @@ const DEFAULTS = {
 };
 
 // Load from localStorage or use defaults (with version check)
-const STATE_VERSION = 3;
+const STATE_VERSION = 4;
 let S = {};
 try {
   const saved = localStorage.getItem('cafePlanState');
@@ -2230,6 +2231,11 @@ function calc() {
     C.selectedAreaRentRange = '35,000–60,000';
     C.selectedAreaKeyRange = '500,000–2,000,000';
   }
+
+  // ---- CAFÉ NAME ----
+  C.cafeNameUpper = (S.cafeName || 'Bayt Café').toUpperCase();
+  C.cafeNameDisplay = S.cafeName || 'Bayt Café';
+  document.title = (S.cafeName || 'Bayt Café') + ' — Planner';
 
   // ---- STRATEGY LABELS ----
   if (S.strategy === 'buy') {
@@ -2675,9 +2681,9 @@ initChecklists();
     return {
       id:'welcome',
       render: function(){
-        return '<div class="ob-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 110 8h-1M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg><span>BAYT CAFÉ</span></div>' +
-          '<div class="ob-title">Welcome to Bayt Café Planner ☕</div>' +
-          '<div class="ob-subtitle">Your complete business planning tool for opening a specialty café in Cairo. Everything is editable. Everything updates live.</div>' +
+        return '<div class="ob-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 110 8h-1M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg><span>Café Planner</span></div>' +
+          '<div class="ob-title">Plan Your Dream Café ☕</div>' +
+          '<div class="ob-subtitle">Your complete business planning tool for opening a specialty café. Everything is editable. Everything updates live.</div>' +
           '<p style="font-size:.85rem;color:var(--text2);margin-bottom:1.5rem">How detailed do you want to go?</p>' +
           '<div class="ob-pace-cards">' +
             '<div class="ob-pace-card" onclick="window._obSelectPace(\'quick\')">' +
@@ -2700,6 +2706,31 @@ initChecklists();
             '</div>' +
           '</div>' +
           '<div class="ob-skip" onclick="window._obFinish()">Skip setup → go straight to the planner</div>';
+      }
+    };
+  }
+
+  function nameStep(){
+    return {
+      id:'name',
+      render: function(){
+        var n = obData.cafeName || '';
+        var suggestions = ['Bayt Café','Sip & Stay','The Daily Grind','Qahwa','Roast & Rest','The Corner Cup','Birdhouse Café','Nour Coffee','Fanar Café','Origin Brew'];
+        return buildProgress() +
+          '<div class="ob-title">Name Your Café</div>' +
+          '<div class="ob-subtitle">Pick a name or type your own. You can always change it later.</div>' +
+          '<div class="ob-input-group" style="margin-bottom:1.5rem">' +
+            '<label>Café Name</label>' +
+            '<input id="ob-cafe-name" type="text" value="'+(n||'')+'" placeholder="Type a name..." oninput="obData.cafeName=this.value" style="text-align:center;font-size:1.3rem">' +
+          '</div>' +
+          '<div style="font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.6rem">Or pick a suggestion:</div>' +
+          '<div style="display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin-bottom:1.5rem">' +
+            suggestions.map(function(s){
+              var active = n === s;
+              return '<button onclick="obData.cafeName=\''+s+'\';document.getElementById(\'ob-cafe-name\').value=\''+s+'\';window._obSet(\'cafeName\',\''+s+'\')" style="background:'+(active?'var(--gold-glow)':'var(--card)')+';border:1px solid '+(active?'var(--gold)':'var(--border)')+';color:'+(active?'var(--gold)':'var(--text2)')+';padding:.4rem .8rem;border-radius:100px;font-size:.75rem;cursor:pointer;font-family:inherit;transition:var(--transition)">'+s+'</button>';
+            }).join('') +
+          '</div>' +
+          buildNav(true, true);
       }
     };
   }
@@ -2959,7 +2990,7 @@ initChecklists();
   // ---- Public API (exposed on window) ----
   window._obSelectPace = function(pace){
     obData.pace = pace;
-    obSteps = [welcomeStep(), strategyStep(), savingsStep(), targetStep()];
+    obSteps = [welcomeStep(), nameStep(), strategyStep(), savingsStep(), targetStep()];
     if(pace === 'balanced' || pace === 'full'){
       obSteps.push(partnersStep());
       obSteps.push(areaStep());
@@ -3050,7 +3081,10 @@ initChecklists();
   function collectCurrentInputs(){
     var step = obSteps[obCurrentStep];
     if(!step) return;
-    if(step.id === 'savings'){
+    if(step.id === 'name'){
+      var nEl = document.getElementById('ob-cafe-name');
+      if(nEl) obData.cafeName = nEl.value;
+    } else if(step.id === 'savings'){
       window._obUpdateSavings();
     } else if(step.id === 'target'){
       var tEl = document.getElementById('ob-target');
@@ -3066,6 +3100,9 @@ initChecklists();
   };
 
   function applyOnboardingData(){
+    // Café Name
+    if(obData.cafeName) S.cafeName = obData.cafeName;
+
     // Strategy
     if(obData.strategy) S.strategy = obData.strategy;
 
