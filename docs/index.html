@@ -674,6 +674,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 
     <!-- Area cards grid -->
     <div class="area-grid" id="area-cards-grid"></div>
+    <div style="text-align:right;margin-top:1rem"><button onclick="resetAreas()" style="background:transparent;border:1px solid var(--border);color:var(--text3);padding:.4rem .8rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.7rem;font-family:inherit;transition:var(--transition)" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--red)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text3)'">Reset All Areas to Defaults</button></div>
   </div>
 </div>
 
@@ -2079,18 +2080,21 @@ function calc() {
 }
 
 // ===========================
-// AREAS DATA
+// AREAS DATA (dynamic — saved to localStorage)
 // ===========================
-const AREAS = [
-  {id:'nasr', name:'Nasr City', tagline:'Lowest entry cost, biggest captive population', rentRange:'15,000–35,000', keyMoneyRange:'0–500,000', buyRange:'1–3M', budgetRange:'1.2–2.5M', defaultRent:25000, defaultKeyMoney:250000, budgetMin:1.2, bestSpots:'Side streets near Abbas El Akkad, Makram Ebeid Square, behind City Stars, near AAST campus', pros:['Cheapest entry in Cairo','Massive captive population (~1M)','Low indie café competition','Low key money — landlords are flexible','Student + office worker traffic'], cons:['Price-sensitive crowd — lower ticket size','Brutal traffic on main streets','Reputation gap with \'cool\' crowd','Need to be on the right side street']},
-  {id:'east', name:'East Cairo Corridor', tagline:'Highest long-term capital appreciation', rentRange:'8,000–25,000', keyMoneyRange:'0–300,000', buyRange:'2–6.5M', budgetRange:'1.5–3.5M', defaultRent:18000, defaultKeyMoney:150000, budgetMin:1.5, bestSpots:'Shorouk Club District, outside compound gates on service roads, near BUE campus, El Horreya Axis', pros:['Cheapest rents in Greater Cairo','Massive growth trajectory (90% YoY price rise)','Under-served — almost no quality cafés','Student traffic from BUE + nearby universities'], cons:['Car-dependent — zero walk-up traffic','Weekend-heavy demand pattern','5–7 year play, not instant returns','Compound interiors charge punishing rents — stay outside walls']},
-  {id:'heliopolis', name:'Heliopolis', tagline:'Best vibe-to-cost ratio', rentRange:'30,000–70,000', keyMoneyRange:'500,000–2,000,000', buyRange:'3.5–8M', budgetRange:'2–4M', defaultRent:45000, defaultKeyMoney:1000000, budgetMin:2, bestSpots:'Korba side streets, Ard El Golf, Almazah, near CAC/Lycée, off Baghdad St', pros:['Walkable — rare in Cairo','Existing café culture you don\'t need to create','Architecture IS your interior design','Proven by Tree Trunk, Bouchee, Café Supreme','Real population already in place'], cons:['Prime Korba squares are full and expensive','Parking is brutal','Older/more conservative crowd','Instagram-vibe concepts work less well — food-forward wins']},
-  {id:'maadi', name:'Maadi Degla', tagline:'Most balanced safe bet', rentRange:'35,000–60,000', keyMoneyRange:'500,000–2,000,000', buyRange:'5–10M', budgetRange:'2.5–6M', defaultRent:50000, defaultKeyMoney:1000000, budgetMin:2.5, bestSpots:'Tier 2: Street 250, 218, 206, 213 — near schools (CAC, Lycée), lower cost, walkable', pros:['Strong community and loyal customers','Expat crowd knows specialty coffee','Walkable tree-lined streets','Room for specialty — most cafés are generic'], cons:['Key money can be brutal on Road 9','Tier 1 streets (Road 9, 231, 233) are very expensive','Can feel quiet on weekday mornings','Buying is 5-10M — out of reach for Day 1']},
-  {id:'october', name:'6th of October', tagline:'Most competitive battlefield', rentRange:'20,000–50,000', keyMoneyRange:'300,000–1,000,000', buyRange:'5–15M', budgetRange:'4–8M', defaultRent:35000, defaultKeyMoney:500000, budgetMin:4, bestSpots:'Off-axis near schools/compounds, Hadayek October, secondary malls — NOT GAN Axis or Park St', pros:['Large growing population','Cheaper off-axis options exist','Near universities and compounds'], cons:['GAN Axis is developer-dominated off-plan','Park St pricing caught up to Maadi Degla Square','Car-dependent','Heavy chain competition on main strips']},
-  {id:'dahshour', name:'Waslat Dahshour', tagline:'Hottest growth strip right now', rentRange:'70,000–120,000', keyMoneyRange:'500,000–2,000,000', buyRange:'6–22M', budgetRange:'4–8M', defaultRent:85000, defaultKeyMoney:1000000, budgetMin:4, bestSpots:'City Walk Strip (proven), avoid off-plan THRU/Junction until delivered', pros:['F&B destination — customers come specifically to eat/drink','Outdoor seating is the norm','Massive parking solves Cairo\'s biggest problem','Modern infrastructure (ventilation, electrical)','Three customer profiles: students, families, weekend brunch'], cons:['Pricing already caught up to established markets','Pure car-traffic — zero walk-in','Saturation risk within 2-3 years','Off-plan risk on newer malls','Slow weekday afternoons']},
-  {id:'zamalek', name:'Zamalek', tagline:'Highest prestige + highest tickets', rentRange:'50,000–100,000', keyMoneyRange:'2,000,000–8,000,000', buyRange:'8–15M', budgetRange:'6–14M', defaultRent:75000, defaultKeyMoney:5000000, budgetMin:6, bestSpots:'Side streets off 26th July or Abou Al Feda — main strips are full', pros:['Highest spending customers in Cairo','Walkable — almost unheard of in Cairo','Brand value: Zamalek address = marketing','Tourist spillover from Cairo Tower, Marriott'], cons:['Brutal key money (5-20M on prime corners)','Almost no supply — 4 shops listed for sale on entire island','Parking nightmare','Competition in a different league','Must open polished — can\'t be scrappy']},
-  {id:'settlement', name:'5th Settlement', tagline:'Highest spending power per customer', rentRange:'50,000–200,000', keyMoneyRange:'1,000,000–5,000,000', buyRange:'7–22M', budgetRange:'8–15M', defaultRent:120000, defaultKeyMoney:2000000, budgetMin:8, bestSpots:'Bait El Watan (cheaper sub-area), outside compound walls, Street 15 District 5', pros:['Highest ticket prices in Cairo','Reliable spending power','Modern infrastructure'], cons:['Most expensive market in Egypt for cafés','Almost every shop is inside developer malls','Mall service fees + revenue cuts','Opening budget 2-3x Maadi Degla']}
+const AREA_DEFAULTS = [
+  {id:'nasr', name:'Nasr City', tagline:'Lowest entry cost, biggest captive population', defaultRent:25000, defaultKeyMoney:250000, budgetMin:1.2, budgetRange:'1.2–2.5M', rentRange:'15,000–35,000', keyMoneyRange:'0–500,000', buyRange:'1–3M', bestSpots:'Side streets near Abbas El Akkad, Makram Ebeid Square, behind City Stars, near AAST campus', pros:['Cheapest entry in Cairo','Massive captive population (~1M)','Low indie café competition','Student + office worker traffic'], cons:['Price-sensitive crowd — lower ticket size','Brutal traffic on main streets','Need to be on the right side street']},
+  {id:'east', name:'East Cairo Corridor', tagline:'Highest long-term appreciation', defaultRent:18000, defaultKeyMoney:150000, budgetMin:1.5, budgetRange:'1.5–3.5M', rentRange:'8,000–25,000', keyMoneyRange:'0–300,000', buyRange:'2–6.5M', bestSpots:'Shorouk Club District, outside compound gates, near BUE campus', pros:['Cheapest rents in Greater Cairo','Massive growth trajectory','Under-served — almost no quality cafés'], cons:['Car-dependent — zero walk-up','Weekend-heavy demand','5–7 year play, not instant']},
+  {id:'heliopolis', name:'Heliopolis', tagline:'Best vibe-to-cost ratio', defaultRent:45000, defaultKeyMoney:1000000, budgetMin:2, budgetRange:'2–4M', rentRange:'30,000–70,000', keyMoneyRange:'500,000–2,000,000', buyRange:'3.5–8M', bestSpots:'Korba side streets, Ard El Golf, Almazah, off Baghdad St', pros:['Walkable — rare in Cairo','Existing café culture','Architecture IS your interior design'], cons:['Prime Korba is full and expensive','Parking is brutal','More conservative crowd']},
+  {id:'maadi', name:'Maadi Degla', tagline:'Most balanced safe bet', defaultRent:50000, defaultKeyMoney:1000000, budgetMin:2.5, budgetRange:'2.5–6M', rentRange:'35,000–60,000', keyMoneyRange:'500,000–2,000,000', buyRange:'5–10M', bestSpots:'Tier 2: Street 250, 218, 206, 213 — near schools', pros:['Strong community, loyal customers','Expat crowd knows specialty','Walkable tree-lined streets'], cons:['Key money brutal on Road 9','Tier 1 streets very expensive','Quiet weekday mornings']},
+  {id:'october', name:'6th of October', tagline:'Most competitive battlefield', defaultRent:35000, defaultKeyMoney:500000, budgetMin:4, budgetRange:'4–8M', rentRange:'20,000–50,000', keyMoneyRange:'300,000–1,000,000', buyRange:'5–15M', bestSpots:'Off-axis near schools/compounds, Hadayek October', pros:['Large growing population','Cheaper off-axis options','Near universities'], cons:['Developer-dominated off-plan','Car-dependent','Heavy chain competition']},
+  {id:'dahshour', name:'Waslat Dahshour', tagline:'Hottest growth strip right now', defaultRent:85000, defaultKeyMoney:1000000, budgetMin:4, budgetRange:'4–8M', rentRange:'70,000–120,000', keyMoneyRange:'500,000–2,000,000', buyRange:'6–22M', bestSpots:'City Walk Strip (proven)', pros:['F&B destination','Outdoor seating norm','Modern infrastructure'], cons:['Pricing caught up','Pure car-traffic','Saturation risk in 2-3 years']},
+  {id:'zamalek', name:'Zamalek', tagline:'Highest prestige + highest tickets', defaultRent:75000, defaultKeyMoney:5000000, budgetMin:6, budgetRange:'6–14M', rentRange:'50,000–100,000', keyMoneyRange:'2,000,000–8,000,000', buyRange:'8–15M', bestSpots:'Side streets off 26th July or Abou Al Feda', pros:['Highest spending customers','Walkable','Brand value = marketing'], cons:['Brutal key money (5-20M)','Almost no supply','Must open polished']},
+  {id:'settlement', name:'5th Settlement', tagline:'Highest spending power per customer', defaultRent:120000, defaultKeyMoney:2000000, budgetMin:8, budgetRange:'8–15M', rentRange:'50,000–200,000', keyMoneyRange:'1,000,000–5,000,000', buyRange:'7–22M', bestSpots:'Bait El Watan, outside compound walls', pros:['Highest ticket prices','Reliable spending power','Modern infrastructure'], cons:['Most expensive in Egypt','Developer mall lock-in','Opening budget 2-3x Maadi']}
 ];
+
+let AREAS = JSON.parse(localStorage.getItem('bayt_areas') || 'null') || JSON.parse(JSON.stringify(AREA_DEFAULTS));
+function saveAreas(){ localStorage.setItem('bayt_areas', JSON.stringify(AREAS)); }
 
 function selectArea(areaId) {
   const area = AREAS.find(a => a.id === areaId);
@@ -2098,50 +2102,85 @@ function selectArea(areaId) {
   S.selectedArea = areaId;
   S.monthlyRent = area.defaultRent;
   S.keyMoney = area.defaultKeyMoney;
-  calc();
-  bindInputs();
-  renderAreaCards();
-  // Toast confirmation
+  calc(); bindInputs(); renderAreaCards();
   const toast = document.getElementById('area-toast');
   if (toast) {
     toast.textContent = area.name + ' selected — rent & key money updated';
-    toast.style.opacity = '1';
-    toast.style.transform = 'translateX(-50%) translateY(0)';
+    toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)';
     setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(10px)'; }, 2500);
   }
 }
 
+function updateAreaField(areaId, field, value) {
+  const area = AREAS.find(a => a.id === areaId);
+  if (!area) return;
+  if (field === 'defaultRent' || field === 'defaultKeyMoney' || field === 'budgetMin') {
+    area[field] = parseFloat(value) || 0;
+  } else {
+    area[field] = value;
+  }
+  saveAreas();
+  if (S.selectedArea === areaId && (field === 'defaultRent' || field === 'defaultKeyMoney')) {
+    S.monthlyRent = area.defaultRent;
+    S.keyMoney = area.defaultKeyMoney;
+    calc(); bindInputs();
+  }
+  renderAreaCards();
+}
+
+function deleteArea(areaId) {
+  if (AREAS.length <= 1) return;
+  AREAS = AREAS.filter(a => a.id !== areaId);
+  if (S.selectedArea === areaId) { S.selectedArea = AREAS[0].id; selectArea(AREAS[0].id); }
+  saveAreas(); renderAreaCards();
+}
+
+function addArea() {
+  const id = 'area_' + Date.now();
+  AREAS.push({id:id, name:'New Area', tagline:'Edit details below', defaultRent:30000, defaultKeyMoney:500000, budgetMin:2, budgetRange:'2–4M', rentRange:'20,000–50,000', keyMoneyRange:'500K–1M', buyRange:'3–6M', bestSpots:'Edit best spots...', pros:['Add pros'], cons:['Add cons']});
+  saveAreas(); renderAreaCards();
+  const el = document.getElementById('acard-'+id);
+  if (el) el.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function resetAreas() {
+  if (!confirm('Reset all areas to defaults? Custom areas will be lost.')) return;
+  AREAS = JSON.parse(JSON.stringify(AREA_DEFAULTS));
+  saveAreas(); renderAreaCards();
+}
+
 function renderAreaCards() {
-  // Budget ranking bar
   const budgetBar = document.getElementById('area-budget-bar');
   if (budgetBar) {
     const sorted = [...AREAS].sort((a,b) => a.budgetMin - b.budgetMin);
-    const maxBudget = Math.max(...AREAS.map(a => a.budgetMin));
-    const colors = ['var(--green)','var(--green)','var(--gold)','var(--gold)','var(--copper)','var(--copper)','var(--red)','var(--red)'];
+    const maxB = Math.max(...AREAS.map(a => a.budgetMin), 1);
+    const colors = ['var(--green)','var(--green)','var(--gold)','var(--gold)','var(--copper)','var(--copper)','var(--red)','var(--red)','var(--red)','var(--red)'];
     budgetBar.innerHTML = sorted.map((a,i) => {
       const sel = S.selectedArea === a.id;
-      const h = Math.max(20, Math.round((a.budgetMin / maxBudget) * 90));
-      return '<div style="flex:1;min-width:70px;text-align:center;cursor:pointer;transition:var(--transition)" onclick="selectArea(\''+a.id+'\')">' +
-        '<div style="font-size:.72rem;font-weight:700;margin-bottom:.3rem;color:'+(sel ? 'var(--gold)' : 'var(--text2)')+'">'+a.budgetRange+'</div>' +
-        '<div style="height:'+h+'px;background:'+(sel ? 'var(--gold)' : colors[i])+';border-radius:4px 4px 0 0;opacity:'+(sel ? 1 : 0.5)+';transition:var(--transition)"></div>' +
-        '<div style="font-size:.62rem;color:'+(sel ? 'var(--gold)' : 'var(--text3)')+';margin-top:.3rem;font-weight:'+(sel ? 700 : 500)+';line-height:1.3">'+a.name+'</div>' +
-      '</div>';
+      const h = Math.max(20, Math.round((a.budgetMin / maxB) * 90));
+      return '<div style="flex:1;min-width:60px;text-align:center;cursor:pointer;transition:var(--transition)" onclick="selectArea(\''+a.id+'\')">' +
+        '<div style="font-size:.68rem;font-weight:700;margin-bottom:.3rem;color:'+(sel?'var(--gold)':'var(--text2)')+'">'+a.budgetRange+'</div>' +
+        '<div style="height:'+h+'px;background:'+(sel?'var(--gold)':colors[Math.min(i,colors.length-1)])+';border-radius:4px 4px 0 0;opacity:'+(sel?1:0.5)+';transition:var(--transition)"></div>' +
+        '<div style="font-size:.58rem;color:'+(sel?'var(--gold)':'var(--text3)')+';margin-top:.3rem;font-weight:'+(sel?700:500)+';line-height:1.2">'+a.name+'</div></div>';
     }).join('');
   }
   const grid = document.getElementById('area-cards-grid');
   if (!grid) return;
+  const esc = s => (s||'').replace(/'/g,'&#39;').replace(/"/g,'&quot;');
   grid.innerHTML = AREAS.map(a => {
     const sel = S.selectedArea === a.id;
-    return '<div class="area-card'+(sel ? ' area-selected' : '')+'" id="acard-'+a.id+'">' +
+    const canDel = AREAS.length > 1;
+    return '<div class="area-card'+(sel?' area-selected':'')+'" id="acard-'+a.id+'">' +
       '<div class="area-badge">SELECTED</div>' +
-      '<h3>'+a.name+'</h3>' +
-      '<span class="area-tag" style="color:var(--gold)">'+a.tagline+'</span>' +
+      (canDel ? '<button onclick="deleteArea(\''+a.id+'\')" style="position:absolute;top:.6rem;right:.6rem;background:transparent;border:1px solid var(--border);color:var(--text3);width:26px;height:26px;border-radius:6px;cursor:pointer;font-size:.8rem;z-index:2;transition:var(--transition)" onmouseover="this.style.borderColor=\'var(--red)\';this.style.color=\'var(--red)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--text3)\'">&times;</button>' : '') +
+      '<input value="'+esc(a.name)+'" onchange="updateAreaField(\''+a.id+'\',\'name\',this.value)" style="background:transparent;border:none;color:var(--text);font-size:1.05rem;font-weight:700;font-family:inherit;width:100%;padding:0;margin-bottom:.2rem">' +
+      '<input value="'+esc(a.tagline)+'" onchange="updateAreaField(\''+a.id+'\',\'tagline\',this.value)" style="background:transparent;border:none;color:var(--gold);font-size:.72rem;font-family:inherit;width:100%;padding:0;margin-bottom:.75rem;opacity:.8">' +
       '<div class="area-metrics">' +
-        '<div class="area-metric"><div class="am-val" style="color:var(--gold)">'+a.budgetRange+'</div><div class="am-label">Total Budget</div></div>' +
-        '<div class="area-metric"><div class="am-val">'+a.rentRange+'</div><div class="am-label">Rent/mo</div></div>' +
-        '<div class="area-metric"><div class="am-val">'+a.keyMoneyRange+'</div><div class="am-label">Key Money</div></div>' +
+        '<div class="area-metric"><input value="'+esc(a.budgetRange)+'" onchange="updateAreaField(\''+a.id+'\',\'budgetRange\',this.value)" style="background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--gold);font-size:.82rem;font-weight:700;text-align:center;width:100%;padding:.25rem;font-family:inherit"><div class="am-label">Budget Range</div></div>' +
+        '<div class="area-metric"><div style="display:flex;align-items:center;justify-content:center;gap:.2rem"><input type="number" value="'+a.defaultRent+'" onchange="updateAreaField(\''+a.id+'\',\'defaultRent\',this.value)" style="background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:.82rem;font-weight:600;text-align:center;width:80px;padding:.25rem;font-family:inherit"></div><div class="am-label">Rent/mo (EGP)</div></div>' +
+        '<div class="area-metric"><div style="display:flex;align-items:center;justify-content:center;gap:.2rem"><input type="number" value="'+a.defaultKeyMoney+'" onchange="updateAreaField(\''+a.id+'\',\'defaultKeyMoney\',this.value)" style="background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:.82rem;font-weight:600;text-align:center;width:100px;padding:.25rem;font-family:inherit"></div><div class="am-label">Key Money (EGP)</div></div>' +
       '</div>' +
-      '<div class="area-spots"><strong>Best spots: </strong>'+a.bestSpots+'</div>' +
+      '<div class="area-spots"><strong>Best spots: </strong><span contenteditable="true" style="outline:none" onblur="updateAreaField(\''+a.id+'\',\'bestSpots\',this.textContent)">'+a.bestSpots+'</span></div>' +
       '<div class="area-pros-cons">' +
         '<div style="cursor:pointer;font-size:.72rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;padding:.4rem 0;user-select:none" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display===\'none\'?\'block\':\'none\';this.querySelector(\'span\').textContent=this.nextElementSibling.style.display===\'none\'?\'▶\':\'▼\'"><span>▶</span> Pros & Cons</div>' +
         '<div style="display:none">' +
@@ -2151,7 +2190,11 @@ function renderAreaCards() {
       '</div>' +
       '<button class="area-select-btn" onclick="selectArea(\''+a.id+'\')">'+(sel ? '✓ Selected' : 'Select This Area')+'</button>' +
     '</div>';
-  }).join('');
+  }).join('') +
+  '<div style="border:2px dashed var(--border);border-radius:var(--radius);padding:2rem;text-align:center;cursor:pointer;transition:var(--transition);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;min-height:200px" onclick="addArea()" onmouseover="this.style.borderColor=\'var(--gold)\'" onmouseout="this.style.borderColor=\'var(--border)\'">' +
+    '<div style="font-size:1.5rem;color:var(--text3)">+</div>' +
+    '<div style="font-size:.82rem;color:var(--text3)">Add New Area</div>' +
+  '</div>';
 }
 
 // ===========================
