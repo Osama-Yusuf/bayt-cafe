@@ -902,6 +902,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   <div class="page-tabs">
     <button class="page-tab active" data-tab="costs-startup">Startup</button>
     <button class="page-tab" data-tab="costs-supplies">Supplies</button>
+    <button class="page-tab" data-tab="costs-suppliers">Suppliers</button>
     <button class="page-tab" data-tab="costs-team">Team & Hiring</button>
   </div>
 
@@ -1025,11 +1026,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         <span class="gt-val" data-calc="totalSuppliesFull">--</span>
       </div>
     </div>
-    <!-- Supplier Directory (merged) -->
-    <div style="margin-top:3rem;padding-top:2rem;border-top:2px solid var(--border)">
-    <div class="section-label" style="margin-bottom:.5rem">Directory</div>
-    <h3 style="font-size:1.3rem;font-weight:800;margin-bottom:.3rem">Supplier Directory</h3>
-    <p style="font-size:.8rem;color:var(--text2);margin-bottom:1.5rem">Actual suppliers in Cairo. Prices are estimates from 2025-2026 — always get fresh quotes.</p>
+  </div>
+
+  <!-- TAB: Suppliers -->
+  <div class="tab-panel" id="tab-costs-suppliers">
+    <div class="section-label">Directory</div>
+    <div class="section-title">Supplier Directory</div>
+    <div class="section-sub">Actual suppliers in Cairo. Prices are estimates from 2025-2026 — always get fresh quotes.</div>
 
     <!-- Coffee Roasters -->
     <div class="sup-section">
@@ -1149,7 +1152,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
           </tbody>
         </table>
       </div>
-    </div>
     </div>
   </div>
 
