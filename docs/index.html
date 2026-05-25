@@ -416,6 +416,26 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .p-item strong{color:var(--text)}
 .p-field{display:grid;grid-template-columns:1fr 120px;gap:.75rem;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.82rem}
 .p-field span{color:var(--text2)}
+/* Kanban board */
+.kanban{display:flex;gap:.75rem;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:.5rem;margin:0 -.25rem}
+.kanban-col{flex:1;min-width:180px;background:var(--bg2);border-radius:var(--radius-sm);border:1px solid var(--border);display:flex;flex-direction:column}
+.kanban-col.drag-over{border-color:var(--gold);background:rgba(212,165,74,.04)}
+.kanban-header{padding:.6rem .75rem;font-size:.75rem;font-weight:700;display:flex;align-items:center;gap:.4rem;border-bottom:1px solid var(--border)}
+.kanban-header .kh-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.kanban-header .kh-count{margin-left:auto;font-size:.6rem;color:var(--text3);font-weight:500}
+.kanban-items{padding:.4rem;flex:1;min-height:60px;display:flex;flex-direction:column;gap:.3rem}
+.kanban-item{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:.45rem .55rem;font-size:.75rem;color:var(--text2);cursor:grab;display:flex;align-items:center;gap:.4rem;transition:var(--transition);user-select:none}
+.kanban-item:active{cursor:grabbing;opacity:.7}
+.kanban-item:hover{border-color:var(--border-light)}
+.kanban-item.dragging{opacity:.3;border-style:dashed}
+.kanban-item .ki-grip{color:var(--text3);font-size:.7rem;flex-shrink:0;cursor:grab;line-height:1}
+.kanban-item .ki-text{flex:1;background:none;border:none;color:var(--text2);font-size:.75rem;font-family:inherit;padding:0;outline:none;cursor:text;min-width:0}
+.kanban-item .ki-text:focus{color:var(--text)}
+.kanban-item .ki-del{background:none;border:none;color:var(--text3);cursor:pointer;font-size:.65rem;padding:0 .15rem;opacity:.4;transition:var(--transition);flex-shrink:0}
+.kanban-item .ki-del:hover{opacity:1;color:var(--red)}
+.kanban-add{background:none;border:none;color:var(--text3);font-size:.68rem;cursor:pointer;padding:.35rem .55rem;width:100%;text-align:left;font-family:inherit;transition:var(--transition)}
+.kanban-add:hover{color:var(--gold)}
+@media(max-width:768px){.kanban{flex-direction:column}.kanban-col{min-width:100%}}
 
 /* ===== SUPPLIER PAGE ===== */
 .sup-section{margin-bottom:2rem}
@@ -901,85 +921,65 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   <div class="tab-panel" id="tab-planning-partnership">
     <div class="section-label">Legal Framework</div>
     <div class="section-title">Partnership Framework</div>
-    <div class="section-sub">Agree on these with your partner(s) before spending a single pound. Review with a lawyer to make it official.</div>
+    <div class="section-sub">Built from your partners. Roles are editable. Review with a lawyer to make it official.</div>
 
     <div class="info-box info-red" style="margin-bottom:1.5rem">
-      <strong>Disclaimer:</strong> This is NOT legal advice. It is a framework to guide your discussions. Hire a lawyer to formalize everything into a proper Musharakah partnership agreement under Egyptian commercial law.
+      <strong>Disclaimer:</strong> This is NOT legal advice. Hire a lawyer to formalize into a proper Musharakah agreement.
     </div>
 
-    <!-- Section 1: Ownership -->
+    <!-- Section 1: Ownership — dynamic from partners -->
     <div class="p-card">
       <h3><span class="p-num">1</span> Ownership & Capital</h3>
-      <div class="p-field"><span>Ownership Split</span><span style="color:var(--gold);font-weight:700">50 / 50</span></div>
-      <div class="p-field"><span>Your Capital Contribution (%)</span><input class="fi fi-sm" type="number" data-key="partnerYourCapital" min="0" max="100" step="5" style="width:100px;text-align:right"></div>
-      <div class="p-field"><span>Partner's Capital Contribution (%)</span><span style="color:var(--gold);font-weight:600" data-calc="partnerOtherCapital">50%</span></div>
-      <div class="read-more">
-        <div class="rm-preview"><div class="p-item"><strong>What counts as capital:</strong> Cash, equipment, deposits. Time is compensated through profit share.</div></div>
-        <div class="rm-full" style="display:none">
-          <div class="p-item"><strong>What counts as capital:</strong> Cash contributed, equipment purchased, deposits paid. Time invested is separate from capital -- it is compensated through profit share and/or management salary.</div>
-          <div class="p-item"><strong>Additional capital later:</strong> If one partner contributes more capital after launch, document it. Options: (a) treat as additional Musharakah capital and adjust profit share, (b) adjust ownership proportionally, or (c) treat as qard hasan (goodwill loan) — repaid from profits before distribution, no markup. Agree upfront.</div>
-        </div>
-        <button class="rm-toggle" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none';this.textContent=this.textContent==='Read more'?'Show less':'Read more'">Read more</button>
-      </div>
+      <div id="partnership-ownership"></div>
+      <div class="p-item" style="font-size:.75rem;color:var(--text3);margin-top:.5rem">Capital = cash + equipment + deposits. Time is compensated through profit share, not ownership.</div>
     </div>
 
-    <!-- Section 2: Roles -->
+    <!-- Section 2: Roles — Kanban Board -->
     <div class="p-card">
       <h3><span class="p-num">2</span> Roles & Responsibilities</h3>
-      <div class="p-item"><strong>You:</strong> Finance, tech, strategy, bookkeeping oversight.</div>
-      <div class="p-item"><strong>Partner B:</strong> Daily ops, suppliers, staff, on-ground logistics.</div>
-      <div class="p-item" style="border-left:3px solid var(--gold);padding-left:1rem;margin-top:.5rem">
-        <strong>Decision Framework:</strong><br>
-        Under <input class="fi fi-sm" type="number" data-key="partnerDayThreshold" step="1000" style="width:90px;text-align:right;display:inline-block" inputmode="numeric"> EGP -- on-ground partner decides.<br>
-        Over that -- both agree. Strategic decisions -- both agree, no exceptions.
+      <p style="font-size:.72rem;color:var(--text3);margin-bottom:.75rem">Drag items between columns to reassign. Click text to edit. Tap + to add.</p>
+      <div class="kanban" id="kanban-board"></div>
+
+      <!-- Decision framework -->
+      <div style="border-left:3px solid var(--gold);padding-left:1rem;margin-top:1.25rem">
+        <strong style="font-size:.82rem">Decision Framework:</strong><br>
+        <span style="font-size:.8rem;color:var(--text2)">Under <input class="fi fi-sm" type="number" data-key="partnerDayThreshold" step="1000" style="width:80px;text-align:right;display:inline-block" inputmode="numeric"> EGP — on-ground partner decides.<br>
+        Over that — all partners agree. Strategic decisions — unanimous, no exceptions.</span>
       </div>
     </div>
 
     <!-- Section 3: Profit -->
     <div class="p-card">
       <h3><span class="p-num">3</span> Profit Distribution</h3>
-      <div class="p-field"><span>Distribution Frequency</span><span style="color:var(--text);font-weight:500">Monthly recommended (review quarterly)</span></div>
-      <div class="p-field"><span>Reinvest % (first 2 years)</span><input class="fi fi-sm" type="number" data-key="partnerReinvest" min="0" max="100" step="5" style="width:100px;text-align:right"></div>
+      <div id="partnership-profit-split"></div>
+      <div class="p-field" style="margin-top:.75rem"><span>Reinvest % (first 2 years)</span><input class="fi fi-sm" type="number" data-key="partnerReinvest" min="0" max="100" step="5" style="width:80px;text-align:right" inputmode="numeric"></div>
       <div class="p-field"><span>Distribute %</span><span style="color:var(--green);font-weight:600" data-calc="partnerDistribute">50%</span></div>
       <div class="p-item"><strong>Zakat:</strong> 2.5% annually. See <a href="#" onclick="goTo('faith','faith-zakat');return false;" style="color:var(--gold);text-decoration:underline">Zakat Calculator</a>.</div>
-      <div class="p-item"><strong>After year 2:</strong> Shift toward distributing more (e.g. 30% reinvest / 70% distribute).</div>
     </div>
 
     <!-- Section 4: Problems -->
     <div class="p-card">
       <h3><span class="p-num">4</span> What If Things Go Wrong</h3>
-      <div class="p-item"><strong>Disagreements:</strong> Pre-agree on a mediator (family, mentor, or tahkeem). Binding for the dispute.</div>
-      <div class="p-item"><strong>Partner exit:</strong> Remaining partner has first right to buy at fair value. 6-month notice.</div>
-      <div class="read-more">
-        <div class="rm-preview"><div class="p-item"><strong>Business failure:</strong> Losses 50/50. Debts settled first, then divide remaining assets.</div></div>
-        <div class="rm-full" style="display:none">
-          <div class="p-item"><strong>If the business fails:</strong> Losses are split 50/50, matching ownership. All debts are settled first. Remaining assets are divided equally. No blame, no resentment -- this is business, and you both took the risk.</div>
-          <div class="p-item"><strong>If one partner cannot contribute time:</strong> Options: (a) adjust profit share temporarily, (b) hire a replacement and deduct from their share, or (c) keep 50/50 if both agree. Document everything.</div>
-        </div>
-        <button class="rm-toggle" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none';this.textContent=this.textContent==='Read more'?'Show less':'Read more'">Read more</button>
-      </div>
+      <div class="p-item"><strong>Disagreements:</strong> Pre-agree on a mediator (trusted family member, mentor, or Islamic arbitration — tahkeem). Decision is binding.</div>
+      <div class="p-item"><strong>Partner exit:</strong> Remaining partner(s) have first right to buy at fair market value. 6-month notice required.</div>
+      <div class="p-item"><strong>Business failure:</strong> Losses split proportionally to ownership. Debts settled first, then divide remaining assets.</div>
+      <div class="p-item"><strong>Partner can't contribute time:</strong> Options: adjust profit share temporarily, hire replacement and deduct from their share, or keep split if all agree.</div>
     </div>
 
     <!-- Section 5: Exit -->
     <div class="p-card">
       <h3><span class="p-num">5</span> Exit & Succession</h3>
-      <div class="p-item"><strong>Death:</strong> Share passes to heirs per fara'id. Surviving partner has first right of refusal.</div>
-      <div class="p-item"><strong>Outside sale:</strong> No. Other partner always gets first right of refusal.</div>
-      <div class="read-more">
-        <div class="rm-preview"><div class="p-item"><strong>Both want to sell:</strong> Agree on price, use independent valuator, split 50/50 after debts.</div></div>
-        <div class="rm-full" style="display:none">
-          <div class="p-item"><strong>If both want to sell:</strong> Both partners must agree on the sale price. Engage an independent business valuator. Split proceeds 50/50 after settling all debts and obligations.</div>
-        </div>
-        <button class="rm-toggle" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none';this.textContent=this.textContent==='Read more'?'Show less':'Read more'">Read more</button>
-      </div>
+      <div class="p-item"><strong>Death:</strong> Share passes to heirs per fara'id (Islamic inheritance). Remaining partner(s) have first right of refusal to buy the share.</div>
+      <div class="p-item"><strong>Outside sale:</strong> Not allowed without other partners' consent. Partners always get first right of refusal.</div>
+      <div class="p-item"><strong>Full exit:</strong> All agree on price, engage independent valuator, split proceeds per ownership after debts.</div>
     </div>
 
     <!-- Section 6: Documentation -->
     <div class="p-card" style="border-color:rgba(212,165,74,.2);background:linear-gradient(135deg,var(--card) 0%,rgba(212,165,74,.04) 100%)">
       <h3><span class="p-num">6</span> Documenting It</h3>
-      <div class="p-item"><strong>Formalize as a Musharakah partnership agreement</strong> -- hire a lawyer experienced in Islamic commercial law in Egypt.</div>
-      <div class="p-item"><strong>Register properly</strong> with Egyptian commercial registration authority.</div>
-      <div class="p-item"><strong>Keep copies</strong> in the shared Google Drive and each partner holds a physical signed copy.</div>
+      <div class="p-item"><strong>Formalize as a Musharakah partnership agreement</strong> — hire a lawyer experienced in Islamic commercial law.</div>
+      <div class="p-item"><strong>Register</strong> with the commercial registration authority.</div>
+      <div class="p-item"><strong>Keep copies</strong> in shared cloud storage. Each partner holds a physical signed copy.</div>
       <div class="p-field"><span>Estimated Legal Cost</span><span style="color:var(--gold);font-weight:600">15,000 - 30,000 EGP</span></div>
     </div>
   </div>
@@ -2199,7 +2199,6 @@ const DEFAULTS = {
   opMisc: 5000,
 
   // Partnership
-  partnerYourCapital: 50,
   partnerDayThreshold: 5000,
   partnerReinvest: 50,
 
@@ -2221,7 +2220,7 @@ const DEFAULTS = {
 };
 
 // Load from localStorage or use defaults (with version check)
-const STATE_VERSION = 6;
+const STATE_VERSION = 7;
 let S = {};
 try {
   const saved = localStorage.getItem('cafePlanState');
@@ -2543,7 +2542,6 @@ function calc() {
   C.savDate = openDate.toLocaleDateString('en-US', {month:'short', year:'numeric'});
 
   // ---- PARTNERSHIP ----
-  C.partnerOtherCapital = (100 - (S.partnerYourCapital || 50)) + '%';
   C.partnerDistribute = (100 - (S.partnerReinvest || 50)) + '%';
 
   // ---- ZAKAT ----
@@ -3035,7 +3033,7 @@ function renderPartners(){
     return '<div style="display:grid;grid-template-columns:'+cols+' 1fr 1fr '+lastCol+';gap:.75rem;align-items:end;margin-bottom:.75rem">' +
       (partners.length>1 ? '<div>' +
         (i===0 ? '<label class="fi-label">Name</label>' : '') +
-        '<input class="fi" type="text" value="'+p.name+'" onchange="partners['+i+'].name=this.value;savePartners();recalcPartners()" style="font-size:.82rem">' +
+        '<input class="fi" type="text" value="'+p.name+'" onchange="partners['+i+'].name=this.value;savePartners();recalcPartners();renderPartnership()" style="font-size:.82rem">' +
       '</div>' : '') +
       '<div>' +
         (i===0 ? '<label class="fi-label">Monthly Savings (EGP)</label>' : '') +
@@ -3052,25 +3050,213 @@ function renderPartners(){
 
 function addPartner(){
   partners.push({name:'Partner '+(partners.length+1), monthly:0, current:0});
-  savePartners(); renderPartners(); recalcPartners();
+  if(partnerRoles) partnerRoles[partners.length-1] = ['Define responsibilities'];
+  savePartners(); saveRoles(); renderPartners(); recalcPartners(); renderPartnership();
 }
 
 function removePartner(i){
   if(partners.length<=1) return;
   partners.splice(i,1);
-  savePartners(); renderPartners(); recalcPartners();
+  if(partnerRoles){ delete partnerRoles[i]; var nr={}; partners.forEach((_,j)=>{nr[j]=partnerRoles[j]||partnerRoles[j+1]||[];}); partnerRoles=nr; }
+  savePartners(); saveRoles(); renderPartners(); recalcPartners(); renderPartnership();
 }
 
 function recalcPartners(){
   S._partnerMonthly = partners.reduce((s,p)=>s+p.monthly, 0);
   S._partnerCurrent = partners.reduce((s,p)=>s+p.current, 0);
   calc();
+  renderPartnership();
 }
 
 function initPartners(){
   renderPartners();
   recalcPartners();
+  renderPartnership();
 }
+
+// ---- Partnership Dynamic Rendering ----
+let partnerRoles = JSON.parse(localStorage.getItem('bayt_roles') || 'null');
+let sharedRoles = JSON.parse(localStorage.getItem('bayt_shared_roles') || 'null') || ['Strategic decisions','Hiring decisions','Menu & pricing changes','Branding & identity'];
+
+function initDefaultRoles(){
+  if(partnerRoles) return;
+  partnerRoles = {};
+  partners.forEach((p,i) => {
+    partnerRoles[i] = i===0
+      ? ['Finance & bookkeeping','Tech & systems (POS, tools)','Strategy & planning']
+      : ['Daily operations','Supplier relationships','Staff management','On-ground logistics'];
+  });
+  saveRoles();
+}
+
+function saveRoles(){
+  localStorage.setItem('bayt_roles', JSON.stringify(partnerRoles));
+  localStorage.setItem('bayt_shared_roles', JSON.stringify(sharedRoles));
+}
+
+function renderPartnership(){
+  initDefaultRoles();
+  const colors = ['var(--gold)','var(--green)','var(--blue)','var(--copper)','var(--purple)'];
+
+  // Ownership section
+  const ownEl = document.getElementById('partnership-ownership');
+  if(ownEl){
+    const equalPct = partners.length > 0 ? (100 / partners.length).toFixed(1).replace('.0','') : '100';
+    ownEl.innerHTML = partners.map((p,i) => {
+      const totalCurrent = partners.reduce((s,pp)=>s+pp.current, 0) || 1;
+      const capitalPct = ((p.current / totalCurrent) * 100).toFixed(0);
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.82rem">' +
+        '<div style="display:flex;align-items:center;gap:.5rem"><div style="width:8px;height:8px;border-radius:2px;background:'+colors[i%colors.length]+'"></div><strong style="color:var(--text)">'+p.name+'</strong></div>' +
+        '<div style="display:flex;gap:1.5rem;align-items:center">' +
+          '<span style="color:var(--text2)">Ownership: <strong style="color:'+colors[i%colors.length]+'">'+equalPct+'%</strong></span>' +
+          '<span style="color:var(--text3)">Capital: '+capitalPct+'%</span>' +
+        '</div></div>';
+    }).join('') +
+    '<div style="font-size:.7rem;color:var(--text3);margin-top:.4rem">Ownership is equal. Capital contribution is based on current savings from the Savings tab.</div>';
+  }
+
+  // Kanban board
+  const kanbanEl = document.getElementById('kanban-board');
+  if(kanbanEl){
+    const esc = s => (s||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    const cols = partners.map((p,i) => ({type:'partner', idx:i, name:p.name, color:colors[i%colors.length], items:partnerRoles[i]||[]}));
+    cols.push({type:'shared', idx:'shared', name:'Shared', color:'var(--gold)', items:sharedRoles});
+
+    kanbanEl.innerHTML = cols.map(col => {
+      const colId = col.type === 'shared' ? 'shared' : col.idx;
+      return '<div class="kanban-col" data-col="'+colId+'" ondragover="event.preventDefault();this.classList.add(\'drag-over\')" ondragleave="this.classList.remove(\'drag-over\')" ondrop="kanbanDrop(event,\''+colId+'\')">' +
+        '<div class="kanban-header"><div class="kh-dot" style="background:'+col.color+'"></div>'+col.name+'<span class="kh-count">'+col.items.length+'</span></div>' +
+        '<div class="kanban-items" data-col="'+colId+'">' +
+          col.items.map((item,j) =>
+            '<div class="kanban-item" draggable="true" data-from="'+colId+'" data-idx="'+j+'" ondragstart="kanbanDragStart(event)" ondragend="kanbanDragEnd(event)">' +
+              '<span class="ki-grip">⠿</span>' +
+              '<input class="ki-text" value="'+esc(item)+'" onchange="kanbanEdit(\''+colId+'\','+j+',this.value)">' +
+              '<button class="ki-del" onclick="kanbanRemove(\''+colId+'\','+j+')">&times;</button>' +
+            '</div>'
+          ).join('') +
+        '</div>' +
+        '<button class="kanban-add" onclick="kanbanAdd(\''+colId+'\')">+ Add</button>' +
+      '</div>';
+    }).join('');
+  }
+
+  // Profit split
+  const profitEl = document.getElementById('partnership-profit-split');
+  if(profitEl){
+    const equalPct = partners.length > 0 ? (100 / partners.length).toFixed(1).replace('.0','') : '100';
+    profitEl.innerHTML = partners.map((p,i) =>
+      '<div class="p-field"><span>'+p.name+'\'s profit share</span><span style="color:'+colors[i%colors.length]+';font-weight:700">'+equalPct+'%</span></div>'
+    ).join('') +
+    '<div style="font-size:.68rem;color:var(--text3);margin-top:.3rem">Profit share matches ownership. Distributed after reinvestment allocation above.</div>';
+  }
+}
+
+// Kanban helpers
+function kanbanGetList(colId){ return colId==='shared' ? sharedRoles : (partnerRoles[colId]||[]); }
+function kanbanSetList(colId, arr){ if(colId==='shared') sharedRoles=arr; else partnerRoles[colId]=arr; }
+
+function kanbanEdit(colId, idx, val){
+  var list = kanbanGetList(colId);
+  if(list[idx]!==undefined) list[idx]=val;
+  saveRoles();
+}
+function kanbanRemove(colId, idx){
+  var list = kanbanGetList(colId);
+  list.splice(idx,1);
+  kanbanSetList(colId, list);
+  saveRoles(); renderPartnership();
+}
+function kanbanAdd(colId){
+  var list = kanbanGetList(colId);
+  list.push('New task');
+  kanbanSetList(colId, list);
+  saveRoles(); renderPartnership();
+  // Focus the new item's input
+  setTimeout(function(){
+    var col = document.querySelector('[data-col="'+colId+'"].kanban-items');
+    if(col){var inputs = col.querySelectorAll('.ki-text'); if(inputs.length) inputs[inputs.length-1].focus();}
+  },50);
+}
+
+var _dragData = null;
+function kanbanDragStart(e){
+  _dragData = {from: e.target.dataset.from, idx: parseInt(e.target.dataset.idx)};
+  e.target.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain','');
+}
+function kanbanDragEnd(e){
+  e.target.classList.remove('dragging');
+  document.querySelectorAll('.kanban-col').forEach(c=>c.classList.remove('drag-over'));
+}
+function kanbanDrop(e, toColId){
+  e.preventDefault();
+  document.querySelectorAll('.kanban-col').forEach(c=>c.classList.remove('drag-over'));
+  if(!_dragData) return;
+  var fromList = kanbanGetList(_dragData.from);
+  var item = fromList[_dragData.idx];
+  if(item===undefined) return;
+  // Remove from source
+  fromList.splice(_dragData.idx, 1);
+  kanbanSetList(_dragData.from, fromList);
+  // Add to target
+  var toList = kanbanGetList(toColId);
+  toList.push(item);
+  kanbanSetList(toColId, toList);
+  _dragData = null;
+  saveRoles(); renderPartnership();
+}
+
+// Touch drag support for mobile
+var _touchDrag = null;
+document.addEventListener('touchstart', function(e){
+  var item = e.target.closest('.kanban-item');
+  if(!item || !e.target.classList.contains('ki-grip')) return;
+  _touchDrag = {el:item, from:item.dataset.from, idx:parseInt(item.dataset.idx), startY:e.touches[0].clientY, clone:null};
+  e.preventDefault();
+  var clone = item.cloneNode(true);
+  clone.style.cssText = 'position:fixed;z-index:999;pointer-events:none;opacity:.8;width:'+item.offsetWidth+'px;left:'+item.getBoundingClientRect().left+'px;top:'+e.touches[0].clientY+'px;transform:translateY(-50%);background:var(--card);border:1px solid var(--gold);border-radius:6px;padding:.45rem .55rem;font-size:.75rem;color:var(--text)';
+  document.body.appendChild(clone);
+  _touchDrag.clone = clone;
+  item.classList.add('dragging');
+}, {passive:false});
+
+document.addEventListener('touchmove', function(e){
+  if(!_touchDrag) return;
+  e.preventDefault();
+  _touchDrag.clone.style.top = e.touches[0].clientY + 'px';
+  _touchDrag.clone.style.left = e.touches[0].clientX + 'px';
+  document.querySelectorAll('.kanban-col').forEach(c=>{
+    var r = c.getBoundingClientRect();
+    if(e.touches[0].clientX>=r.left && e.touches[0].clientX<=r.right && e.touches[0].clientY>=r.top && e.touches[0].clientY<=r.bottom){
+      c.classList.add('drag-over');
+    } else {
+      c.classList.remove('drag-over');
+    }
+  });
+}, {passive:false});
+
+document.addEventListener('touchend', function(e){
+  if(!_touchDrag) return;
+  _touchDrag.el.classList.remove('dragging');
+  if(_touchDrag.clone) _touchDrag.clone.remove();
+  var dropCol = document.querySelector('.kanban-col.drag-over');
+  if(dropCol){
+    var toColId = dropCol.dataset.col;
+    var fromList = kanbanGetList(_touchDrag.from);
+    var item = fromList[_touchDrag.idx];
+    if(item!==undefined){
+      fromList.splice(_touchDrag.idx,1);
+      kanbanSetList(_touchDrag.from, fromList);
+      var toList = kanbanGetList(toColId);
+      toList.push(item);
+      kanbanSetList(toColId, toList);
+      saveRoles(); renderPartnership();
+    }
+  }
+  document.querySelectorAll('.kanban-col').forEach(c=>c.classList.remove('drag-over'));
+  _touchDrag = null;
+});
 
 function renderVehicleRows() {
   const el = document.getElementById('vehicle-rows');
