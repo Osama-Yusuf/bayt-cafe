@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Bayt Café — بيت كافيه</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
@@ -54,6 +54,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     flex-direction:row;padding:0;
     border-top:1px solid var(--border);border-right:none;
     z-index:100;transform:none;
+    background:rgba(11,11,11,.97);
+    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+    padding-bottom:env(safe-area-inset-bottom, 0px);
   }
   .sidebar.open{transform:none}
   .sidebar-logo{display:none}
@@ -61,33 +64,44 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   .sidebar-nav{
     display:flex;flex-direction:row;
     justify-content:space-around;
-    padding:.4rem 0;overflow-x:auto;
-    gap:0;
+    padding:.35rem 0;overflow-x:hidden;
+    gap:0;width:100%;
   }
   .sidebar-nav a{
+    flex:1;
     flex-direction:column;
-    gap:.15rem;
-    padding:.4rem .5rem;
-    font-size:.6rem;
-    border-left:none;
-    border-bottom:2px solid transparent;
+    gap:.2rem;
+    padding:.45rem .25rem;
+    font-size:.58rem;
+    font-weight:600;
+    border-left:none !important;
+    border-bottom:none;
     text-align:center;
     margin:0;
     border-radius:0;
     min-width:0;
+    color:var(--text3);
+    position:relative;
+    letter-spacing:.01em;
   }
   .sidebar-nav a.active{
-    border-left:none;
-    border-bottom-color:var(--gold);
+    border-left:none !important;
+    border-bottom:none;
     background:transparent;
+    color:var(--gold);
+  }
+  .sidebar-nav a.active::before{
+    content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:24px;height:2px;background:var(--gold);border-radius:1px;
   }
   .sidebar-nav a .nav-icon{
-    font-size:1.1rem;width:auto;
+    font-size:1.15rem;width:auto;display:block;
+    line-height:1;margin-bottom:1px;
   }
   .main-content{
     margin-left:0!important;
-    padding:1.5rem 1rem!important;
-    padding-bottom:70px!important;
+    padding:1.25rem 1rem!important;
+    padding-bottom:calc(72px + env(safe-area-inset-bottom, 0px))!important;
   }
   .hamburger{display:none}
   .mobile-overlay{display:none!important}
@@ -116,11 +130,54 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   .calc-field,.calc-row{grid-template-columns:1fr}
   .ob-choice-grid{grid-template-columns:1fr}
   .ob-container{padding:1.5rem 1rem}
-  .team-row{grid-template-columns:auto 1fr 90px 40px;font-size:.75rem}
+  .team-row{grid-template-columns:auto 1fr 80px 36px;font-size:.72rem;gap:.3rem}
   .bar-chart{gap:1rem}
   .bar-fill{width:50px}
   .p-field{grid-template-columns:1fr}
   .zk-inputs{grid-template-columns:1fr}
+
+  /* Partners in savings — stack on mobile */
+  #partners-list > div{grid-template-columns:1fr !important;gap:.4rem !important}
+  #partners-list > div > button{width:100% !important;height:36px !important}
+
+  /* Supply rows — stack on narrow screens */
+  .supply-row{grid-template-columns:1fr !important;gap:.25rem !important;padding:.6rem 0 !important}
+  .supply-row .sr-name{font-weight:600;color:var(--text)}
+  .supply-row input{width:100% !important}
+  .supply-row .sr-sub{text-align:left !important;color:var(--gold);font-size:.8rem}
+  .supply-row[style*="font-weight:600"]{display:none !important}
+
+  /* Cost rows — ensure no overflow */
+  .cost-row{grid-template-columns:1fr 80px 70px !important;gap:.3rem}
+  .cost-row .cr-name{font-size:.72rem}
+
+  /* Menu rows — tighter on mobile */
+  .menu-row{grid-template-columns:1fr 55px 55px 45px !important;gap:.2rem !important;font-size:.7rem !important}
+  .menu-row input{width:50px !important;font-size:.75rem !important;padding:.3rem !important}
+
+  /* Area cards metrics */
+  .area-metrics{grid-template-columns:1fr !important}
+  .area-metric input{width:100% !important}
+
+  /* Savings calculator row */
+  .savings-row{grid-template-columns:1fr !important}
+
+  /* General overflow prevention */
+  *{max-width:100%}
+  input[type="number"],input[type="text"]{max-width:100%;box-sizing:border-box}
+}
+
+/* Extra small screens (under 400px) */
+@media(max-width:400px){
+  .main-content{padding:1rem .75rem !important;padding-bottom:70px !important}
+  .card{padding:1rem}
+  .section-title{font-size:1.2rem}
+  .page-tab{padding:.4rem .6rem;font-size:.65rem}
+  .metric{padding:.75rem .5rem}
+  .m-val{font-size:1rem}
+  .m-label{font-size:.55rem}
+  .sidebar-nav a{padding:.3rem .35rem;font-size:.55rem}
+  .sidebar-nav a .nav-icon{font-size:.95rem}
 }
 
 /* ===== MAIN CONTENT ===== */
@@ -526,6 +583,16 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     <div class="card" style="text-align:center">
       <div style="font-size:2rem;font-weight:800;color:var(--copper)">Under 35</div>
       <p>Young Egyptians see coffee as lifestyle</p>
+    </div>
+  </div>
+
+  <!-- Settings -->
+  <div style="margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border)">
+    <h3 style="font-size:.85rem;font-weight:700;color:var(--text3);margin-bottom:1rem">Settings</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:.6rem">
+      <button onclick="restartOnboarding()" style="background:var(--card);border:1px solid var(--border);color:var(--text2);padding:.5rem 1rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.75rem;font-family:inherit;transition:var(--transition)" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">&#9881; Re-run Setup</button>
+      <button onclick="if(confirm('Reset ALL data to defaults? This clears your custom numbers, partners, areas, and checklists.')){localStorage.clear();location.reload()}" style="background:var(--card);border:1px solid var(--border);color:var(--text2);padding:.5rem 1rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.75rem;font-family:inherit;transition:var(--transition)" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--red)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">&#128465; Reset Everything</button>
+      <button onclick="var d=JSON.stringify({state:S,partners:partners,areas:AREAS},null,2);var b=new Blob([d],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=(S.cafeName||'cafe')+'-plan.json';a.click()" style="background:var(--card);border:1px solid var(--border);color:var(--text2);padding:.5rem 1rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.75rem;font-family:inherit;transition:var(--transition)" onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='var(--border)'">&#128190; Export Data</button>
     </div>
   </div>
 </div>
