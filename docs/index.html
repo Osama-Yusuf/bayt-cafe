@@ -21,7 +21,7 @@
   --sidebar-w:240px;
 }
 html{scroll-behavior:smooth;font-size:16px}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;display:flex;min-height:100vh}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;display:flex;min-height:100vh;-webkit-text-size-adjust:100%}
 .serif{font-family:'Playfair Display',Georgia,serif}
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:var(--bg)}
@@ -43,12 +43,84 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .hamburger{display:none;position:fixed;top:1rem;left:1rem;z-index:300;width:40px;height:40px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;align-items:center;justify-content:center;color:var(--gold);font-size:1.2rem}
 .mobile-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:190}
 
+/* Read-more toggle */
+.rm-toggle{background:none;border:none;color:var(--gold);font-size:.78rem;font-weight:600;cursor:pointer;padding:.3rem 0;font-family:inherit}
+.rm-toggle:hover{text-decoration:underline}
+
 @media(max-width:768px){
-  .sidebar{transform:translateX(-100%)}
-  .sidebar.open{transform:translateX(0)}
-  .hamburger{display:flex}
-  .mobile-overlay.open{display:block}
-  .main-content{margin-left:0!important;padding:1rem!important;padding-top:4rem!important}
+  .sidebar{
+    position:fixed;bottom:0;left:0;right:0;top:auto;
+    width:100%;height:auto;
+    flex-direction:row;padding:0;
+    border-top:1px solid var(--border);border-right:none;
+    z-index:100;transform:none;
+  }
+  .sidebar.open{transform:none}
+  .sidebar-logo{display:none}
+  .sidebar-footer{display:none}
+  .sidebar-nav{
+    display:flex;flex-direction:row;
+    justify-content:space-around;
+    padding:.4rem 0;overflow-x:auto;
+    gap:0;
+  }
+  .sidebar-nav a{
+    flex-direction:column;
+    gap:.15rem;
+    padding:.4rem .5rem;
+    font-size:.6rem;
+    border-left:none;
+    border-bottom:2px solid transparent;
+    text-align:center;
+    margin:0;
+    border-radius:0;
+    min-width:0;
+  }
+  .sidebar-nav a.active{
+    border-left:none;
+    border-bottom-color:var(--gold);
+    background:transparent;
+  }
+  .sidebar-nav a .nav-icon{
+    font-size:1.1rem;width:auto;
+  }
+  .main-content{
+    margin-left:0!important;
+    padding:1.5rem 1rem!important;
+    padding-bottom:70px!important;
+  }
+  .hamburger{display:none}
+  .mobile-overlay{display:none!important}
+
+  /* General mobile fixes */
+  section,.page{padding:1.5rem 1rem}
+  .section-title{font-size:1.4rem}
+  .section-sub{font-size:.85rem}
+  .card{padding:1.25rem}
+  .card-grid.cols-2,.card-grid.cols-3,.card-grid.cols-4{grid-template-columns:1fr}
+  .page-tabs{gap:.2rem;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
+  .page-tab{padding:.5rem .8rem;font-size:.72rem;flex-shrink:0}
+  .metric{padding:1rem .75rem}
+  .m-val{font-size:1.2rem}
+  .fi{font-size:.9rem;padding:.6rem .75rem;min-height:44px}
+  .fi-sm{font-size:.8rem;padding:.4rem .5rem;min-height:44px}
+  table{font-size:.72rem}
+  th,td{padding:.5rem .6rem}
+  .menu-row{grid-template-columns:1fr 65px 65px 55px;font-size:.72rem;gap:.3rem}
+  .supply-row{grid-template-columns:1fr 60px 70px 70px;font-size:.72rem}
+  .cost-row{grid-template-columns:1fr 90px 80px;font-size:.75rem}
+  .area-grid{grid-template-columns:1fr}
+  .area-card{padding:1.25rem}
+  .vs-grid{grid-template-columns:1fr}
+  .vs-divider{display:none}
+  .calc-field,.calc-row{grid-template-columns:1fr}
+  .ob-choice-grid{grid-template-columns:1fr}
+  .ob-container{padding:1.5rem 1rem}
+  .team-row{grid-template-columns:auto 1fr 90px 40px;font-size:.75rem}
+  .bar-chart{gap:1rem}
+  .bar-fill{width:50px}
+  .p-field{grid-template-columns:1fr}
+  .zk-inputs{grid-template-columns:1fr}
 }
 
 /* ===== MAIN CONTENT ===== */
@@ -219,15 +291,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .hire-stage h4.stg-green-text{color:var(--green)}
 .hire-stage h4.stg-blue-text{color:var(--blue)}
 
-/* Responsive */
-@media(max-width:600px){
-  .section-title{font-size:1.6rem}
-  .cost-row{grid-template-columns:1fr 90px 80px;font-size:.75rem}
-  .menu-row{grid-template-columns:1fr 70px 70px 60px;font-size:.75rem}
-  .supply-row{grid-template-columns:1fr 70px 80px 80px;font-size:.75rem}
-  .team-row{grid-template-columns:auto 1fr 90px 40px;font-size:.75rem}
-  .bar-chart{gap:1rem}
-  .bar-fill{width:50px}
+/* Small screen extra overrides */
+@media(max-width:400px){
+  .section-title{font-size:1.2rem}
+  .menu-row{grid-template-columns:1fr 60px 60px 50px;font-size:.68rem}
+  .supply-row{grid-template-columns:1fr 55px 65px 65px;font-size:.68rem}
 }
 
 /* Pulse animation for the dashboard */
@@ -489,7 +557,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem">
         <div>
           <label class="fi-label">Gold Reserves — Liquidation Value (EGP)</label>
-          <input class="fi" type="number" data-key="goldReserves" min="0" step="10000">
+          <input class="fi" type="number" data-key="goldReserves" min="0" step="10000" inputmode="numeric">
         </div>
         <div>
           <label class="fi-label" data-calc="targetLabel">Target: Property Purchase Price (EGP)</label>
@@ -537,9 +605,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
           <div style="font-size:.65rem;color:var(--text2);text-transform:uppercase;margin-top:.2rem">Key Money Range</div>
         </div>
       </div>
-      <p style="font-size:.8rem;color:var(--text2);line-height:1.7;margin-bottom:.75rem"><strong style="color:var(--gold)">Buying is expensive</strong> — a proper caf&eacute; space in your selected area is a serious capital commitment. Rent a Tier 2 spot in a side street with foot traffic and buy in Year 3-5 once profitable.</p>
-      <p style="font-size:.8rem;color:var(--text2);line-height:1.7;margin-bottom:.75rem"><strong style="color:var(--red)">Always ask: "إيه قيمة الخلو؟"</strong> — Key money (خلو رجل) is a one-time non-refundable payment to the previous tenant. A shop advertised at a reasonable rent might need millions in خلو to step into.</p>
-      <p style="font-size:.8rem;color:var(--text2);line-height:1.7"><strong style="color:var(--green)">Realistic total to open: 3-4M EGP</strong> — rent + key money + build-out + equipment + licenses + 6 months runway. Save 18-24 months, keep savings in gold + foreign currency to hedge devaluation.</p>
+      <p style="font-size:.8rem;color:var(--text2);line-height:1.7;margin-bottom:.5rem"><strong style="color:var(--gold)">Buying is expensive</strong> — rent a Tier 2 side street, buy in Year 3-5 once profitable.</p>
+      <p style="font-size:.8rem;color:var(--text2);line-height:1.7;margin-bottom:.5rem"><strong style="color:var(--red)">Always ask: "إيه قيمة الخلو؟"</strong> — Key money can add millions to "reasonable" rent.</p>
+      <p style="font-size:.8rem;color:var(--text2);line-height:1.7"><strong style="color:var(--green)">Realistic total: 3-4M EGP</strong> — rent + key money + build-out + equipment + licenses + 6mo runway.</p>
     </div>
   </div>
 
@@ -660,20 +728,25 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <div class="p-field"><span>Ownership Split</span><span style="color:var(--gold);font-weight:700">50 / 50</span></div>
       <div class="p-field"><span>Your Capital Contribution (%)</span><input class="fi fi-sm" type="number" data-key="partnerYourCapital" min="0" max="100" step="5" style="width:100px;text-align:right"></div>
       <div class="p-field"><span>Partner's Capital Contribution (%)</span><span style="color:var(--gold);font-weight:600" data-calc="partnerOtherCapital">50%</span></div>
-      <div class="p-item"><strong>What counts as capital:</strong> Cash contributed, equipment purchased, deposits paid. Time invested is separate from capital -- it is compensated through profit share and/or management salary.</div>
-      <div class="p-item"><strong>Additional capital later:</strong> If one partner contributes more capital after launch, document it. Options: (a) treat as additional Musharakah capital and adjust profit share, (b) adjust ownership proportionally, or (c) treat as qard hasan (goodwill loan) — repaid from profits before distribution, no markup. Agree upfront.</div>
+      <div class="read-more">
+        <div class="rm-preview"><div class="p-item"><strong>What counts as capital:</strong> Cash, equipment, deposits. Time is compensated through profit share.</div></div>
+        <div class="rm-full" style="display:none">
+          <div class="p-item"><strong>What counts as capital:</strong> Cash contributed, equipment purchased, deposits paid. Time invested is separate from capital -- it is compensated through profit share and/or management salary.</div>
+          <div class="p-item"><strong>Additional capital later:</strong> If one partner contributes more capital after launch, document it. Options: (a) treat as additional Musharakah capital and adjust profit share, (b) adjust ownership proportionally, or (c) treat as qard hasan (goodwill loan) — repaid from profits before distribution, no markup. Agree upfront.</div>
+        </div>
+        <button class="rm-toggle" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none';this.textContent=this.textContent==='Read more'?'Show less':'Read more'">Read more</button>
+      </div>
     </div>
 
     <!-- Section 2: Roles -->
     <div class="p-card">
       <h3><span class="p-num">2</span> Roles & Responsibilities</h3>
-      <div class="p-item"><strong>You (Remote Partner):</strong> Financial planning, budgets, and forecasting. Systems and tech (POS setup, automation, analytics). Strategic decisions and business development. Bookkeeping oversight and P&L review.</div>
-      <div class="p-item"><strong>Partner B (On-Ground):</strong> Daily operations and cafe management. Supplier relationships and procurement. Staff management, scheduling, and training. On-ground logistics — permits, maintenance, emergencies.</div>
+      <div class="p-item"><strong>You:</strong> Finance, tech, strategy, bookkeeping oversight.</div>
+      <div class="p-item"><strong>Partner B:</strong> Daily ops, suppliers, staff, on-ground logistics.</div>
       <div class="p-item" style="border-left:3px solid var(--gold);padding-left:1rem;margin-top:.5rem">
         <strong>Decision Framework:</strong><br>
-        Day-to-day decisions under <input class="fi fi-sm" type="number" data-key="partnerDayThreshold" step="1000" style="width:90px;text-align:right;display:inline-block"> EGP -- whoever is on-ground decides.<br>
-        Decisions over that amount -- both partners must agree.<br>
-        Strategic decisions (new location, major hires, menu overhaul) -- both must agree, no exceptions.
+        Under <input class="fi fi-sm" type="number" data-key="partnerDayThreshold" step="1000" style="width:90px;text-align:right;display:inline-block" inputmode="numeric"> EGP -- on-ground partner decides.<br>
+        Over that -- both agree. Strategic decisions -- both agree, no exceptions.
       </div>
     </div>
 
@@ -683,25 +756,37 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <div class="p-field"><span>Distribution Frequency</span><span style="color:var(--text);font-weight:500">Monthly recommended (review quarterly)</span></div>
       <div class="p-field"><span>Reinvest % (first 2 years)</span><input class="fi fi-sm" type="number" data-key="partnerReinvest" min="0" max="100" step="5" style="width:100px;text-align:right"></div>
       <div class="p-field"><span>Distribute %</span><span style="color:var(--green);font-weight:600" data-calc="partnerDistribute">50%</span></div>
-      <div class="p-item"><strong>Zakat:</strong> Set aside 2.5% of qualifying wealth annually. See the <a href="#" onclick="goTo('faith','faith-zakat');return false;" style="color:var(--gold);text-decoration:underline">Zakat Calculator</a> page for details.</div>
-      <div class="p-item"><strong>After year 2:</strong> Revisit the reinvestment ratio. As the business stabilizes, you can shift to distributing more (e.g. 30% reinvest / 70% distribute).</div>
+      <div class="p-item"><strong>Zakat:</strong> 2.5% annually. See <a href="#" onclick="goTo('faith','faith-zakat');return false;" style="color:var(--gold);text-decoration:underline">Zakat Calculator</a>.</div>
+      <div class="p-item"><strong>After year 2:</strong> Shift toward distributing more (e.g. 30% reinvest / 70% distribute).</div>
     </div>
 
     <!-- Section 4: Problems -->
     <div class="p-card">
       <h3><span class="p-num">4</span> What If Things Go Wrong</h3>
-      <div class="p-item"><strong>Disagreements:</strong> Agree on a third-party mediator before you need one. Options: trusted family member, business mentor, or Islamic arbitration (tahkeem). The mediator's decision is binding for the specific dispute.</div>
-      <div class="p-item"><strong>If one partner wants out:</strong> Remaining partner gets first right to buy the departing partner's share at fair market value (assessed by an independent accountant). Minimum 6-month notice period so the business can adjust.</div>
-      <div class="p-item"><strong>If the business fails:</strong> Losses are split 50/50, matching ownership. All debts are settled first. Remaining assets are divided equally. No blame, no resentment -- this is business, and you both took the risk.</div>
-      <div class="p-item"><strong>If one partner cannot contribute time:</strong> Discuss openly. Options: (a) adjust profit share temporarily to reflect actual contribution, (b) hire a replacement for their role and deduct the salary from their share, or (c) keep 50/50 if both agree. Whatever you decide, document it.</div>
+      <div class="p-item"><strong>Disagreements:</strong> Pre-agree on a mediator (family, mentor, or tahkeem). Binding for the dispute.</div>
+      <div class="p-item"><strong>Partner exit:</strong> Remaining partner has first right to buy at fair value. 6-month notice.</div>
+      <div class="read-more">
+        <div class="rm-preview"><div class="p-item"><strong>Business failure:</strong> Losses 50/50. Debts settled first, then divide remaining assets.</div></div>
+        <div class="rm-full" style="display:none">
+          <div class="p-item"><strong>If the business fails:</strong> Losses are split 50/50, matching ownership. All debts are settled first. Remaining assets are divided equally. No blame, no resentment -- this is business, and you both took the risk.</div>
+          <div class="p-item"><strong>If one partner cannot contribute time:</strong> Options: (a) adjust profit share temporarily, (b) hire a replacement and deduct from their share, or (c) keep 50/50 if both agree. Document everything.</div>
+        </div>
+        <button class="rm-toggle" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none';this.textContent=this.textContent==='Read more'?'Show less':'Read more'">Read more</button>
+      </div>
     </div>
 
     <!-- Section 5: Exit -->
     <div class="p-card">
       <h3><span class="p-num">5</span> Exit & Succession</h3>
-      <div class="p-item"><strong>If one partner passes away:</strong> Their share passes to heirs per Islamic inheritance law (fara'id). The surviving partner has first right of refusal to purchase the inherited share at fair market value. Important: address this in writing.</div>
-      <div class="p-item"><strong>Can either partner sell to an outsider?</strong> Recommended: No. The other partner always gets first right of refusal. This is a family business -- keep it that way.</div>
-      <div class="p-item"><strong>If both want to sell:</strong> Both partners must agree on the sale price. Engage an independent business valuator. Split proceeds 50/50 after settling all debts and obligations.</div>
+      <div class="p-item"><strong>Death:</strong> Share passes to heirs per fara'id. Surviving partner has first right of refusal.</div>
+      <div class="p-item"><strong>Outside sale:</strong> No. Other partner always gets first right of refusal.</div>
+      <div class="read-more">
+        <div class="rm-preview"><div class="p-item"><strong>Both want to sell:</strong> Agree on price, use independent valuator, split 50/50 after debts.</div></div>
+        <div class="rm-full" style="display:none">
+          <div class="p-item"><strong>If both want to sell:</strong> Both partners must agree on the sale price. Engage an independent business valuator. Split proceeds 50/50 after settling all debts and obligations.</div>
+        </div>
+        <button class="rm-toggle" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none';this.textContent=this.textContent==='Read more'?'Show less':'Read more'">Read more</button>
+      </div>
     </div>
 
     <!-- Section 6: Documentation -->
@@ -1038,54 +1123,72 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     <div class="card" style="margin-bottom:1.5rem">
       <h3 style="margin-bottom:.75rem">Hiring Guide</h3>
       <div class="info-box" style="margin-bottom:1rem">
-        <strong>Where to Find Baristas:</strong> Wuzzuf.net, Facebook Groups ("Specialty Coffee Egypt", "Cairo Jobs"), Instagram DMs to baristas at other cafes, SCA Training Centers, word of mouth, walk-ins with a "Now Hiring" sign.
+        <strong>Where to Find Baristas:</strong> Wuzzuf.net, Facebook Groups, Instagram DMs, SCA Training Centers, walk-ins.
       </div>
 
-      <h4 style="font-size:.85rem;font-weight:600;margin-bottom:.75rem">3-Stage Evaluation</h4>
-      <div class="card-grid cols-3" style="margin-bottom:1.25rem">
-        <div class="hire-stage">
-          <h4 style="color:var(--gold)">Stage 1: Phone Screen (15 min)</h4>
-          <ul class="checklist">
-            <li>Why coffee? (passion = retention)</li>
-            <li>What do you drink at home?</li>
-            <li>Where do you live? (commute kills attendance)</li>
-            <li>Availability for shifts?</li>
-          </ul>
+      <div class="read-more">
+        <div class="rm-preview">
+          <h4 style="font-size:.85rem;font-weight:600;margin-bottom:.5rem">3-Stage Evaluation</h4>
+          <p style="font-size:.8rem;color:var(--text2)">Phone Screen (15 min) → In-Person (30 min) → Bar Test (45 min)</p>
         </div>
-        <div class="hire-stage stg-green">
-          <h4 class="stg-green-text" style="color:var(--green)">Stage 2: In-Person (30 min)</h4>
-          <ul class="checklist">
-            <li>Warm and presentable?</li>
-            <li>Handles pressure scenarios?</li>
-            <li>Clear communication (AR + EN)?</li>
-            <li>Would you want them greeting you daily?</li>
-          </ul>
+        <div class="rm-full" style="display:none">
+          <h4 style="font-size:.85rem;font-weight:600;margin-bottom:.75rem">3-Stage Evaluation</h4>
+          <div class="card-grid cols-3" style="margin-bottom:1.25rem">
+            <div class="hire-stage">
+              <h4 style="color:var(--gold)">Stage 1: Phone Screen (15 min)</h4>
+              <ul class="checklist">
+                <li>Why coffee? (passion = retention)</li>
+                <li>What do you drink at home?</li>
+                <li>Where do you live? (commute kills attendance)</li>
+                <li>Availability for shifts?</li>
+              </ul>
+            </div>
+            <div class="hire-stage stg-green">
+              <h4 class="stg-green-text" style="color:var(--green)">Stage 2: In-Person (30 min)</h4>
+              <ul class="checklist">
+                <li>Warm and presentable?</li>
+                <li>Handles pressure scenarios?</li>
+                <li>Clear communication (AR + EN)?</li>
+                <li>Would you want them greeting you daily?</li>
+              </ul>
+            </div>
+            <div class="hire-stage stg-blue">
+              <h4 class="stg-blue-text" style="color:var(--blue)">Stage 3: Bar Test (45 min)</h4>
+              <ul class="checklist">
+                <li>Espresso extraction (dial in grind?)</li>
+                <li>Milk steaming (microfoam, no screaming)</li>
+                <li>Latte art (heart = pass)</li>
+                <li>Drink recipe knowledge</li>
+                <li>Cleanliness and speed</li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div class="hire-stage stg-blue">
-          <h4 class="stg-blue-text" style="color:var(--blue)">Stage 3: Bar Test (45 min)</h4>
-          <ul class="checklist">
-            <li>Espresso extraction (dial in grind?)</li>
-            <li>Milk steaming (microfoam, no screaming)</li>
-            <li>Latte art (heart = pass)</li>
-            <li>Drink recipe knowledge</li>
-            <li>Cleanliness and speed</li>
-          </ul>
-        </div>
+        <button class="rm-toggle" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none';this.textContent=this.textContent==='Read more'?'Show less':'Read more'">Read more</button>
       </div>
 
-      <div class="info-box info-red" style="margin-bottom:1rem">
-        <strong>Red Flags:</strong> Cannot explain why they left previous job | Zero coffee curiosity | Dirty habits during trial | Arrogant attitude | Lives far away (60+ min commute) | Phone addiction | Freezes under pressure | Poor hygiene
-      </div>
-
-      <div class="card-grid cols-2">
-        <div class="info-box info-blue">
-          <strong>SCA Certifications:</strong><br>
-          Foundation: 3,000-6,000 EGP | Intermediate: 5,000-10,000 EGP | Professional: 10,000-20,000+ EGP<br>
-          Training at The Roastery (SCA-accredited, Cairo)
+      <div class="read-more" style="margin-top:.75rem">
+        <div class="rm-preview">
+          <div class="info-box info-red" style="margin-bottom:0">
+            <strong>Red Flags:</strong> No reason for leaving last job | Zero coffee curiosity | Poor hygiene | 60+ min commute
+          </div>
         </div>
-        <div class="info-box info-green">
-          <strong>Retention Tips:</strong> Pay above market. Clear growth path. Performance bonuses. Respect and consistency in scheduling. Fund education (SCA certs). Provide good equipment (baristas notice).
+        <div class="rm-full" style="display:none">
+          <div class="info-box info-red" style="margin-bottom:1rem">
+            <strong>Red Flags:</strong> Cannot explain why they left previous job | Zero coffee curiosity | Dirty habits during trial | Arrogant attitude | Lives far away (60+ min commute) | Phone addiction | Freezes under pressure | Poor hygiene
+          </div>
+          <div class="card-grid cols-2">
+            <div class="info-box info-blue">
+              <strong>SCA Certifications:</strong><br>
+              Foundation: 3,000-6,000 EGP | Intermediate: 5,000-10,000 EGP | Professional: 10,000-20,000+ EGP<br>
+              Training at The Roastery (SCA-accredited, Cairo)
+            </div>
+            <div class="info-box info-green">
+              <strong>Retention Tips:</strong> Pay above market. Clear growth path. Performance bonuses. Fund SCA certs. Provide good equipment.
+            </div>
+          </div>
         </div>
+        <button class="rm-toggle" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none';this.textContent=this.textContent==='Read more'?'Show less':'Read more'">Read more</button>
       </div>
     </div>
   </div>
@@ -1390,7 +1493,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         <h3>Phase 0 -- Preparation</h3>
         <div class="phase-sub">Lease, fitout, equipment, branding, licensing, hiring, training</div>
         <div class="card" style="padding:1rem">
-          <p style="font-size:.8rem;color:var(--text2);margin-bottom:.75rem">Estimated 2-3 months. Cannot be rushed -- licenses alone take 1-3 months in Egypt.</p>
+          <p style="font-size:.8rem;color:var(--text2);margin-bottom:.75rem">2-3 months. Licenses alone take 1-3 months in Egypt.</p>
           <div class="triggers">
             <div class="trigger"><span>&#10003;</span> Space built out</div>
             <div class="trigger"><span>&#10003;</span> Licenses obtained</div>
@@ -1406,7 +1509,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         <h3>Phase 1 -- Launch</h3>
         <div class="phase-sub">"Get the coffee right." 15 items. 3 staff + you. Survival mode.</div>
         <div class="card" style="padding:1rem">
-          <p style="font-size:.8rem;color:var(--text2);margin-bottom:.5rem">Focus entirely on consistency and quality. Perfect the basics.</p>
+          <p style="font-size:.8rem;color:var(--text2);margin-bottom:.5rem">Perfect the basics. Consistency above everything.</p>
           <div style="font-size:.68rem;color:var(--text3);font-weight:600;margin-bottom:.5rem">ADVANCE WHEN ALL ARE TRUE FOR 2+ WEEKS:</div>
           <div class="triggers">
             <div class="trigger">&#128200; 40+ customers/day</div>
@@ -1425,6 +1528,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         <div class="phase-sub">"Build the habit." 20 items. Loyalty card. 3rd barista. Regulars forming.</div>
         <div class="card" style="padding:1rem">
           <p style="font-size:.8rem;color:var(--text2);margin-bottom:.5rem">Turn visitors into regulars. Add pour-over and first signature drink.</p>
+
           <div class="triggers">
             <div class="trigger">&#128260; 25-35% repeat rate</div>
             <div class="trigger">&#128200; 60+ customers/day (3 weeks)</div>
@@ -1486,7 +1590,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         <h3>Phase 6 -- Empire</h3>
         <div class="phase-sub">Multiple locations. Own roast. Wholesale. Regional brand.</div>
         <div class="card" style="padding:1rem;border-color:rgba(212,165,74,.2);background:linear-gradient(135deg,var(--card),rgba(212,165,74,.05))">
-          <p style="font-size:.8rem;color:var(--text2)">Open cafe #2. Hire a manager. Launch own-brand roasted coffee. Wholesale to other cafes. Subscription boxes. Become what Cilantro is today -- but with specialty quality and authentic love.</p>
+          <p style="font-size:.8rem;color:var(--text2)">Cafe #2, own-brand roasted coffee, wholesale, subscription boxes.</p>
         </div>
       </div>
     </div>
@@ -1510,53 +1614,62 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     <!-- Hours -->
     <div class="ram-section ram-accent">
       <h3><span style="color:var(--gold)">&#9201;</span> Hours & Schedule</h3>
-      <div class="ram-item"><strong>Before Iftar:</strong> Most specialty cafes close or run limited hours during fasting (sunrise to sunset). Some open for takeaway only for non-fasting customers.</div>
-      <div class="ram-item"><strong>After Iftar (sunset to 2-3 AM):</strong> PEAK hours. This is when Egypt comes alive. Extended evening hours are essential.</div>
-      <div class="ram-item"><strong>Suhoor (3-4 AM):</strong> Some cafes stay open for suhoor. Evaluate if your location has demand.</div>
-      <div class="ram-item"><strong>Recommended schedule:</strong> Close 2PM-6PM (dead hours during fasting), open 6PM-2AM (prime time).</div>
-      <div class="ram-item"><strong>Staff shifts</strong> need complete restructuring for this month.</div>
+      <div class="ram-item"><strong>Recommended:</strong> Close 2PM-6PM (dead hours), open 6PM-2AM (prime time).</div>
+      <div class="ram-item"><strong>After Iftar (sunset to 2-3 AM):</strong> PEAK hours. Extended evening hours are essential.</div>
+      <div class="read-more">
+        <div class="rm-preview"></div>
+        <div class="rm-full" style="display:none">
+          <div class="ram-item"><strong>Before Iftar:</strong> Most cafes close or do takeaway only for non-fasting customers.</div>
+          <div class="ram-item"><strong>Suhoor (3-4 AM):</strong> Some cafes stay open. Evaluate if your location has demand.</div>
+          <div class="ram-item"><strong>Staff shifts</strong> need complete restructuring for this month.</div>
+        </div>
+        <button class="rm-toggle" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none';this.textContent=this.textContent==='Read more'?'Show less':'Read more'">Read more</button>
+      </div>
     </div>
 
     <!-- Menu -->
     <div class="ram-section">
       <h3><span style="color:var(--gold)">&#127869;</span> Special Ramadan Menu</h3>
-      <div class="ram-item"><strong>Dates + Arabic coffee</strong> -- traditional iftar starter. Must have.</div>
-      <div class="ram-item"><strong>Sahlab</strong> -- warm, creamy, perfect post-iftar. Your signature Sahlab Latte would shine here.</div>
-      <div class="ram-item"><strong>Qamar el-Din</strong> (apricot drink) -- classic Ramadan beverage.</div>
-      <div class="ram-item"><strong>Heavier pastries:</strong> Kunafa, Qatayef, Basbousa -- partner with a bakery or make simple versions.</div>
+      <div class="ram-item"><strong>Must-haves:</strong> Dates + Arabic coffee, Sahlab Latte, Qamar el-Din, Tamr Hindi, Karkade.</div>
       <div class="ram-item"><strong>Ramadan combo:</strong> Dates + Arabic coffee + mini kunafa -- special pricing.</div>
-      <div class="ram-item">Reduce cold drinks (less demand during cooler evening hours).</div>
-      <div class="ram-item"><strong>Traditional drinks:</strong> Add Tamr Hindi (tamarind) and Karkade (hibiscus) -- classic Ramadan favorites.</div>
+      <div class="read-more">
+        <div class="rm-preview"></div>
+        <div class="rm-full" style="display:none">
+          <div class="ram-item"><strong>Heavier pastries:</strong> Kunafa, Qatayef, Basbousa -- partner with a bakery or make simple versions.</div>
+          <div class="ram-item">Reduce cold drinks (less demand during cooler evening hours).</div>
+          <div class="ram-item"><strong>Traditional drinks:</strong> Add Tamr Hindi (tamarind) and Karkade (hibiscus) -- classic Ramadan favorites.</div>
+        </div>
+        <button class="rm-toggle" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none';this.textContent=this.textContent==='Read more'?'Show less':'Read more'">Read more</button>
+      </div>
     </div>
 
     <!-- Staffing -->
     <div class="ram-section">
       <h3><span style="color:var(--green)">&#128101;</span> Staffing Adjustments</h3>
-      <div class="ram-item">Staff are fasting -- shorter active shifts, avoid heavy labor during fasting hours.</div>
-      <div class="ram-item"><strong>Shift structure:</strong> Split shifts or evening-only during Ramadan.</div>
-      <div class="ram-item"><strong>Provide iftar meal</strong> for staff working the evening shift (mandatory culturally).</div>
-      <div class="ram-item">Consider hiring 1 temporary part-time worker for the Ramadan rush.</div>
-      <div class="ram-item">Be flexible and compassionate -- fasting while working is hard.</div>
+      <div class="ram-item"><strong>Shift structure:</strong> Split shifts or evening-only. Provide iftar meal for staff (mandatory).</div>
+      <div class="ram-item">Consider 1 temp part-time worker for the rush. Be flexible -- fasting while working is hard.</div>
     </div>
 
     <!-- Marketing -->
     <div class="ram-section">
       <h3><span style="color:var(--blue)">&#128227;</span> Marketing Opportunities</h3>
-      <div class="ram-item"><strong>Ramadan decorations</strong> -- lanterns (fanous), crescent, warm lighting. Transform the space.</div>
-      <div class="ram-item"><strong>"Iftar at Bayt"</strong> -- position the cafe as a gathering spot for friends post-iftar.</div>
-      <div class="ram-item"><strong>Loyalty special:</strong> Double stamps on the loyalty card during Ramadan.</div>
-      <div class="ram-item"><strong>Social media:</strong> Ramadan content calendar, daily greetings, special menu highlights.</div>
-      <div class="ram-item"><strong>Charity collaboration:</strong> Partner with a charity for "suspended coffee" (pay-it-forward) during Ramadan. Great for brand and sawab.</div>
+      <div class="ram-item"><strong>Decor:</strong> Lanterns (fanous), crescent, warm lighting. Transform the space.</div>
+      <div class="ram-item"><strong>"Iftar at Bayt"</strong> -- position as a gathering spot. Double loyalty stamps.</div>
+      <div class="read-more">
+        <div class="rm-preview"></div>
+        <div class="rm-full" style="display:none">
+          <div class="ram-item"><strong>Social media:</strong> Ramadan content calendar, daily greetings, special menu highlights.</div>
+          <div class="ram-item"><strong>Charity collaboration:</strong> Partner with a charity for "suspended coffee" (pay-it-forward). Great for brand and sawab.</div>
+        </div>
+        <button class="rm-toggle" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none';this.textContent=this.textContent==='Read more'?'Show less':'Read more'">Read more</button>
+      </div>
     </div>
 
     <!-- Financial -->
     <div class="ram-section">
       <h3><span style="color:var(--copper)">&#128176;</span> Financial Impact</h3>
-      <div class="ram-item"><strong>Expect:</strong> Lower daytime revenue, significantly higher evening revenue.</div>
-      <div class="ram-item"><strong>Net effect:</strong> Usually neutral to slightly positive if you plan well.</div>
-      <div class="ram-item"><strong>Extra costs:</strong> Special menu items (dates, kunafa), decorations, temporary staff.</div>
-      <div class="ram-item"><strong>Revenue boost:</strong> Extended hours, higher evening traffic, group gatherings, Ramadan specials.</div>
-      <div class="ram-item" style="color:var(--gold)"><strong>Eid al-Fitr (end of Ramadan):</strong> MASSIVE day. Plan a special Eid event and menu. Stock up well in advance.</div>
+      <div class="ram-item"><strong>Net effect:</strong> Usually neutral to slightly positive if planned well. Lower daytime, much higher evening.</div>
+      <div class="ram-item" style="color:var(--gold)"><strong>Eid al-Fitr:</strong> MASSIVE day. Plan a special event and stock up in advance.</div>
     </div>
 
     <!-- Ramadan Checklist -->
@@ -1583,8 +1696,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     <div class="card" style="margin-bottom:1.5rem">
       <h3 style="margin-bottom:.75rem">How Zakat Works on Business</h3>
       <div class="p-item"><strong>Rate:</strong> 2.5% of net qualifying assets after one lunar year.</div>
-      <div class="p-item"><strong>Zakat IS due on:</strong> Cash in bank, inventory (beans, cups, etc. at cost value), money owed to you by customers (receivables).</div>
-      <div class="p-item"><strong>Zakat is NOT due on:</strong> Equipment, furniture, fixtures -- assets used in business, not intended for trade.</div>
+      <div class="p-item"><strong>Due on:</strong> Cash, inventory (at cost), receivables. <strong>Not due on:</strong> Equipment, furniture, fixtures.</div>
     </div>
 
     <!-- Calculator -->
@@ -1660,13 +1772,21 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     <!-- Important Notes -->
     <div class="card">
       <h3 style="margin-bottom:.75rem">Important Notes</h3>
-      <ul class="zk-notes" style="list-style:none;padding:0">
-        <li style="display:flex;align-items:flex-start;gap:.5rem"><span style="color:var(--gold);flex-shrink:0">&#9670;</span> This is a simplified calculator. Consult an Islamic scholar or your Islamic bank for a precise ruling on your situation.</li>
-        <li style="display:flex;align-items:flex-start;gap:.5rem"><span style="color:var(--gold);flex-shrink:0">&#9670;</span> Zakat on business assets is calculated differently than personal wealth zakat.</li>
-        <li style="display:flex;align-items:flex-start;gap:.5rem"><span style="color:var(--gold);flex-shrink:0">&#9670;</span> Some scholars say zakat is on net profit only, others on total qualifying assets. Follow your madhab or ask a trusted scholar.</li>
-        <li style="display:flex;align-items:flex-start;gap:.5rem"><span style="color:var(--gold);flex-shrink:0">&#9670;</span> Pay zakat in the lunar month it becomes due. Many pay in Ramadan for extra reward.</li>
-        <li style="display:flex;align-items:flex-start;gap:.5rem"><span style="color:var(--gold);flex-shrink:0">&#9670;</span> Zakat can be given to local Egyptian charities, orphanages, or directly to those in need.</li>
-      </ul>
+      <div class="read-more">
+        <div class="rm-preview">
+          <p style="font-size:.8rem;color:var(--text2)">Simplified calculator. Consult an Islamic scholar for a precise ruling. Pay zakat when due -- many pay in Ramadan.</p>
+        </div>
+        <div class="rm-full" style="display:none">
+          <ul class="zk-notes" style="list-style:none;padding:0">
+            <li style="display:flex;align-items:flex-start;gap:.5rem"><span style="color:var(--gold);flex-shrink:0">&#9670;</span> This is a simplified calculator. Consult an Islamic scholar or your Islamic bank for a precise ruling.</li>
+            <li style="display:flex;align-items:flex-start;gap:.5rem"><span style="color:var(--gold);flex-shrink:0">&#9670;</span> Zakat on business assets is calculated differently than personal wealth zakat.</li>
+            <li style="display:flex;align-items:flex-start;gap:.5rem"><span style="color:var(--gold);flex-shrink:0">&#9670;</span> Some scholars say zakat is on net profit only, others on total qualifying assets. Follow your madhab.</li>
+            <li style="display:flex;align-items:flex-start;gap:.5rem"><span style="color:var(--gold);flex-shrink:0">&#9670;</span> Pay zakat in the lunar month it becomes due. Many pay in Ramadan for extra reward.</li>
+            <li style="display:flex;align-items:flex-start;gap:.5rem"><span style="color:var(--gold);flex-shrink:0">&#9670;</span> Zakat can be given to local Egyptian charities, orphanages, or directly to those in need.</li>
+          </ul>
+        </div>
+        <button class="rm-toggle" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none';this.textContent=this.textContent==='Read more'?'Show less':'Read more'">Read more</button>
+      </div>
     </div>
   </div>
 </div>
@@ -1813,7 +1933,7 @@ const DEFAULTS = {
 };
 
 // Load from localStorage or use defaults (with version check)
-const STATE_VERSION = 2;
+const STATE_VERSION = 3;
 let S = {};
 try {
   const saved = localStorage.getItem('cafePlanState');
@@ -2460,6 +2580,9 @@ bindInputs();
 setupDuplicateSync();
 calc();
 renderAreaCards();
+
+// Touch-friendly: add inputmode="numeric" to all number inputs
+document.querySelectorAll('input[type="number"]').forEach(el => { el.setAttribute('inputmode', 'numeric'); });
 
 // Restore last visited page
 const savedPage = localStorage.getItem('bayt_currentPage');
