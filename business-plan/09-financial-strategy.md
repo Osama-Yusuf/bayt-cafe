@@ -4,7 +4,7 @@ All financial instruments in this plan are **halal** — no riba.
 
 ## Your Numbers
 
-| Detail | You | Sister | Combined |
+| Detail | You | Partner | Combined |
 |--------|----:|-------:|---------:|
 | Monthly savings (EGP) | 30,000 | 30,000 | 60,000 |
 | Current savings | 300K+ EGP | Matching | 600K+ EGP |
@@ -12,142 +12,135 @@ All financial instruments in this plan are **halal** — no riba.
 
 ---
 
-## Why Real Assets Beat Cash in Egypt
+## The Reality: Maadi Degla Pricing (May 2026)
 
-Egypt has experienced multiple تعويم events. Each time:
-- EGP loses 30-50% of value overnight
-- Cash savings lose purchasing power instantly
-- Property prices surge in EGP terms
-- Rent increases follow inflation
+### Buying a Shop — تمليك
 
-| | Cash (Mudarabah) | Property | Gold |
-|---|:-:|:-:|:-:|
-| Nominal return | 15-18% | 5-7% rent + 15-25% appreciation | Tracks devaluation |
-| After 25-30% inflation | **Negative real return** | **Positive real return** | **Holds value** |
-| If another تعويم hits | Loses 30-50% purchasing power | Skyrockets in EGP | Skyrockets in EGP |
-| Liquidity | High | Low (months to sell) | High |
+| Size | Location | Price | Per sqm |
+|------|----------|------:|--------:|
+| 32 sqm | Degla Square (mall unit, secondary) | 2,170,000 | ~68,000 |
+| 35 sqm | Zahraa Al Maadi St (secondary) | 2,270,000 | ~65,000 |
+| 44 sqm | Rayhana Residence, Zahraa | 7,000,000 | ~159,000 |
+| 54 sqm | Zahraa Al Maadi St, Degla | 8,100,000 | ~150,000 |
+| 130 sqm | Zahraa Tunnel | 8,000,000 | ~62,000 |
+| 200 sqm | Degla Square | 14,000,000 | ~70,000 |
 
-**In Egypt, real assets beat paper savings. Property and gold preserve wealth, cash doesn't.**
+**For a 50 sqm café: realistically 5-10M EGP.** Anything under 4M in Degla proper is side-street, basement, or has problems (no commercial license, weak frontage).
 
----
+**Verdict: Buying in Maadi is out of reach right now.** Save it for Year 3+ when the café is profitable.
 
-## The Plan: Buy the Café's Own Space
+### Renting — The Realistic Path
 
-Don't rent. Don't buy a separate investment property. **Buy the space Bayt Café will operate in.**
+| Street/Area | Size | Monthly Rent | Tier |
+|-------------|------|------------:|------|
+| Street 9 (Road 9) | 30 sqm | 18,000 | Tier 1 (premium) |
+| Street 199, Degla | 220 sqm | 25,000 | Suspiciously cheap — check condition |
+| Street 250 | 150 sqm | 65,000 | Tier 2 (solid) |
+| Street 218 | 120 sqm | 80,000 | Tier 2 (solid) |
+| Road 9 corridor, Degla Square, Street 233 | 100-200 sqm | 100,000-150,000 | Tier 1 (premium) |
 
-### Why Owning Beats Everything
+**Target for a first café: 35,000-60,000 EGP/month** on a Tier 2 street.
 
-| Factor | Own the Space | Rent + Investment Property |
-|--------|:-:|:-:|
-| Monthly rent | **Zero** | 40,000-50,000 EGP to a landlord |
-| 3-year rent total | **Zero** | ~1,500,000+ EGP gone |
-| Control over space | **Full** — renovate however you want | Limited by landlord |
-| Risk of lease ending | **None** | Landlord can non-renew |
-| Annual rent hikes | **None** | 7-15% every year |
-| If café fails | Rent the space out, collect income | Lose the lease, keep small investment property |
-| Asset appreciation | Your property grows with inflation | Same, but you're also bleeding rent |
-| Break-even speed | **Much faster** (30-40% less monthly cost) | Slower |
+### خلو رجل — Key Money (The Hidden Cost Nobody Mentions)
 
-### The Math
+Most well-located shops in older Maadi buildings require a **one-time, non-refundable payment** to the previous tenant or owner on top of monthly rent.
 
-| Step | Amount |
-|------|--------|
-| Target property price (small commercial space) | ~2,000,000 EGP |
-| Combined monthly savings (30K each) | 60,000 EGP/month |
-| 12 months of savings | 720,000 EGP |
-| Existing savings + gold reserves | ~1,300,000+ EGP |
-| **Total at Month 12** | **~2,000,000+ EGP** |
+| Location Quality | Key Money Range |
+|-----------------|---------------:|
+| Side street, weak traffic | 0-500,000 |
+| Tier 2 decent street | 500,000-2,000,000 |
+| Road 9 / prime Degla | 2,000,000-5,000,000+ |
 
-Pay in cash for the best price. No debt, no riba.
-
-### What to Look for in the Space
-
-**Must-haves:**
-- Ground floor, street-level
-- Visible from the street (signage potential)
-- 40-80 sqm (doesn't need to be huge to start)
-- Water supply + drainage
-- Adequate electrical capacity (3-phase if possible)
-- In a walkable area with foot traffic
-
-**Doesn't need to be:**
-- Café-ready — you'll renovate it yourself
-- In the most expensive area — a good spot in a growing neighborhood beats a mediocre spot in a premium one
-- Perfect — you can fix cosmetic issues during fitout
+**Always ask: "إيه قيمة الخلو؟" before getting excited about a low rent number.** A 30K/month shop on Road 9 might require 2M+ key money to step in.
 
 ---
 
-## Savings Strategy During the Accumulation Phase
+## Street Ranking for a Small Café
 
-Keep savings protected against devaluation:
+### Tier 1 — Highest Traffic, Highest Cost
+Road 9 (شارع 9), Street 231, 233, Degla Square, Street 200 (near Wadi Degla Club)
+- Built-in walk-up customers and existing café culture
+- Triple the price, competing with Cilantro, Beano's, Costa, established indies
+- **Not recommended for a first café** — too expensive
 
-| Vehicle | Allocation | Purpose |
-|---------|:----------:|---------|
-| Gold (physical) | 40-50% | Devaluation shield. Buy gradually. Sell when ready to buy property. |
-| AED (keep in UAE account) | 30-40% | USD-pegged. Natural hedge against EGP devaluation. |
-| Mudarabah (for short-term needs) | 10-20% | Liquid cash for planning expenses (travel, courses, branding deposits). |
+### Tier 2 — Residential Pockets with Potential (RECOMMENDED)
+Street 250, 218, 206, 213, near international schools (CAC, Lycée)
+- Lower cost, captive customer base, less competition
+- Degla's grid layout and tree-lined streets mean side streets still get foot traffic
+- Near gyms, clinics, Road 9 access
+- **This is where the smart money goes**
 
-**Do NOT keep all savings in EGP cash.** Gold and AED protect your purchasing power.
+### Tier 3 — Cheaper, Riskier
+Zahraa El Maadi, El Laselky, farther from Degla core
+- Cheapest entry but you're betting on driving traffic to you
+- Can work with strong social media and unique concept
 
 ---
 
-## Timeline
+## Realistic Budget to Open (Renting)
+
+| Category | Low | High |
+|----------|----:|-----:|
+| Rent + 6 months security deposit | 200,000 | 500,000 |
+| Key money (خلو رجل) | 500,000 | 2,000,000 |
+| Finishing & build-out | 800,000 | 1,500,000 |
+| Equipment (espresso, grinders, fridges, POS) | 400,000 | 800,000 |
+| Licenses (civil defense, commercial, food safety) | 100,000 | 250,000 |
+| Working capital (6 months runway) | 600,000 | 1,000,000 |
+| **TOTAL** | **2,600,000** | **6,050,000** |
+
+**Realistic target for a lean-but-good Tier 2 café: ~3-4M EGP.**
+
+---
+
+## Revised Savings Strategy
+
+With 60K/month combined savings + existing capital:
+
+| Month | New Savings | Cumulative + Existing + Gold | Can You Open? |
+|------:|:----------:|:---------------------------:|:-------------|
+| 6 | 360,000 | ~1,500,000 | No |
+| 12 | 720,000 | ~1,860,000 | Too tight |
+| 18 | 1,080,000 | ~2,220,000 | Lean café possible if low key money |
+| 24 | 1,440,000 | ~2,580,000 | Yes — comfortable Tier 2 spot |
+| 30 | 1,800,000 | ~2,940,000 | Yes — solid budget with safety margin |
+
+**Sweet spot: 18-24 months of saving.** Aim for ~3M total to open comfortably.
+
+### Where to Keep Savings During Accumulation
+
+| Vehicle | Allocation | Why |
+|---------|:----------:|-----|
+| Gold (physical) | 40-50% | Devaluation shield. Buy gradually. |
+| AED / USD (keep in foreign currency) | 30-40% | Natural hedge against EGP devaluation |
+| Mudarabah (optional) | 10-20% | Liquid cash for planning expenses only |
+
+**Do NOT keep all savings in EGP cash.** Every تعويم eats it.
+
+---
+
+## The Long Game: Buy Later
+
+The plan to **own the café space** is still correct — just not Day 1:
 
 ```
-Month 1-6:    Save 60K/month (30K each).
-              Keep in gold + AED.
-              Visit cafés, take barista course.
-              Sister scouts commercial spaces in Cairo.
-
-Month 6-10:   Continue saving. Shortlist spaces.
-              Negotiate cash purchase.
-              Begin branding and licensing in parallel.
-
-Month 10-14:  Buy the space. Renovate.
-              Full control — no landlord.
-              Equipment, permits, hiring, training.
-              Remaining savings cover startup costs.
-
-Month 14-16:  GRAND OPENING — Bismillah
-              You own the space. Zero rent.
-              If café fails → rent the space, collect income.
-              If café thrives → you own asset + business.
-              Either way, you win.
+Year 0-2:    Rent a Tier 2 shop. Build the brand. Become profitable.
+Year 2-3:    Save café profits + continued personal savings.
+Year 3-5:    Buy the café's space (or a better location).
+             Eliminate rent forever. Property appreciates.
+             If market allows, buy a second space for location #2.
 ```
 
----
-
-## Role Split (You + Sister)
-
-| Responsibility | Who |
-|---------------|-----|
-| Capital investment | 50/50 (30K each monthly) |
-| Financial planning, systems, POS, tech | You |
-| On-ground daily operations | Sister (in Cairo) |
-| Property search | Sister (local presence) |
-| Strategic decisions | Both |
-| Hiring | Both |
-| Social media / marketing | Decide together |
-| Supplier relationships | Sister |
-
----
-
-## If You Need More Than 2M
-
-If the right space costs a bit more (2.2-2.5M):
-1. Save for 2-3 extra months
-2. Negotiate harder on price (cash buyers have leverage)
-3. Liquidate more gold reserves
-4. Family contribution (halal — document it clearly in the partnership agreement)
-
-**Do NOT take a conventional loan.** If Islamic financing is needed, look into Musharakah (partnership) or Murabaha (cost-plus) through Faisal Islamic Bank or ADIB Egypt. But cash is king — no debt is the goal.
+Renting now doesn't mean renting forever. It means using capital efficiently to prove the concept, then buying from a position of strength.
 
 ---
 
 ## The Bottom Line
 
-1. **Own your space** — rent is the #1 cost. Eliminate it.
-2. **Save in gold + AED** — protect against devaluation.
-3. **~12 months to accumulate** — 720K new savings + existing gold = ~2M.
-4. **Pay cash** — no riba, no debt, full ownership.
-5. **If the café fails**, you still own a property you can rent out. Safety net built in.
+1. **Buying in Maadi Degla needs 5-10M** — out of reach for Day 1
+2. **Rent a Tier 2 spot** (Street 250, 218, 206, 213) for 35-60K/month
+3. **Budget 3-4M total** including key money, build-out, equipment, and 6 months runway
+4. **Save 18-24 months** at 60K/month + existing capital + gold
+5. **Always ask about خلو رجل** — it's the hidden cost that breaks budgets
+6. **Buy the space in Year 3-5** once profitable — that's when owning makes sense
+7. **Keep savings in gold + foreign currency** — EGP cash loses value every year
