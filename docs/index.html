@@ -382,7 +382,12 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .progress-ring{position:relative;display:inline-block}
 
 /* ===== CHECKLIST PAGE ===== */
-.cl-phase{margin-bottom:2rem}
+.cl-phase{margin-bottom:2rem;border:2px solid transparent;border-radius:var(--radius);padding:.5rem;transition:border-color .2s}
+.cl-phase.drag-over{border-color:var(--gold);background:rgba(212,165,74,.03)}
+.cl-item.cl-drop-above{border-top:2px solid var(--gold) !important}
+.cl-del{background:none;border:1px solid transparent;color:var(--text3);cursor:pointer;font-size:1rem;padding:.2rem .5rem;flex-shrink:0;border-radius:4px;opacity:0;transition:all .2s;font-family:inherit}
+.cl-item:hover .cl-del{opacity:.5}
+.cl-del:hover{opacity:1 !important;color:var(--red);border-color:var(--red)}
 .cl-phase-header{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0;border-bottom:2px solid var(--border);margin-bottom:.75rem}
 .cl-phase-header h3{font-size:1rem;font-weight:700}
 .cl-phase-progress{font-size:.75rem;color:var(--text2)}
@@ -830,91 +835,12 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <div class="cl-ov-val" id="clOverallText">0 / 0</div>
     </div>
 
-    <div style="text-align:right;margin-bottom:1.5rem">
-      <button class="btn-reset" onclick="resetChecklist()">Reset All</button>
+    <div style="display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap">
+      <button class="btn-reset" onclick="resetChecklist()">Reset to Defaults</button>
     </div>
 
-    <!-- Phase 1 -->
-    <div class="cl-phase" data-phase="1">
-      <div class="cl-phase-header">
-        <h3 style="color:var(--gold)">Phase 1: Foundation <span style="font-size:.75rem;font-weight:400;color:var(--text2)">(Months 1-3 of saving period)</span></h3>
-        <div class="cl-phase-progress" id="clPh1Progress">0 / 9</div>
-      </div>
-      <div class="cl-item" data-cl="p1_savings_account"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Open savings account (Islamic bank or gold)</div><div class="cl-desc">Choose your savings vehicle — see Savings page for options</div></div></div>
-      <div class="cl-item" data-cl="p1_auto_transfer"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Set up monthly savings transfers</div><div class="cl-desc">Automate contributions from each partner</div></div></div>
-      <div class="cl-item" data-cl="p1_partnership"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Draft partnership agreement</div><div class="cl-desc">See Partnership page for framework</div></div></div>
-      <div class="cl-item" data-cl="p1_cafe_visits"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Start visiting Cairo cafes</div><div class="cl-desc">Aim for 30+ visits, take notes on each</div></div></div>
-      <div class="cl-item" data-cl="p1_barista_course"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Take a barista course</div><div class="cl-desc">SCA Foundation at The Roastery, Cairo</div></div></div>
-      <div class="cl-item" data-cl="p1_social_follow"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Begin following Cairo coffee scene</div><div class="cl-desc">Instagram and TikTok -- study what works</div></div></div>
-      <div class="cl-item" data-cl="p1_locations"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Research and shortlist 3-5 potential locations</div><div class="cl-desc">Visit in person, check foot traffic at different times</div></div></div>
-      <div class="cl-item" data-cl="p1_gdrive"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Create shared Google Drive folder</div><div class="cl-desc">For all business documents, contracts, research</div></div></div>
-      <div class="cl-item" data-cl="p1_inspiration"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Start a cafe inspiration board</div><div class="cl-desc">Design, menu, branding ideas -- Pinterest, saved posts, photos</div></div></div>
-    </div>
-
-    <!-- Phase 2 -->
-    <div class="cl-phase" data-phase="2">
-      <div class="cl-phase-header">
-        <h3 style="color:var(--green)">Phase 2: Planning <span style="font-size:.75rem;font-weight:400;color:var(--text2)">(Months 4-6)</span></h3>
-        <div class="cl-phase-progress" id="clPh2Progress">0 / 11</div>
-      </div>
-      <div class="cl-item" data-cl="p2_location_final"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Finalize location choice</div><div class="cl-desc">Maadi Degla recommended</div></div></div>
-      <div class="cl-item" data-cl="p2_lawyer"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Hire a lawyer for licensing process</div><div class="cl-desc">Essential for navigating Egyptian bureaucracy</div></div></div>
-      <div class="cl-item" data-cl="p2_commercial_reg"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Apply for Commercial Register</div><div class="cl-desc">&#1587;&#1580;&#1604; &#1578;&#1580;&#1575;&#1585;&#1610;</div></div></div>
-      <div class="cl-item" data-cl="p2_tax_card"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Apply for Tax Card</div><div class="cl-desc">&#1576;&#1591;&#1575;&#1602;&#1577; &#1590;&#1585;&#1610;&#1576;&#1610;&#1577;</div></div></div>
-      <div class="cl-item" data-cl="p2_brand_designer"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Begin brand identity work</div><div class="cl-desc">Hire freelance designer -- Behance, Mostaql</div></div></div>
-      <div class="cl-item" data-cl="p2_brand_finalize"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Finalize cafe name, logo, color palette, typography</div><div class="cl-desc">Lock in the brand before anything else is designed</div></div></div>
-      <div class="cl-item" data-cl="p2_menu_design"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Design menu layout and packaging</div><div class="cl-desc">Physical menu, takeaway cups, bags, stickers</div></div></div>
-      <div class="cl-item" data-cl="p2_roaster_samples"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Contact coffee roasters for samples and wholesale pricing</div><div class="cl-desc">The Roastery, Brown Nose, 30 North, Cairocoffee</div></div></div>
-      <div class="cl-item" data-cl="p2_bakery_partners"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Contact bakery partners for daily supply terms</div><div class="cl-desc">Negotiate pricing, delivery schedule, return policy</div></div></div>
-      <div class="cl-item" data-cl="p2_social_accounts"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Set up Instagram and TikTok accounts</div><div class="cl-desc">Start posting behind-the-scenes content</div></div></div>
-      <div class="cl-item" data-cl="p2_domain"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Register domain and create coming-soon page</div><div class="cl-desc">Your domain -- simple, clean, with email signup</div></div></div>
-    </div>
-
-    <!-- Phase 3 -->
-    <div class="cl-phase" data-phase="3">
-      <div class="cl-phase-header">
-        <h3 style="color:var(--blue)">Phase 3: Build-Out <span style="font-size:.75rem;font-weight:400;color:var(--text2)">(Months 7-9)</span></h3>
-        <div class="cl-phase-progress" id="clPh3Progress">0 / 20</div>
-      </div>
-      <div class="cl-item" data-cl="p3_lease"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Sign lease</div><div class="cl-desc">Push for 5-year term, 1-3 months rent-free fitout</div></div></div>
-      <div class="cl-item" data-cl="p3_architect"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Hire architect/contractor for renovation</div><div class="cl-desc">Get 3+ quotes, check past work, agree on timeline</div></div></div>
-      <div class="cl-item" data-cl="p3_health_permit"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Submit Health Permit application</div><div class="cl-desc">&#1578;&#1585;&#1582;&#1610;&#1589; &#1589;&#1581;&#1610;</div></div></div>
-      <div class="cl-item" data-cl="p3_operating_license"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Submit Operating License application</div><div class="cl-desc">&#1585;&#1582;&#1589;&#1577; &#1605;&#1586;&#1575;&#1608;&#1604;&#1577; &#1575;&#1604;&#1606;&#1588;&#1575;&#1591;</div></div></div>
-      <div class="cl-item" data-cl="p3_civil_defense"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Civil Defense inspection</div><div class="cl-desc">Fire safety compliance</div></div></div>
-      <div class="cl-item" data-cl="p3_nfsa"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">NFSA food safety compliance</div><div class="cl-desc">National Food Safety Authority requirements</div></div></div>
-      <div class="cl-item" data-cl="p3_espresso_machine"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Order espresso machine</div><div class="cl-desc">4-8 week lead time! Order early.</div></div></div>
-      <div class="cl-item" data-cl="p3_equipment"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Order grinders, refrigerators, ice machine, POS system</div><div class="cl-desc">All ancillary equipment</div></div></div>
-      <div class="cl-item" data-cl="p3_water"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Install water filtration system</div><div class="cl-desc">Non-negotiable in Cairo for espresso quality</div></div></div>
-      <div class="cl-item" data-cl="p3_ac"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Install AC system</div><div class="cl-desc">2-3 split units minimum for Egyptian summers</div></div></div>
-      <div class="cl-item" data-cl="p3_furniture"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Furniture and decor procurement</div><div class="cl-desc">Tables, chairs, bar stools, shelving, decor</div></div></div>
-      <div class="cl-item" data-cl="p3_signage"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Signage fabrication and permits</div><div class="cl-desc">Exterior sign, menu boards, window graphics</div></div></div>
-      <div class="cl-item" data-cl="p3_pos"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Set up POS system</div><div class="cl-desc">Foodics or POSRocket -- configure menu, test payments</div></div></div>
-      <div class="cl-item" data-cl="p3_social_insurance"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Register for social insurance for employees</div><div class="cl-desc">Legal requirement in Egypt</div></div></div>
-      <div class="cl-item" data-cl="p3_job_listings"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Post job listings for baristas</div><div class="cl-desc">Wuzzuf, Facebook groups, Instagram</div></div></div>
-      <div class="cl-item" data-cl="p3_hire"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Interview and hire 2 baristas + 1 cleaner</div><div class="cl-desc">Use the 3-stage evaluation from Team page</div></div></div>
-      <div class="cl-item" data-cl="p3_training"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Begin barista training</div><div class="cl-desc">2-3 weeks before opening -- every drink on the menu</div></div></div>
-      <div class="cl-item" data-cl="p3_inventory"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Order initial inventory</div><div class="cl-desc">Beans, milk, syrups, cups, disposables</div></div></div>
-      <div class="cl-item" data-cl="p3_suppliers"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Set up supplier delivery schedules</div><div class="cl-desc">Regular cadence for each supplier</div></div></div>
-      <div class="cl-item" data-cl="p3_music"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Music license</div><div class="cl-desc">Egyptian Society of Authors, Composers, Publishers</div></div></div>
-    </div>
-
-    <!-- Phase 4 -->
-    <div class="cl-phase" data-phase="4">
-      <div class="cl-phase-header">
-        <h3 style="color:var(--copper)">Phase 4: Launch <span style="font-size:.75rem;font-weight:400;color:var(--text2)">(Month 10)</span></h3>
-        <div class="cl-phase-progress" id="clPh4Progress">0 / 10</div>
-      </div>
-      <div class="cl-item" data-cl="p4_equipment_test"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Equipment installed, tested, and dialed in</div><div class="cl-desc">Every machine calibrated and running smoothly</div></div></div>
-      <div class="cl-item" data-cl="p4_menu_test"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Full menu test run</div><div class="cl-desc">Make every item, taste, adjust recipes</div></div></div>
-      <div class="cl-item" data-cl="p4_staff_ready"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Staff can execute entire menu independently</div><div class="cl-desc">Every barista can make every drink without help</div></div></div>
-      <div class="cl-item" data-cl="p4_soft_open"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Soft opening -- friends and family</div><div class="cl-desc">2-3 days, invite-only, practice real service</div></div></div>
-      <div class="cl-item" data-cl="p4_feedback"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Collect and address soft opening feedback</div><div class="cl-desc">Fix every issue before the real opening</div></div></div>
-      <div class="cl-item" data-cl="p4_google_maps"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Google Maps listing live with photos</div><div class="cl-desc">Essential for discoverability</div></div></div>
-      <div class="cl-item" data-cl="p4_photo_session"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Professional photography session</div><div class="cl-desc">Space + drinks -- for social media, Google, menu</div></div></div>
-      <div class="cl-item" data-cl="p4_grand_plan"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Grand opening event planned and promoted</div><div class="cl-desc">Social media, invites, special offers</div></div></div>
-      <div class="cl-item" data-cl="p4_grand_opening"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title" style="color:var(--gold);font-size:.95rem">GRAND OPENING -- Bismillah!</div><div class="cl-desc">The day everything begins, insha'Allah</div></div></div>
-      <div class="cl-item" data-cl="p4_reviews"><div class="cl-check"><input type="checkbox"><div class="cl-box"></div></div><div><div class="cl-title">Encourage first customers to leave Google reviews</div><div class="cl-desc">Early reviews build trust and visibility</div></div></div>
-    </div>
+    <!-- All phases rendered dynamically -->
+    <div id="checklist-container"></div>
   </div>
 
   <!-- TAB: Partnership -->
@@ -1476,10 +1402,18 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     <div class="section-title">Live P&L Analysis</div>
     <div class="section-sub">Everything flows here. All values are pulled from other pages. This is the truth of your business.</div>
 
-    <div style="display:flex;gap:.5rem;margin-bottom:1.5rem">
-      <button onclick="saveSnapshot()" class="snap-btn" style="background:var(--card);border:1px solid var(--border);color:var(--text2);padding:.4rem .8rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.72rem;font-family:inherit">&#128247; Save Snapshot</button>
-      <button onclick="clearSnapshot()" class="snap-btn" style="background:var(--card);border:1px solid var(--border);color:var(--text3);padding:.4rem .8rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.72rem;font-family:inherit">Clear</button>
-      <span id="snap-label" style="font-size:.7rem;color:var(--text3);align-self:center"></span>
+    <div class="card" style="margin-bottom:1.5rem;padding:1rem 1.25rem;border-color:rgba(155,125,212,.15)">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+        <div>
+          <div style="font-size:.82rem;font-weight:700;color:var(--text)">Compare Scenarios</div>
+          <div style="font-size:.68rem;color:var(--text3)">Save current numbers as "Plan A", then change area/staff/menu to see the difference</div>
+        </div>
+        <div style="display:flex;gap:.4rem">
+          <button onclick="saveSnapshot()" style="background:var(--purple);border:none;color:var(--bg);padding:.4rem .75rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.72rem;font-weight:600;font-family:inherit">Save Plan A</button>
+          <button onclick="clearSnapshot()" style="background:transparent;border:1px solid var(--border);color:var(--text3);padding:.4rem .75rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.72rem;font-family:inherit">Clear</button>
+        </div>
+      </div>
+      <span id="snap-label" style="font-size:.68rem;color:var(--purple);display:block;margin-top:.4rem"></span>
     </div>
     <div id="snap-compare"></div>
 
@@ -3300,72 +3234,165 @@ if (savedPage) navigateTo(savedPage);
 // ===========================
 // CHECKLIST SYSTEM
 // ===========================
-function initChecklists() {
-  const allItems = document.querySelectorAll('[data-cl]');
-  allItems.forEach(item => {
-    const id = item.dataset.cl;
-    const cb = item.querySelector('input[type="checkbox"]');
-    if (!cb) return;
-    // Load state
-    const saved = localStorage.getItem('bayt_cl_' + id);
-    if (saved === '1') {
-      cb.checked = true;
-      item.classList.add('checked');
-    }
-    // Listen
-    cb.addEventListener('change', () => {
-      if (cb.checked) {
-        localStorage.setItem('bayt_cl_' + id, '1');
-        item.classList.add('checked');
-      } else {
-        localStorage.removeItem('bayt_cl_' + id);
-        item.classList.remove('checked');
-      }
-      updateChecklistProgress();
-    });
-  });
-  updateChecklistProgress();
-}
+// Data-driven checklist with drag-and-drop
+var CL_DEFAULTS = {
+  1:{name:'Foundation',color:'var(--gold)',sub:'Months 1-3 of saving period',items:[
+    {id:'p1_savings',t:'Open savings account (Islamic bank or gold)',d:'Choose your savings vehicle'},
+    {id:'p1_transfers',t:'Set up monthly savings transfers',d:'Automate contributions from each partner'},
+    {id:'p1_partnership',t:'Draft partnership agreement',d:'See Partnership tab for framework'},
+    {id:'p1_visits',t:'Start visiting local cafes',d:'Aim for 30+ visits, take notes on each'},
+    {id:'p1_competitors',t:'Research competitors in target area',d:'Visit them, note prices, menu, vibe, busy hours'},
+    {id:'p1_barista',t:'Take a barista course',d:'SCA Foundation or equivalent'},
+    {id:'p1_social',t:'Begin following the coffee scene',d:'Instagram and TikTok — study what works'},
+    {id:'p1_locations',t:'Research and shortlist 3-5 locations',d:'Visit in person, check foot traffic at different times'},
+    {id:'p1_gdrive',t:'Create shared cloud folder',d:'All business documents, contracts, research'},
+    {id:'p1_inspo',t:'Start a cafe inspiration board',d:'Design, menu, branding ideas'}
+  ]},
+  2:{name:'Planning',color:'var(--green)',sub:'Months 4-6',items:[
+    {id:'p2_location',t:'Finalize location choice',d:'Based on your Areas research'},
+    {id:'p2_keymon',t:'Scout lease options and ask about key money',d:'Always ask: إيه قيمة الخلو؟ before committing'},
+    {id:'p2_negotiate',t:'Negotiate lease or purchase terms',d:'Cash leverage, fitout period, annual increase cap'},
+    {id:'p2_lawyer',t:'Hire a lawyer for licensing',d:'Essential for navigating bureaucracy'},
+    {id:'p2_register',t:'Apply for Commercial Register',d:'سجل تجاري'},
+    {id:'p2_tax',t:'Apply for Tax Card',d:'بطاقة ضريبية'},
+    {id:'p2_designer',t:'Begin brand identity work',d:'Hire freelance designer'},
+    {id:'p2_brand',t:'Finalize name, logo, colors, typography',d:'Lock in the brand'},
+    {id:'p2_menu',t:'Design menu layout and packaging',d:'Menu, cups, bags, stickers'},
+    {id:'p2_roasters',t:'Contact coffee roasters for samples',d:'Get wholesale pricing from 3+'},
+    {id:'p2_bakery',t:'Contact bakery partners',d:'Pricing, delivery schedule, return policy'},
+    {id:'p2_social',t:'Set up social media accounts',d:'Start posting behind-the-scenes'},
+    {id:'p2_domain',t:'Register domain + coming-soon page',d:'Simple, clean, with email signup'}
+  ]},
+  3:{name:'Build-Out',color:'var(--blue)',sub:'Months 7-9',items:[
+    {id:'p3_lease',t:'Sign lease or close purchase',d:'Secure the space — everything else depends on this'},
+    {id:'p3_architect',t:'Hire architect/contractor',d:'3+ quotes, check past work'},
+    {id:'p3_health',t:'Submit Health Permit application',d:'ترخيص صحي'},
+    {id:'p3_license',t:'Submit Operating License',d:'رخصة مزاولة النشاط'},
+    {id:'p3_fire',t:'Civil Defense inspection',d:'Fire safety compliance'},
+    {id:'p3_food',t:'Food safety compliance',d:'National Food Safety Authority'},
+    {id:'p3_machine',t:'Order espresso machine',d:'4-8 week lead time!'},
+    {id:'p3_equip',t:'Order grinders, fridges, POS',d:'All equipment'},
+    {id:'p3_water',t:'Install water filtration',d:'Non-negotiable — test water quality first'},
+    {id:'p3_ac',t:'Install AC system',d:'Essential for summer'},
+    {id:'p3_furniture',t:'Furniture and decor',d:'Tables, chairs, shelving, decor'},
+    {id:'p3_signage',t:'Signage fabrication + permits',d:'Exterior, menu boards, window'},
+    {id:'p3_pos',t:'Set up POS system',d:'Configure menu, test payments'},
+    {id:'p3_wifi',t:'Set up WiFi + power outlets at every seat',d:'Reliable internet, visible password'},
+    {id:'p3_playlist',t:'Curate opening playlist',d:'Warm, on-brand — not random radio'},
+    {id:'p3_insurance',t:'Register social insurance',d:'Legal requirement for employees'},
+    {id:'p3_jobs',t:'Post job listings',d:'Job boards, social media, referrals'},
+    {id:'p3_hire',t:'Interview and hire staff',d:'Use 3-stage evaluation from Team tab'},
+    {id:'p3_train',t:'Begin barista training',d:'2-3 weeks before opening'},
+    {id:'p3_inventory',t:'Order initial inventory',d:'Beans, milk, syrups, cups'},
+    {id:'p3_suppliers',t:'Set up supplier schedules',d:'Regular delivery cadence'},
+    {id:'p3_music',t:'Music license',d:'Society of Authors, Composers, Publishers'}
+  ]},
+  4:{name:'Launch',color:'var(--copper)',sub:'Opening month',items:[
+    {id:'p4_test_equip',t:'Equipment tested and dialed in',d:'Every machine calibrated'},
+    {id:'p4_test_water',t:'Test espresso with filtered water',d:'Pull 20+ shots, dial in grind, dose, time'},
+    {id:'p4_test_menu',t:'Full menu test run',d:'Make every item, taste, adjust'},
+    {id:'p4_staff_ready',t:'Staff can run menu independently',d:'Every drink without help'},
+    {id:'p4_soft',t:'Soft opening — friends and family',d:'2-3 days, invite-only'},
+    {id:'p4_feedback',t:'Address soft opening feedback',d:'Fix everything before real opening'},
+    {id:'p4_google',t:'Google Maps listing live',d:'Essential for discoverability'},
+    {id:'p4_photos',t:'Professional photography session',d:'Space + drinks for social media'},
+    {id:'p4_delivery',t:'Set up delivery app profiles',d:'Talabat, Elmenus — even if just cold brew + pastry'},
+    {id:'p4_loyalty',t:'Print loyalty cards',d:'Buy 7, get 1 free — simple stamp card'},
+    {id:'p4_event',t:'Grand opening event planned',d:'Social media, invites, offers'},
+    {id:'p4_open',t:'GRAND OPENING — Bismillah!',d:'The day everything begins'},
+    {id:'p4_reviews',t:'Encourage Google reviews',d:'Early reviews build trust'}
+  ]},
+  5:{name:'Post-Launch',color:'var(--purple)',sub:'First 6 months after opening',items:[
+    {id:'p5_present',t:'Be present every day for first 2 weeks',d:'At least one founder on-site all operating hours'},
+    {id:'p5_daily_track',t:'Track daily sales in POS',d:'Revenue, transactions, avg ticket — every single day'},
+    {id:'p5_feedback_loop',t:'Set up customer feedback channel',d:'QR code on table → Google Form, or just talk to people'},
+    {id:'p5_week2_fix',t:'Fix all operational issues from Week 1',d:'Equipment, timing, supply gaps — immediate action'},
+    {id:'p5_social_rhythm',t:'Establish social media posting rhythm',d:'5x/week Instagram, 3x/week TikTok — consistency > perfection'},
+    {id:'p5_month1_review',t:'Month 1 review: actual vs projected P&L',d:'Compare real numbers to your P&L tab — where are the gaps?'},
+    {id:'p5_slow_sellers',t:'Identify and cut slow-selling menu items',d:'If it sells less than 3/day after a month, drop it'},
+    {id:'p5_regulars',t:'Learn 20 regulars by name and order',d:'Personal connection = retention no chain can match'},
+    {id:'p5_month2_staff',t:'Month 2: evaluate staff performance',d:'Who is strong, who needs training, who is not a fit'},
+    {id:'p5_3rd_barista',t:'Assess if 3rd barista is needed',d:'80+ daily transactions or days off causing problems'},
+    {id:'p5_supplier_review',t:'Review supplier quality and pricing',d:'Are beans consistent? Better deal elsewhere? Negotiate volume'},
+    {id:'p5_month3_menu',t:'Month 3: first menu refresh',d:'Add 1-2 new items based on customer requests, remove 1-2 dead ones'},
+    {id:'p5_first_event',t:'Host first community event',d:'Coffee cupping, latte art throwdown, or tasting night'},
+    {id:'p5_influencer',t:'First influencer collaboration',d:'Invite 2-3 micro-influencers (5K-50K followers) for free drinks + content'},
+    {id:'p5_month6_pnl',t:'Month 6: comprehensive P&L review',d:'Are you on track to break even? What needs to change?'},
+    {id:'p5_sca_cert',t:'Send best barista to SCA certification',d:'Invest in their growth — retention + quality'},
+    {id:'p5_lease_check',t:'Review lease terms and renewal timeline',d:'Know your dates, plan ahead — no surprises'}
+  ]}
+};
 
-function updateChecklistProgress() {
-  // Phase progress (main checklist)
-  const phases = {'1':'clPh1Progress','2':'clPh2Progress','3':'clPh3Progress','4':'clPh4Progress'};
-  let totalAll = 0, checkedAll = 0;
-  Object.entries(phases).forEach(([phase, elId]) => {
-    const phaseEl = document.querySelector('.cl-phase[data-phase="'+phase+'"]');
-    if (!phaseEl) return;
-    const items = phaseEl.querySelectorAll('[data-cl]');
-    const checked = phaseEl.querySelectorAll('[data-cl] input:checked');
-    const el = document.getElementById(elId);
-    if (el) el.innerHTML = '<strong>' + checked.length + '</strong> / ' + items.length;
+var clData = JSON.parse(localStorage.getItem('bayt_checklist_v3') || 'null') || JSON.parse(JSON.stringify(CL_DEFAULTS));
+function saveCl(){ localStorage.setItem('bayt_checklist_v3', JSON.stringify(clData)); }
+
+function renderChecklist(){
+  var container = document.getElementById('checklist-container');
+  if(!container) return;
+  var phases = Object.keys(clData).map(Number).sort();
+  var totalAll=0, checkedAll=0;
+  var esc = function(s){return (s||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;');};
+
+  container.innerHTML = phases.map(function(p){
+    var phase = clData[p];
+    if(!phase) return '';
+    var items = phase.items || [];
+    var checked = items.filter(function(it){return localStorage.getItem('bayt_cl_'+it.id)==='1';}).length;
     totalAll += items.length;
-    checkedAll += checked.length;
-  });
-  // Overall
-  const ovText = document.getElementById('clOverallText');
-  const ovBar = document.getElementById('clOverallBar');
-  if (ovText) ovText.textContent = checkedAll + ' / ' + totalAll;
-  if (ovBar) ovBar.style.width = (totalAll > 0 ? (checkedAll / totalAll * 100) : 0) + '%';
+    checkedAll += checked;
 
-  // Ramadan checklist progress
-  const ramItems = document.querySelectorAll('.ram-cl-item[data-cl]');
-  const ramChecked = document.querySelectorAll('.ram-cl-item[data-cl] input:checked');
-  const ramProg = document.getElementById('ramClProgress');
-  if (ramProg) ramProg.textContent = ramChecked.length + ' / ' + ramItems.length;
+    return '<div class="cl-phase" data-phase="'+p+'" ondragover="event.preventDefault();this.classList.add(\'drag-over\')" ondragleave="this.classList.remove(\'drag-over\')" ondrop="clDrop(event,'+p+')">' +
+      '<div class="cl-phase-header">' +
+        '<h3 style="color:'+phase.color+'">Phase '+p+': '+phase.name+' <span style="font-size:.75rem;font-weight:400;color:var(--text2)">('+phase.sub+')</span></h3>' +
+        '<div class="cl-phase-progress"><strong>'+checked+'</strong> / '+items.length+'</div>' +
+      '</div>' +
+      items.map(function(it,idx){
+        var isChecked = localStorage.getItem('bayt_cl_'+it.id)==='1';
+        return '<div class="cl-item'+(isChecked?' checked':'')+'" data-cl="'+it.id+'" draggable="true" data-phase="'+p+'" data-idx="'+idx+'" ondragstart="clDragStart(event)" ondragend="clDragEnd(event)" ondragover="event.preventDefault();event.stopPropagation();document.querySelectorAll(\'.cl-item\').forEach(function(x){x.classList.remove(\'cl-drop-above\')});this.classList.add(\'cl-drop-above\')">' +
+          '<div class="cl-check" onclick="clToggle(\''+it.id+'\')"><input type="checkbox"'+(isChecked?' checked':'')+' onclick="event.stopPropagation();clToggle(\''+it.id+'\')">' +
+            '<div class="cl-box"></div></div>' +
+          '<span class="ki-grip" style="color:var(--text3);font-size:.65rem;cursor:grab;flex-shrink:0;user-select:none">⠿</span>' +
+          '<div style="flex:1;min-width:0">' +
+            '<input value="'+esc(it.t)+'" onchange="clEdit('+p+','+idx+',\'t\',this.value)" style="background:none;border:none;border-bottom:1px solid transparent;color:var(--text);font-size:.85rem;font-weight:600;font-family:inherit;width:100%;padding:.1rem 0;transition:var(--transition)" onfocus="this.style.borderBottomColor=\'var(--border)\'" onblur="this.style.borderBottomColor=\'transparent\'">' +
+            '<input value="'+esc(it.d)+'" onchange="clEdit('+p+','+idx+',\'d\',this.value)" style="background:none;border:none;border-bottom:1px solid transparent;color:var(--text3);font-size:.72rem;font-family:inherit;width:100%;padding:.1rem 0;transition:var(--transition)" onfocus="this.style.borderBottomColor=\'var(--border)\'" onblur="this.style.borderBottomColor=\'transparent\'">' +
+          '</div>' +
+          '<button class="cl-del" onclick="clRemove('+p+','+idx+')">&times;</button>' +
+        '</div>';
+      }).join('') +
+      '<button onclick="clAdd('+p+')" class="kanban-add" style="margin-top:.3rem">+ Add item</button>' +
+    '</div>';
+  }).join('');
+
+  var ovText = document.getElementById('clOverallText');
+  var ovBar = document.getElementById('clOverallBar');
+  if(ovText) ovText.textContent = checkedAll + ' / ' + totalAll;
+  if(ovBar) ovBar.style.width = (totalAll>0?(checkedAll/totalAll*100):0) + '%';
 }
 
-function resetChecklist() {
-  if (!confirm('Reset ALL checklist items? This cannot be undone.')) return;
-  const allItems = document.querySelectorAll('[data-cl]');
-  allItems.forEach(item => {
-    const id = item.dataset.cl;
-    localStorage.removeItem('bayt_cl_' + id);
-    const cb = item.querySelector('input[type="checkbox"]');
-    if (cb) cb.checked = false;
-    item.classList.remove('checked');
-  });
-  updateChecklistProgress();
+function clToggle(id){
+  if(localStorage.getItem('bayt_cl_'+id)==='1') localStorage.removeItem('bayt_cl_'+id);
+  else localStorage.setItem('bayt_cl_'+id,'1');
+  renderChecklist();
 }
+function clEdit(phase,idx,field,val){ if(clData[phase]&&clData[phase].items[idx]) clData[phase].items[idx][field]=val; saveCl(); }
+function clRemove(phase,idx){ if(clData[phase]){var it=clData[phase].items[idx]; if(it) localStorage.removeItem('bayt_cl_'+it.id); clData[phase].items.splice(idx,1); saveCl(); renderChecklist();} }
+function clAdd(phase){ if(!clData[phase]) return; clData[phase].items.push({id:'cl_'+Date.now(),t:'New task',d:'Add details...'}); saveCl(); renderChecklist(); setTimeout(function(){var items=document.querySelectorAll('.cl-phase[data-phase="'+phase+'"] .cl-item');if(items.length){var last=items[items.length-1];var inp=last.querySelector('input[type="text"]');if(inp){inp.focus();inp.select();}}},50); }
+
+// Drag and drop for checklist
+var _clDrag = null;
+function clDragStart(e){ _clDrag={phase:parseInt(e.target.dataset.phase),idx:parseInt(e.target.dataset.idx)}; e.target.style.opacity='.3'; e.dataTransfer.effectAllowed='move'; e.dataTransfer.setData('text/plain',''); }
+function clDragEnd(e){ e.target.style.opacity='1'; document.querySelectorAll('.cl-phase').forEach(function(p){p.classList.remove('drag-over');}); }
+function clDrop(e,toPhase){ e.preventDefault(); document.querySelectorAll('.cl-phase').forEach(function(p){p.classList.remove('drag-over');}); document.querySelectorAll('.cl-item').forEach(function(it){it.classList.remove('cl-drop-above');}); if(!_clDrag) return; var fromItems=clData[_clDrag.phase].items; var item=fromItems[_clDrag.idx]; if(!item) return; var dropTarget=e.target.closest('.cl-item'); var insertIdx=-1; if(dropTarget&&dropTarget.dataset.phase==toPhase){ insertIdx=parseInt(dropTarget.dataset.idx); if(_clDrag.phase==toPhase&&_clDrag.idx<insertIdx) insertIdx--; } fromItems.splice(_clDrag.idx,1); if(insertIdx>=0) clData[toPhase].items.splice(insertIdx,0,item); else clData[toPhase].items.push(item); _clDrag=null; saveCl(); renderChecklist(); }
+
+function resetChecklist(){
+  if(!confirm('Reset ALL checklist items to defaults? Custom items will be lost.')) return;
+  clData = JSON.parse(JSON.stringify(CL_DEFAULTS));
+  Object.keys(CL_DEFAULTS).forEach(function(p){ CL_DEFAULTS[p].items.forEach(function(it){ localStorage.removeItem('bayt_cl_'+it.id); }); });
+  saveCl(); renderChecklist();
+}
+
+function initChecklists(){ renderChecklist(); }
+
 
 initChecklists();
 
