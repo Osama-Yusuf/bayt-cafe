@@ -331,9 +331,76 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .area-tier-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;text-align:center}
 .area-tier-card h4{font-size:.85rem;font-weight:700;margin-bottom:.3rem}
 .area-tier-card p{font-size:.72rem;color:var(--text2);line-height:1.5}
+
+/* ===== ONBOARDING ===== */
+.onboarding-overlay{position:fixed;inset:0;z-index:1000;background:var(--bg);display:flex;align-items:center;justify-content:center;overflow-y:auto}
+.onboarding-overlay.hidden{display:none}
+.ob-container{max-width:600px;width:100%;padding:2rem;text-align:center}
+.ob-step{display:none;animation:obFadeIn .4s ease}
+.ob-step.active{display:block}
+@keyframes obFadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.ob-choice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:1.5rem 0}
+.ob-choice{background:var(--card);border:2px solid var(--border);border-radius:var(--radius);padding:1.5rem 1rem;cursor:pointer;transition:var(--transition);text-align:center}
+.ob-choice:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:var(--shadow)}
+.ob-choice.selected{border-color:var(--gold);background:var(--gold-glow)}
+.ob-choice .ob-icon{font-size:2rem;margin-bottom:.5rem}
+.ob-choice h4{font-size:.9rem;font-weight:700;margin-bottom:.3rem}
+.ob-choice p{font-size:.75rem;color:var(--text2)}
+.ob-input-group{text-align:left;margin:1rem 0}
+.ob-input-group label{display:block;font-size:.72rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem}
+.ob-input-group input{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.75rem 1rem;color:var(--text);font-size:1.1rem;font-weight:600;font-family:inherit;text-align:center}
+.ob-input-group input:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px var(--gold-glow)}
+.ob-nav{display:flex;justify-content:space-between;margin-top:2rem;gap:1rem}
+.ob-btn{padding:.65rem 1.5rem;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:var(--transition);font-family:inherit;border:none}
+.ob-btn-primary{background:var(--gold);color:var(--bg)}
+.ob-btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.ob-btn-secondary{background:transparent;border:1px solid var(--border);color:var(--text2)}
+.ob-btn-secondary:hover{border-color:var(--text2);color:var(--text)}
+.ob-progress{display:flex;gap:.3rem;justify-content:center;margin-bottom:2rem}
+.ob-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:var(--transition)}
+.ob-dot.active{background:var(--gold);width:24px;border-radius:4px}
+.ob-dot.done{background:var(--green)}
+.ob-title{font-size:1.8rem;font-weight:800;margin-bottom:.5rem;letter-spacing:-.02em}
+.ob-subtitle{font-size:.9rem;color:var(--text2);margin-bottom:2rem;line-height:1.6}
+.ob-logo{display:flex;align-items:center;justify-content:center;gap:.6rem;margin-bottom:2rem}
+.ob-logo svg{width:36px;height:36px;color:var(--gold)}
+.ob-logo span{font-weight:800;font-size:1.2rem;color:var(--gold);letter-spacing:.02em}
+.ob-pace-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0}
+@media(max-width:600px){.ob-pace-cards{grid-template-columns:1fr}}
+.ob-pace-card{background:var(--card);border:2px solid var(--border);border-radius:var(--radius);padding:1.5rem 1rem;cursor:pointer;transition:var(--transition);text-align:center}
+.ob-pace-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:var(--shadow)}
+.ob-pace-card h4{font-size:.95rem;font-weight:700;margin-bottom:.2rem}
+.ob-pace-card .ob-pace-time{font-size:.72rem;color:var(--gold);font-weight:600;margin-bottom:.5rem}
+.ob-pace-card p{font-size:.72rem;color:var(--text2);line-height:1.5}
+.ob-result-preview{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;margin-top:1.25rem;text-align:center}
+.ob-result-preview .ob-res-val{font-size:1.5rem;font-weight:800;color:var(--gold)}
+.ob-result-preview .ob-res-label{font-size:.68rem;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-top:.2rem}
+.ob-skip{font-size:.72rem;color:var(--text3);cursor:pointer;margin-top:1.5rem;transition:var(--transition)}
+.ob-skip:hover{color:var(--gold)}
+.ob-area-mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin:1.25rem 0;text-align:left}
+@media(max-width:500px){.ob-area-mini-grid{grid-template-columns:1fr}}
+.ob-area-mini{background:var(--card);border:2px solid var(--border);border-radius:var(--radius-sm);padding:.85rem;cursor:pointer;transition:var(--transition)}
+.ob-area-mini:hover{border-color:var(--gold);transform:translateY(-1px)}
+.ob-area-mini.selected{border-color:var(--gold);background:var(--gold-glow)}
+.ob-area-mini h4{font-size:.82rem;font-weight:700;margin-bottom:.15rem}
+.ob-area-mini .ob-area-budget{font-size:.72rem;color:var(--gold);font-weight:600}
+.ob-area-mini .ob-area-tagline{font-size:.68rem;color:var(--text3);margin-top:.2rem}
+.ob-partner-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;margin-bottom:.5rem;text-align:left}
+@media(max-width:500px){.ob-partner-row{grid-template-columns:1fr}}
+.ob-partner-row input{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.55rem .75rem;color:var(--text);font-size:.85rem;font-weight:600;font-family:inherit}
+.ob-partner-row input:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px var(--gold-glow)}
+.sidebar-restart{display:block;width:100%;background:transparent;border:1px dashed var(--border);color:var(--text3);padding:.4rem .6rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.62rem;font-family:inherit;transition:var(--transition);margin-top:.6rem;text-align:center}
+.sidebar-restart:hover{border-color:var(--gold);color:var(--gold)}
 </style>
 </head>
 <body>
+
+<!-- ONBOARDING OVERLAY -->
+<div class="onboarding-overlay hidden" id="onboarding">
+  <div class="ob-container" id="ob-container">
+    <!-- Steps rendered by JS -->
+  </div>
+</div>
 
 <!-- MOBILE HAMBURGER -->
 <button class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.mobile-overlay').classList.toggle('open')">&#9776;</button>
@@ -353,7 +420,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     <a data-page="strategy"><span class="nav-icon">&#9813;</span>Strategy</a>
     <a data-page="faith"><span class="nav-icon">&#9770;</span>Faith</a>
   </nav>
-  <div class="sidebar-footer">All numbers in EGP<br>Rate: ~13.6 EGP = 1 AED</div>
+  <div class="sidebar-footer">All numbers in EGP<br>Rate: ~13.6 EGP = 1 AED<button class="sidebar-restart" onclick="restartOnboarding()">Restart Setup</button></div>
 </aside>
 
 <!-- MAIN CONTENT -->
@@ -408,7 +475,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   <div class="tab-panel active" id="tab-planning-savings">
     <div class="section-label">Financial Planning</div>
     <div class="section-title">Savings & Timeline</div>
-    <div class="section-sub">Plan how to accumulate capital to buy your caf&eacute; space. Add partners, adjust numbers, see when you can open.</div>
+    <div class="section-sub" id="savingsSubtitle">Plan how to accumulate capital. Add partners, adjust numbers, see when you can open.</div>
 
     <!-- Calculator -->
     <div class="card" style="margin-bottom:1.5rem">
@@ -425,7 +492,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
           <input class="fi" type="number" data-key="goldReserves" min="0" step="10000">
         </div>
         <div>
-          <label class="fi-label">Target: Property Purchase Price (EGP)</label>
+          <label class="fi-label" data-calc="targetLabel">Target: Property Purchase Price (EGP)</label>
           <input class="fi" type="number" data-key="savingsTarget" min="500000" step="100000">
         </div>
       </div>
@@ -448,7 +515,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:var(--radius-sm);overflow:hidden">
         <div style="background:var(--bg2);padding:1.15rem;text-align:center"><div style="font-size:1.5rem;font-weight:800;color:var(--gold)" data-calc="savMonths">--</div><div style="font-size:.62rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Months to Target</div></div>
         <div style="background:var(--bg2);padding:1.15rem;text-align:center"><div style="font-size:1.5rem;font-weight:800;color:var(--green)" data-calc="savYourTotal">--</div><div style="font-size:.62rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Total Accumulated</div></div>
-        <div style="background:var(--bg2);padding:1.15rem;text-align:center"><div style="font-size:1.5rem;font-weight:800;color:var(--copper)" data-calc="savDate">--</div><div style="font-size:.62rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em">Estimated Buy Date</div></div>
+        <div style="background:var(--bg2);padding:1.15rem;text-align:center"><div style="font-size:1.5rem;font-weight:800;color:var(--copper)" data-calc="savDate">--</div><div style="font-size:.62rem;color:var(--text2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em" data-calc="dateLabel">Estimated Buy Date</div></div>
       </div>
     </div>
 
@@ -1611,6 +1678,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 // REACTIVE STATE SYSTEM
 // ===========================
 const DEFAULTS = {
+  // Strategy
+  strategy: 'rent',
+
   // Savings
   goldReserves: 500000,
   useMudarabah: false,
@@ -2041,6 +2111,15 @@ function calc() {
     C.selectedAreaKeyRange = '500,000–2,000,000';
   }
 
+  // ---- STRATEGY LABELS ----
+  if (S.strategy === 'buy') {
+    C.targetLabel = 'Target: Property Purchase Price (EGP)';
+    C.dateLabel = 'Estimated Buy Date';
+  } else {
+    C.targetLabel = 'Target: Total Opening Capital (EGP)';
+    C.dateLabel = 'Estimated Open Date';
+  }
+
   // ---- UPDATE DOM ----
   document.querySelectorAll('[data-calc]').forEach(el => {
     const key = el.dataset.calc;
@@ -2457,6 +2536,502 @@ function resetChecklist() {
 }
 
 initChecklists();
+
+// ===========================
+// ONBOARDING FLOW
+// ===========================
+(function(){
+  var obOverlay = document.getElementById('onboarding');
+  var obContainer = document.getElementById('ob-container');
+  var obData = {};
+  var obSteps = [];
+  var obCurrentStep = 0;
+
+  // ---- Step definitions ----
+  function welcomeStep(){
+    return {
+      id:'welcome',
+      render: function(){
+        return '<div class="ob-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 110 8h-1M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg><span>BAYT CAFÉ</span></div>' +
+          '<div class="ob-title">Welcome to Bayt Café Planner ☕</div>' +
+          '<div class="ob-subtitle">Your complete business planning tool for opening a specialty café in Cairo. Everything is editable. Everything updates live.</div>' +
+          '<p style="font-size:.85rem;color:var(--text2);margin-bottom:1.5rem">How detailed do you want to go?</p>' +
+          '<div class="ob-pace-cards">' +
+            '<div class="ob-pace-card" onclick="window._obSelectPace(\'quick\')">' +
+              '<div class="ob-icon">⚡</div>' +
+              '<h4>Quick Setup</h4>' +
+              '<div class="ob-pace-time">~1 min</div>' +
+              '<p>Just the essentials: strategy, savings, target</p>' +
+            '</div>' +
+            '<div class="ob-pace-card" onclick="window._obSelectPace(\'balanced\')">' +
+              '<div class="ob-icon">⚖️</div>' +
+              '<h4>Balanced Setup</h4>' +
+              '<div class="ob-pace-time">~2 min</div>' +
+              '<p>Essentials + partners + area selection</p>' +
+            '</div>' +
+            '<div class="ob-pace-card" onclick="window._obSelectPace(\'full\')">' +
+              '<div class="ob-icon">🔧</div>' +
+              '<h4>Full Setup</h4>' +
+              '<div class="ob-pace-time">~5 min</div>' +
+              '<p>Everything customized: size, menu style, staffing</p>' +
+            '</div>' +
+          '</div>' +
+          '<div class="ob-skip" onclick="window._obFinish()">Skip setup → go straight to the planner</div>';
+      }
+    };
+  }
+
+  function strategyStep(){
+    return {
+      id:'strategy',
+      render: function(){
+        var sel = obData.strategy || 'rent';
+        return buildProgress() +
+          '<div class="ob-title">Your Strategy</div>' +
+          '<div class="ob-subtitle">Are you planning to rent or buy your café space?</div>' +
+          '<div class="ob-choice-grid">' +
+            '<div class="ob-choice'+(sel==='rent'?' selected':'')+'" onclick="window._obSet(\'strategy\',\'rent\')">' +
+              '<div class="ob-icon">🏠</div>' +
+              '<h4>Rent</h4>' +
+              '<p>Lower upfront cost, flexibility to relocate</p>' +
+            '</div>' +
+            '<div class="ob-choice'+(sel==='buy'?' selected':'')+'" onclick="window._obSet(\'strategy\',\'buy\')">' +
+              '<div class="ob-icon">🔑</div>' +
+              '<h4>Buy</h4>' +
+              '<p>Own the space, zero monthly rent, long-term asset</p>' +
+            '</div>' +
+          '</div>' +
+          buildNav(true,true);
+      }
+    };
+  }
+
+  function savingsStep(){
+    return {
+      id:'savings',
+      render: function(){
+        var m = obData.monthlySavings !== undefined ? obData.monthlySavings : 60000;
+        var c = obData.existingCapital !== undefined ? obData.existingCapital : 300000;
+        var g = obData.goldReserves !== undefined ? obData.goldReserves : 0;
+        return buildProgress() +
+          '<div class="ob-title">Your Savings</div>' +
+          '<div class="ob-subtitle">How much can you save monthly?</div>' +
+          '<div class="ob-input-group"><label>Monthly Savings (EGP)</label><input type="number" id="ob-monthly" value="'+m+'" min="0" step="5000" oninput="window._obUpdateSavings()"></div>' +
+          '<div class="ob-input-group"><label>Existing Capital (EGP)</label><input type="number" id="ob-current" value="'+c+'" min="0" step="10000" oninput="window._obUpdateSavings()"></div>' +
+          '<div class="ob-input-group"><label>Gold Reserves (EGP)</label><input type="number" id="ob-gold" value="'+g+'" min="0" step="10000" oninput="window._obUpdateSavings()"></div>' +
+          buildNav(true,true);
+      }
+    };
+  }
+
+  function targetStep(){
+    return {
+      id:'target',
+      render: function(){
+        var t = obData.target !== undefined ? obData.target : 3500000;
+        var m = obData.monthlySavings || 60000;
+        var c = obData.existingCapital || 300000;
+        var g = obData.goldReserves || 0;
+        var remaining = Math.max(t - c - g, 0);
+        var months = m > 0 ? Math.ceil(remaining / m) : 999;
+        return buildProgress() +
+          '<div class="ob-title">Your Target</div>' +
+          '<div class="ob-subtitle">What is your target budget?</div>' +
+          '<div class="ob-input-group"><label>Target Amount (EGP)</label><input type="number" id="ob-target" value="'+t+'" min="100000" step="100000" oninput="window._obUpdateTarget()"></div>' +
+          '<div class="ob-result-preview" id="ob-target-preview">' +
+            '<div class="ob-res-val">~'+months+' months</div>' +
+            '<div class="ob-res-label">At '+fmt(m)+'/month to reach '+fmt(t)+' EGP</div>' +
+          '</div>' +
+          buildNav(true, obSteps[obCurrentStep+1] ? true : false, !obSteps[obCurrentStep+1]);
+      }
+    };
+  }
+
+  function partnersStep(){
+    return {
+      id:'partners',
+      render: function(){
+        if (!obData.obPartners) {
+          obData.obPartners = [{name:'You', monthly:obData.monthlySavings||30000, current:obData.existingCapital||300000}];
+          obData.partnerMode = 'solo';
+        }
+        var mode = obData.partnerMode || 'solo';
+        var html = buildProgress() +
+          '<div class="ob-title">Partners</div>' +
+          '<div class="ob-subtitle">Are you doing this solo or with partners?</div>' +
+          '<div class="ob-choice-grid">' +
+            '<div class="ob-choice'+(mode==='solo'?' selected':'')+'" onclick="window._obSetPartnerMode(\'solo\')">' +
+              '<div class="ob-icon">👤</div>' +
+              '<h4>Solo</h4>' +
+              '<p>Just you, all the equity</p>' +
+            '</div>' +
+            '<div class="ob-choice'+(mode==='partners'?' selected':'')+'" onclick="window._obSetPartnerMode(\'partners\')">' +
+              '<div class="ob-icon">🤝</div>' +
+              '<h4>With Partner(s)</h4>' +
+              '<p>Split costs and equity</p>' +
+            '</div>' +
+          '</div>';
+        if (mode === 'partners') {
+          html += '<div id="ob-partners-list" style="margin-top:1rem">';
+          html += '<div class="ob-partner-row" style="margin-bottom:.25rem"><div style="font-size:.65rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;padding-left:.75rem">Name</div><div style="font-size:.65rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;padding-left:.75rem">Monthly (EGP)</div><div style="font-size:.65rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;padding-left:.75rem">Existing (EGP)</div></div>';
+          obData.obPartners.forEach(function(p,i){
+            html += '<div class="ob-partner-row">' +
+              '<input type="text" value="'+p.name+'" onchange="window._obUpdatePartner('+i+',\'name\',this.value)" placeholder="Name">' +
+              '<input type="number" value="'+p.monthly+'" onchange="window._obUpdatePartner('+i+',\'monthly\',this.value)" min="0" step="1000">' +
+              '<input type="number" value="'+p.current+'" onchange="window._obUpdatePartner('+i+',\'current\',this.value)" min="0" step="10000">' +
+            '</div>';
+          });
+          html += '</div>';
+          html += '<button onclick="window._obAddPartner()" style="background:transparent;border:1px dashed var(--border-light);color:var(--text2);padding:.4rem .8rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.72rem;font-family:inherit;transition:var(--transition);margin-top:.5rem;width:100%" onmouseover="this.style.borderColor=\'var(--gold)\';this.style.color=\'var(--gold)\'" onmouseout="this.style.borderColor=\'var(--border-light)\';this.style.color=\'var(--text2)\'">+ Add Another Partner</button>';
+        }
+        html += buildNav(true, true);
+        return html;
+      }
+    };
+  }
+
+  function areaStep(){
+    return {
+      id:'area',
+      render: function(){
+        var selId = obData.selectedArea || S.selectedArea || 'maadi';
+        var html = buildProgress() +
+          '<div class="ob-title">Target Area</div>' +
+          '<div class="ob-subtitle">Which area are you targeting?</div>' +
+          '<div class="ob-area-mini-grid">';
+        AREAS.forEach(function(a){
+          html += '<div class="ob-area-mini'+(selId===a.id?' selected':'')+'" onclick="window._obSelectArea(\''+a.id+'\')">' +
+            '<h4>'+a.name+'</h4>' +
+            '<div class="ob-area-budget">'+a.budgetRange+' EGP</div>' +
+            '<div class="ob-area-tagline">'+a.tagline+'</div>' +
+          '</div>';
+        });
+        html += '</div>';
+        html += '<div class="ob-skip" onclick="window._obNext()" style="margin-top:.5rem">Skip — I\'ll decide later</div>';
+        html += buildNav(true, obSteps[obCurrentStep+1] ? true : false, !obSteps[obCurrentStep+1]);
+        return html;
+      }
+    };
+  }
+
+  function cafeSizeStep(){
+    return {
+      id:'cafesize',
+      render: function(){
+        var sel = obData.cafeSize || 'medium';
+        return buildProgress() +
+          '<div class="ob-title">Café Size</div>' +
+          '<div class="ob-subtitle">What size café are you planning?</div>' +
+          '<div class="ob-choice-grid" style="grid-template-columns:repeat(3,1fr)">' +
+            '<div class="ob-choice'+(sel==='small'?' selected':'')+'" onclick="window._obSet(\'cafeSize\',\'small\')">' +
+              '<div class="ob-icon">🏡</div>' +
+              '<h4>Small</h4>' +
+              '<p>30–50 sqm<br>15–25 seats</p>' +
+            '</div>' +
+            '<div class="ob-choice'+(sel==='medium'?' selected':'')+'" onclick="window._obSet(\'cafeSize\',\'medium\')">' +
+              '<div class="ob-icon">🏪</div>' +
+              '<h4>Medium</h4>' +
+              '<p>50–80 sqm<br>25–40 seats</p>' +
+            '</div>' +
+            '<div class="ob-choice'+(sel==='large'?' selected':'')+'" onclick="window._obSet(\'cafeSize\',\'large\')">' +
+              '<div class="ob-icon">🏬</div>' +
+              '<h4>Large</h4>' +
+              '<p>80–120 sqm<br>40–60 seats</p>' +
+            '</div>' +
+          '</div>' +
+          buildNav(true,true);
+      }
+    };
+  }
+
+  function menuStyleStep(){
+    return {
+      id:'menustyle',
+      render: function(){
+        var sel = obData.menuStyle || 'specialty';
+        return buildProgress() +
+          '<div class="ob-title">Menu Style</div>' +
+          '<div class="ob-subtitle">What coffee style are you going for?</div>' +
+          '<div class="ob-choice-grid">' +
+            '<div class="ob-choice'+(sel==='specialty'?' selected':'')+'" onclick="window._obSet(\'menuStyle\',\'specialty\')">' +
+              '<div class="ob-icon">✨</div>' +
+              '<h4>Specialty</h4>' +
+              '<p>SCA 80+ beans, pour-over, single origin. Premium pricing.</p>' +
+            '</div>' +
+            '<div class="ob-choice'+(sel==='mainstream'?' selected':'')+'" onclick="window._obSet(\'menuStyle\',\'mainstream\')">' +
+              '<div class="ob-icon">☕</div>' +
+              '<h4>Mainstream</h4>' +
+              '<p>Commercial beans, simpler menu, lower prices.</p>' +
+            '</div>' +
+          '</div>' +
+          buildNav(true,true);
+      }
+    };
+  }
+
+  function staffStep(){
+    return {
+      id:'staff',
+      render: function(){
+        var sel = obData.staffPlan || 'standard';
+        return buildProgress() +
+          '<div class="ob-title">Staff Plan</div>' +
+          '<div class="ob-subtitle">How lean do you want to start?</div>' +
+          '<div class="ob-choice-grid" style="grid-template-columns:repeat(3,1fr)">' +
+            '<div class="ob-choice'+(sel==='minimal'?' selected':'')+'" onclick="window._obSet(\'staffPlan\',\'minimal\')">' +
+              '<div class="ob-icon">👤</div>' +
+              '<h4>Minimal</h4>' +
+              '<p>2 staff: 1 barista + 1 helper</p>' +
+            '</div>' +
+            '<div class="ob-choice'+(sel==='standard'?' selected':'')+'" onclick="window._obSet(\'staffPlan\',\'standard\')">' +
+              '<div class="ob-icon">👥</div>' +
+              '<h4>Standard</h4>' +
+              '<p>3 staff: 2 baristas + 1 cleaner</p>' +
+            '</div>' +
+            '<div class="ob-choice'+(sel==='full'?' selected':'')+'" onclick="window._obSet(\'staffPlan\',\'full\')">' +
+              '<div class="ob-icon">👨‍👨‍👦‍👦</div>' +
+              '<h4>Full</h4>' +
+              '<p>4 staff: 2 baristas + shift lead + cleaner</p>' +
+            '</div>' +
+          '</div>' +
+          buildNav(true, false, true);
+      }
+    };
+  }
+
+  // ---- Helpers ----
+  function buildProgress(){
+    var html = '<div class="ob-progress">';
+    for(var i=1; i<obSteps.length; i++){
+      var cls = 'ob-dot';
+      if(i < obCurrentStep) cls += ' done';
+      else if(i === obCurrentStep) cls += ' active';
+      html += '<div class="'+cls+'"></div>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function buildNav(showBack, showNext, showFinish){
+    var html = '<div class="ob-nav">';
+    if(showBack && obCurrentStep > 0){
+      html += '<button class="ob-btn ob-btn-secondary" onclick="window._obBack()">← Back</button>';
+    } else {
+      html += '<div></div>';
+    }
+    if(showFinish){
+      html += '<button class="ob-btn ob-btn-primary" onclick="window._obFinish()">Launch Planner →</button>';
+    } else if(showNext){
+      html += '<button class="ob-btn ob-btn-primary" onclick="window._obNext()">Next →</button>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function renderCurrentStep(){
+    if(!obSteps[obCurrentStep]) return;
+    obContainer.innerHTML = obSteps[obCurrentStep].render();
+  }
+
+  // ---- Public API (exposed on window) ----
+  window._obSelectPace = function(pace){
+    obData.pace = pace;
+    obSteps = [welcomeStep(), strategyStep(), savingsStep(), targetStep()];
+    if(pace === 'balanced' || pace === 'full'){
+      obSteps.push(partnersStep());
+      obSteps.push(areaStep());
+    }
+    if(pace === 'full'){
+      obSteps.push(cafeSizeStep());
+      obSteps.push(menuStyleStep());
+      obSteps.push(staffStep());
+    }
+    obCurrentStep = 1;
+    renderCurrentStep();
+  };
+
+  window._obNext = function(){
+    collectCurrentInputs();
+    if(obCurrentStep < obSteps.length - 1){
+      obCurrentStep++;
+      renderCurrentStep();
+      obContainer.scrollTop = 0;
+    }
+  };
+
+  window._obBack = function(){
+    collectCurrentInputs();
+    if(obCurrentStep > 0){
+      obCurrentStep--;
+      renderCurrentStep();
+    }
+  };
+
+  window._obSet = function(key, val){
+    obData[key] = val;
+    renderCurrentStep();
+  };
+
+  window._obSelectArea = function(areaId){
+    obData.selectedArea = areaId;
+    renderCurrentStep();
+  };
+
+  window._obSetPartnerMode = function(mode){
+    obData.partnerMode = mode;
+    if(mode === 'partners' && obData.obPartners && obData.obPartners.length < 2){
+      obData.obPartners.push({name:'Partner', monthly:30000, current:300000});
+    }
+    renderCurrentStep();
+  };
+
+  window._obUpdatePartner = function(i, field, val){
+    if(!obData.obPartners || !obData.obPartners[i]) return;
+    if(field === 'name'){
+      obData.obPartners[i].name = val;
+    } else {
+      obData.obPartners[i][field] = parseFloat(val) || 0;
+    }
+  };
+
+  window._obAddPartner = function(){
+    if(!obData.obPartners) obData.obPartners = [];
+    obData.obPartners.push({name:'Partner '+(obData.obPartners.length+1), monthly:0, current:0});
+    renderCurrentStep();
+  };
+
+  window._obUpdateSavings = function(){
+    var mEl = document.getElementById('ob-monthly');
+    var cEl = document.getElementById('ob-current');
+    var gEl = document.getElementById('ob-gold');
+    if(mEl) obData.monthlySavings = parseFloat(mEl.value) || 0;
+    if(cEl) obData.existingCapital = parseFloat(cEl.value) || 0;
+    if(gEl) obData.goldReserves = parseFloat(gEl.value) || 0;
+  };
+
+  window._obUpdateTarget = function(){
+    var tEl = document.getElementById('ob-target');
+    if(tEl) obData.target = parseFloat(tEl.value) || 0;
+    var m = obData.monthlySavings || 60000;
+    var c = obData.existingCapital || 300000;
+    var g = obData.goldReserves || 0;
+    var t = obData.target || 3500000;
+    var remaining = Math.max(t - c - g, 0);
+    var months = m > 0 ? Math.ceil(remaining / m) : 999;
+    var prev = document.getElementById('ob-target-preview');
+    if(prev){
+      prev.innerHTML = '<div class="ob-res-val">~'+months+' months</div><div class="ob-res-label">At '+fmt(m)+'/month to reach '+fmt(t)+' EGP</div>';
+    }
+  };
+
+  function collectCurrentInputs(){
+    var step = obSteps[obCurrentStep];
+    if(!step) return;
+    if(step.id === 'savings'){
+      window._obUpdateSavings();
+    } else if(step.id === 'target'){
+      var tEl = document.getElementById('ob-target');
+      if(tEl) obData.target = parseFloat(tEl.value) || 0;
+    }
+  }
+
+  window._obFinish = function(){
+    collectCurrentInputs();
+    applyOnboardingData();
+    localStorage.setItem('bayt_onboarded', 'true');
+    obOverlay.classList.add('hidden');
+  };
+
+  function applyOnboardingData(){
+    // Strategy
+    if(obData.strategy) S.strategy = obData.strategy;
+
+    // Savings — apply to first partner
+    if(obData.monthlySavings !== undefined || obData.existingCapital !== undefined || obData.goldReserves !== undefined){
+      if(partners.length > 0){
+        partners[0].monthly = obData.monthlySavings !== undefined ? obData.monthlySavings : partners[0].monthly;
+        partners[0].current = obData.existingCapital !== undefined ? obData.existingCapital : partners[0].current;
+      }
+      if(obData.goldReserves !== undefined) S.goldReserves = obData.goldReserves;
+    }
+
+    // Target
+    if(obData.target) S.savingsTarget = obData.target;
+
+    // Partners
+    if(obData.partnerMode === 'solo'){
+      partners = [{name: partners[0] ? partners[0].name : 'You', monthly: partners[0] ? partners[0].monthly : 30000, current: partners[0] ? partners[0].current : 300000}];
+    } else if(obData.partnerMode === 'partners' && obData.obPartners){
+      partners = obData.obPartners.map(function(p){ return {name:p.name, monthly:p.monthly, current:p.current}; });
+    }
+
+    // Area
+    if(obData.selectedArea){
+      selectArea(obData.selectedArea);
+    }
+
+    // Cafe Size
+    if(obData.cafeSize === 'small'){
+      S.spRenovation = 250000; S.spFurniture = 80000; S.spAC = 30000;
+      S.eqEspresso = 200000; S.monthlyRent = Math.min(S.monthlyRent, 35000);
+    } else if(obData.cafeSize === 'large'){
+      S.spRenovation = 600000; S.spFurniture = 250000; S.spAC = 80000;
+      S.eqEspresso = 450000;
+    }
+
+    // Menu Style
+    if(obData.menuStyle === 'mainstream'){
+      var menuPriceKeys = ['menuEspressoP','menuAmericanoP','menuLatteP','menuCappP','menuFlatP','menuTurkishP','menuHotChocP','menuTeaP','menuIcedLatteP','menuIcedAmP','menuColdBrewP','menuIcedMochaP','menuOJP','menuLemonP','menuCroissantP','menuCookieP','menuCakeP','menuSandwichP'];
+      var menuCostKeys = ['menuEspressoC','menuAmericanoC','menuLatteC','menuCappC','menuFlatC','menuTurkishC','menuHotChocC','menuTeaC','menuIcedLatteC','menuIcedAmC','menuColdBrewC','menuIcedMochaC','menuOJC','menuLemonC','menuCroissantC','menuCookieC','menuCakeC','menuSandwichC'];
+      menuPriceKeys.forEach(function(k){ S[k] = Math.round((DEFAULTS[k] || S[k]) * 0.8); });
+      menuCostKeys.forEach(function(k){ S[k] = Math.round((DEFAULTS[k] || S[k]) * 0.7); });
+    }
+
+    // Staff Plan
+    if(obData.staffPlan === 'minimal'){
+      S.onBarista1 = true; S.onBarista2 = false; S.onCleaner = true;
+      S.salCleaner = 3000; S.onShiftLead = false;
+    } else if(obData.staffPlan === 'standard'){
+      S.onBarista1 = true; S.onBarista2 = true; S.onCleaner = true;
+      S.onShiftLead = false;
+    } else if(obData.staffPlan === 'full'){
+      S.onBarista1 = true; S.onBarista2 = true; S.onCleaner = true;
+      S.onShiftLead = true;
+    }
+
+    // Save and recalc
+    savePartners();
+    renderPartners();
+    recalcPartners();
+    bindInputs();
+    setupDuplicateSync();
+    calc();
+    renderAreaCards();
+
+    // Navigate to dashboard
+    navigateTo('dashboard');
+  }
+
+  // ---- Start / Restart ----
+  function startOnboarding(){
+    obData = {};
+    obCurrentStep = 0;
+    obSteps = [welcomeStep()];
+    obOverlay.classList.remove('hidden');
+    renderCurrentStep();
+  }
+
+  window.restartOnboarding = function(){
+    localStorage.removeItem('bayt_onboarded');
+    startOnboarding();
+  };
+
+  // ---- Init: show on first visit ----
+  if(!localStorage.getItem('bayt_onboarded')){
+    startOnboarding();
+  }
+
+})();
 </script>
 </body>
 </html>
