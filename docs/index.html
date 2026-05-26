@@ -391,6 +391,14 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .cl-del{background:none;border:1px solid transparent;color:var(--text3);cursor:pointer;font-size:1rem;padding:.2rem .5rem;flex-shrink:0;border-radius:4px;opacity:0;transition:all .2s;font-family:inherit}
 .cl-item:hover .cl-del{opacity:.5}
 .cl-del:hover{opacity:1 !important;color:var(--red);border-color:var(--red)}
+#log-entries table{width:100%;border-collapse:collapse;font-size:.78rem}
+#log-entries th{font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;padding:.5rem .4rem;font-weight:600;text-align:right}
+#log-entries th:first-child{text-align:left}
+#log-entries td{padding:.4rem;vertical-align:middle}
+#log-entries tbody tr{border-bottom:1px solid var(--border)}
+#log-entries tbody tr:hover{background:rgba(255,255,255,.02)}
+#log-entries tfoot td{padding:.6rem .4rem}
+@media(max-width:768px){#log-entries{font-size:.7rem}#log-entries .fi-sm{font-size:.72rem;padding:.3rem}}
 .cl-phase-header{display:flex;justify-content:space-between;align-items:center;padding:.85rem 1rem;cursor:pointer;user-select:none;transition:var(--transition)}
 .cl-phase-header:hover{background:rgba(255,255,255,.02)}
 .cl-phase-header h3{font-size:.9rem;font-weight:700;display:flex;align-items:center;gap:.6rem}
@@ -664,6 +672,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <div class="page" id="page-planning">
   <div class="page-tabs">
     <button class="page-tab active" data-tab="planning-savings">Savings</button>
+    <button class="page-tab" data-tab="planning-log">Log</button>
     <button class="page-tab" data-tab="planning-checklist">Checklist</button>
     <button class="page-tab" data-tab="planning-partnership">Partnership</button>
     <button class="page-tab" data-tab="planning-areas">Areas</button>
@@ -832,6 +841,49 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <p style="font-size:.8rem;color:var(--text2);line-height:1.7;margin-bottom:.5rem"><strong style="color:var(--gold)">Buying is expensive</strong> — rent a Tier 2 side street, buy in Year 3-5 once profitable.</p>
       <p style="font-size:.8rem;color:var(--text2);line-height:1.7;margin-bottom:.5rem"><strong style="color:var(--red)">Always ask: "إيه قيمة الخلو؟"</strong> — Key money can add millions to "reasonable" rent.</p>
       <p style="font-size:.8rem;color:var(--text2);line-height:1.7"><strong style="color:var(--green)">Realistic total: 3-4M EGP</strong> — rent + key money + build-out + equipment + licenses + 6mo runway.</p>
+    </div>
+  </div>
+
+  <!-- TAB: Savings Log -->
+  <div class="tab-panel" id="tab-planning-log">
+    <div class="section-label">Track Progress</div>
+    <div class="section-title">Savings Log</div>
+    <div class="section-sub">Record what you actually save each month. Compare plan vs reality.</div>
+
+    <div class="card" style="margin-bottom:1.5rem">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.6rem">
+        <span style="font-size:.82rem;font-weight:700">Progress</span>
+        <span style="font-size:.78rem;color:var(--text2)"><span id="log-total-val" style="color:var(--gold);font-weight:700">0</span> of <span id="log-target-val">3.5M</span> EGP</span>
+      </div>
+      <div style="height:16px;background:var(--bg2);border-radius:8px;overflow:hidden;position:relative">
+        <div id="log-progress-bar" style="height:100%;background:var(--gold);border-radius:8px;transition:width .6s ease;width:0%"></div>
+        <div style="position:absolute;left:25%;top:0;bottom:0;width:1px;background:var(--text3);opacity:.2"></div>
+        <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--text3);opacity:.2"></div>
+        <div style="position:absolute;left:75%;top:0;bottom:0;width:1px;background:var(--text3);opacity:.2"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:.55rem;color:var(--text3);margin-top:.25rem">
+        <span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span>
+      </div>
+      <div id="log-pct" style="text-align:center;font-size:1.3rem;font-weight:800;color:var(--gold);margin-top:.5rem">0%</div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:1.5rem">
+      <div class="card">
+        <h3 style="font-size:.85rem;font-weight:700;margin-bottom:.75rem">Milestones</h3>
+        <div id="log-milestones"></div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:.85rem;font-weight:700;margin-bottom:.75rem">Plan vs Actual</h3>
+        <div id="log-comparison"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+        <h3 style="font-size:.85rem;font-weight:700;margin:0">Monthly Log</h3>
+        <button onclick="addLogEntry()" style="background:var(--gold);border:none;color:var(--bg);padding:.4rem .75rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.72rem;font-weight:600;font-family:inherit">+ Add Month</button>
+      </div>
+      <div id="log-entries" style="overflow-x:auto"></div>
     </div>
   </div>
 
@@ -2937,6 +2989,7 @@ function switchTab(tabId) {
   if (btn) btn.classList.add('active');
   window.scrollTo(0, 0);
   localStorage.setItem('bayt_currentTab_' + parent.id, tabId);
+  if(tabId === 'planning-log' && typeof renderLog === 'function') renderLog();
 }
 
 function goTo(pageId, tabId) {
@@ -3242,8 +3295,7 @@ renderAreaCards();
 document.querySelectorAll('input[type="number"]').forEach(el => { el.setAttribute('inputmode', 'numeric'); });
 
 // Restore last visited page
-const savedPage = localStorage.getItem('bayt_currentPage');
-if (savedPage) navigateTo(savedPage);
+// Page restore moved after all init (see below renderLog)
 
 // ===========================
 // CHECKLIST SYSTEM
@@ -3461,6 +3513,146 @@ function initChecklists(){ renderChecklist(); }
 
 
 initChecklists();
+
+// ===========================
+// SAVINGS LOG
+// ===========================
+var savingsLog = JSON.parse(localStorage.getItem('bayt_savings_log') || '[]');
+function saveLog(){ localStorage.setItem('bayt_savings_log', JSON.stringify(savingsLog)); }
+
+function addLogEntry(){
+  var now = new Date();
+  var lastMonth = savingsLog.length > 0 ? savingsLog[savingsLog.length-1].month : null;
+  var newMonth;
+  if(lastMonth){
+    var parts = lastMonth.split('-');
+    var d = new Date(parseInt(parts[0]), parseInt(parts[1]), 1);
+    newMonth = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+  } else {
+    newMonth = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+  }
+  var entry = {month:newMonth, entries:{}, rental:0};
+  if(typeof partners!=='undefined'&&Array.isArray(partners)) partners.forEach(function(p,i){ entry.entries[i]=p.monthly||0; });
+  if(S.hasRentalIncome&&S.rentalPhase==='own') entry.rental=S.rentalIncome||0;
+  savingsLog.push(entry);
+  saveLog(); renderLog();
+}
+
+function removeLogEntry(idx){ savingsLog.splice(idx,1); saveLog(); renderLog(); }
+
+function updateLogEntry(idx,key,val){
+  if(!savingsLog[idx]) return;
+  if(key==='month') savingsLog[idx].month=val;
+  else if(key==='rental') savingsLog[idx].rental=parseFloat(val)||0;
+  else savingsLog[idx].entries[key]=parseFloat(val)||0;
+  saveLog(); renderLog();
+}
+
+function getLogTotal(){
+  var t=0;
+  savingsLog.forEach(function(e){ if(e.entries) Object.values(e.entries||{}).forEach(function(v){t+=(v||0);}); t+=(e.rental||0); });
+  t+=(S._partnerCurrent||0)+(S.goldReserves||0);
+  return t;
+}
+
+function renderLog(){
+  var target=S.savingsTarget||3500000;
+  var logTotal=getLogTotal();
+  var pct=target>0?Math.min(logTotal/target*100,100):0;
+  var showRental=S.hasRentalIncome&&S.rentalPhase==='own';
+
+  var progBar=document.getElementById('log-progress-bar');
+  var progPct=document.getElementById('log-pct');
+  var totalVal=document.getElementById('log-total-val');
+  var targetVal=document.getElementById('log-target-val');
+  if(progBar) progBar.style.width=pct+'%';
+  if(progPct){progPct.textContent=Math.round(pct)+'%';progPct.style.color=pct>=100?'var(--green)':'var(--gold)';}
+  if(totalVal) totalVal.textContent=fmtK(logTotal);
+  if(targetVal) targetVal.textContent=fmtK(target);
+
+  // Milestones
+  var msEl=document.getElementById('log-milestones');
+  if(msEl){
+    var logOnly=0;
+    savingsLog.forEach(function(e){Object.values(e.entries||{}).forEach(function(v){logOnly+=(v||0);});logOnly+=(e.rental||0);});
+    var avgM=savingsLog.length>0?logOnly/savingsLog.length:(S._partnerMonthly||0);
+    var existing=(S._partnerCurrent||0)+(S.goldReserves||0);
+    msEl.innerHTML=[{p:25},{p:50},{p:75},{p:100}].map(function(ms){
+      var amt=target*ms.p/100;
+      var reached=logTotal>=amt;
+      var remaining=Math.max(amt-logTotal,0);
+      var estMo=avgM>0?Math.ceil(remaining/avgM):999;
+      var estD=new Date();estD.setMonth(estD.getMonth()+estMo);
+      var est=estMo<240?estD.toLocaleDateString('en-US',{month:'short',year:'numeric'}):'--';
+      var icon=reached?'<span style="color:var(--green)">&#10003;</span>':'<span style="color:var(--text3)">&#9675;</span>';
+      var status=reached?'<span style="color:var(--green)">Reached</span>':'<span style="color:var(--text3)">Est. '+est+'</span>';
+      return '<div style="display:flex;align-items:center;gap:.6rem;padding:.4rem 0;'+(ms.p<100?'border-bottom:1px solid var(--border);':'')+'">'+icon+'<div style="flex:1"><div style="font-size:.78rem;font-weight:600;color:'+(reached?'var(--green)':'var(--text)')+'">'+ms.p+'% — '+fmtK(amt)+'</div><div style="font-size:.65rem">'+status+'</div></div></div>';
+    }).join('');
+  }
+
+  // Plan vs Actual
+  var compEl=document.getElementById('log-comparison');
+  if(compEl){
+    var planned=S._partnerMonthly||0;
+    if(showRental) planned+=(S.rentalIncome||0);
+    var logOnly2=0;
+    savingsLog.forEach(function(e){Object.values(e.entries||{}).forEach(function(v){logOnly2+=(v||0);});logOnly2+=(e.rental||0);});
+    var actualAvg=savingsLog.length>0?Math.round(logOnly2/savingsLog.length):0;
+    var diff=actualAvg-planned;
+    var diffColor=diff>=0?'var(--green)':'var(--red)';
+    var diffSign=diff>=0?'+':'';
+    if(savingsLog.length===0){
+      compEl.innerHTML='<div style="font-size:.78rem;color:var(--text3);text-align:center;padding:1rem">Add your first month to see comparison.</div>';
+    } else {
+      compEl.innerHTML='<div style="display:flex;flex-direction:column;gap:.6rem">'+
+        '<div style="display:flex;justify-content:space-between;font-size:.78rem"><span style="color:var(--text2)">Planned/mo</span><span style="font-weight:700">'+fmt(planned)+'</span></div>'+
+        '<div style="display:flex;justify-content:space-between;font-size:.78rem"><span style="color:var(--text2)">Actual avg/mo</span><span style="font-weight:700;color:var(--gold)">'+fmt(actualAvg)+'</span></div>'+
+        '<div style="display:flex;justify-content:space-between;font-size:.78rem"><span style="color:var(--text2)">Difference</span><span style="font-weight:700;color:'+diffColor+'">'+diffSign+fmt(diff)+'</span></div>'+
+      '</div>';
+    }
+  }
+
+  // Monthly entries table
+  var el=document.getElementById('log-entries');
+  if(!el) return;
+  if(savingsLog.length===0){
+    el.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text3);font-size:.82rem">No entries yet. Click "+ Add Month" to start tracking.</div>';
+    return;
+  }
+  var hCols='<th>Month</th>';
+  if(typeof partners!=='undefined'&&Array.isArray(partners)) partners.forEach(function(p){hCols+='<th>'+p.name+'</th>';});
+  if(showRental) hCols+='<th>Rental</th>';
+  hCols+='<th>Total</th><th></th>';
+
+  var rows=savingsLog.map(function(entry,idx){
+    var rowT=0;
+    Object.values(entry.entries).forEach(function(v){rowT+=(v||0);});
+    rowT+=(entry.rental||0);
+    var cells='<td><input type="month" value="'+entry.month+'" onchange="updateLogEntry('+idx+',\'month\',this.value)" style="background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:.72rem;font-family:inherit;padding:.3rem .4rem"></td>';
+    if(typeof partners!=='undefined'&&Array.isArray(partners)) partners.forEach(function(p,i){
+      var v=(entry.entries&&entry.entries[i]!==undefined)?entry.entries[i]:0;
+      cells+='<td><input type="number" value="'+v+'" onchange="updateLogEntry('+idx+','+i+',this.value)" class="fi fi-sm" style="width:100%;text-align:right" inputmode="numeric"></td>';
+    });
+    if(showRental) cells+='<td><input type="number" value="'+(entry.rental||0)+'" onchange="updateLogEntry('+idx+',\'rental\',this.value)" class="fi fi-sm" style="width:100%;text-align:right" inputmode="numeric"></td>';
+    cells+='<td style="font-weight:700;color:var(--gold);text-align:right;white-space:nowrap">'+fmt(rowT)+'</td>';
+    cells+='<td><button class="cl-del" style="opacity:.3" onclick="removeLogEntry('+idx+')" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.3">&times;</button></td>';
+    return '<tr>'+cells+'</tr>';
+  }).join('');
+
+  var runT=0;
+  savingsLog.forEach(function(e){Object.values(e.entries||{}).forEach(function(v){runT+=(v||0);});runT+=(e.rental||0);});
+
+  el.innerHTML='<table><thead><tr style="border-bottom:2px solid var(--border)">'+hCols+'</tr></thead><tbody>'+rows+'</tbody>'+
+    '<tfoot><tr style="border-top:2px solid var(--border)"><td style="font-weight:700">Total Logged</td>'+
+    '<td colspan="'+(((typeof partners!=='undefined'?partners.length:0)+(showRental?1:0))||1)+'"></td>'+
+    '<td style="font-weight:800;color:var(--gold);text-align:right">'+fmt(runT)+'</td><td></td></tr></tfoot></table>';
+}
+
+renderLog();
+
+// Restore last visited page + tab
+var savedPage = localStorage.getItem('bayt_currentPage');
+if (savedPage) navigateTo(savedPage);
 
 // ===========================
 // SNAPSHOT COMPARISON
